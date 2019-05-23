@@ -34,7 +34,7 @@
 .event {
   border: 1px solid rgba(0,0,0,.7);
   border-top-style: none;
-  background-color rgba(255,255,255,1);
+  background-color: rgba(255,255,255,1);
 }
 .consignments-header, .consignment {
   display: grid;
