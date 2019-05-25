@@ -1,3 +1,4 @@
+var url = '/consignments/'
 var fields = [
     'tracking_number',
     'requested_route',
@@ -15,7 +16,7 @@ var data = {
   }
 
 function showEvents(t){
-  var u = '/consignments/' + t + '/events'
+  var u = url + t + '/events'
   var cEvents = $('<div>', {'id': 'cEvents'})
   var cHeader = $('<div>',{class: 'events-header'})
 
