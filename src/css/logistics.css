@@ -22,12 +22,11 @@
   z-index: 999;
 }
 #cForm {
-  position: absolute;
-  float: left;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 40px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 500px;
+  padding: 30px 60px 30px 10px;
 }
 .events-header-item, .event-item, .consignments-header-item, .consignment-item {
   padding: 4px;
