@@ -49,7 +49,7 @@ function showEvents(t){
 function getCollectedCons() {
   var cHeader = $('<div>',{class: 'consignments-header'})
 
-  $.each(['Traking No','Type','Route','Location','Status'], function(i, t){
+  $.each(['Traking No','Type','Route','Cons. Id','Location','Status'], function(i, t){
     $('<div>',{class: 'consignments-header-item', text: t}).appendTo(cHeader)
   })
   
@@ -67,6 +67,7 @@ function getCollectedCons() {
         $('<div>', {'class': 'consignment-item', 'text': obj.package_type}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.requested_route}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
+        $('<div>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
         $('#cConsignments').append(cConsignment)
       }
