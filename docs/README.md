@@ -1,6 +1,6 @@
 # cons-inspector
 
-A simple tool to display the status of records collected on a chosen date. Clicking on the displayed consignment number presents a timestamped list of audit messages.
+A simple tool to display the status of records collected on a chosen date. Clicking on a displayed consignment number presents a timestamped list of audit messages.
 
 ## css/
 
