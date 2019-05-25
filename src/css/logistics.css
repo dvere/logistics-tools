@@ -40,6 +40,9 @@
   display: grid;
   grid-template-columns: 120px 60px 80px 80px 100px 140px;
 }
+.consignment:nth-of-type(odd) {
+  background-color: rgba(0,0,0,0.1)
+}
 .events-header, .consignments-header {
   color: rgba(255,255,255,1);
   background-color: rgba(67,142,185,1);
