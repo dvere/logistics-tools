@@ -1,4 +1,3 @@
-var url = '/consignments/'
 var fields = [
     'tracking_number',
     'requested_route',
