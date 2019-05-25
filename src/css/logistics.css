@@ -38,7 +38,7 @@
 }
 .consignments-header, .consignment {
   display: grid;
-  grid-template-columns: 120px 60px 60px 60px 80px 120px;
+  grid-template-columns: 120px 60px 80px 80px 100px 140px;
 }
 .events-header, .consignments-header {
   color: rgba(255,255,255,1);
