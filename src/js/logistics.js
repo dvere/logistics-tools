@@ -78,7 +78,7 @@ function getCollectedCons() {
 }
 
 function addPartsToDOM(){
-  $('<link>', {rel: 'stylesheet', href: 'https://dvere.github.io/cons-inspector/assets/css/logistics.css?v='+ $.now()})
+  $('<link>', {rel: 'stylesheet', href: 'https://dvere.github.io/cons-inspector/assets/css/logistics.min.css?v='+ $.now()})
     .appendTo($('head'))
   $('div.page-content').remove()
   $('#cInsert').remove()
