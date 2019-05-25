@@ -3,6 +3,7 @@ var fields = [
     'tracking_number',
     'requested_route',
     'consolidation_id',
+    'location',
     'delivery_address_type',
     'package_type',
     'status',
