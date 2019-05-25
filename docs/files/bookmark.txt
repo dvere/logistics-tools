@@ -1,10 +1,4 @@
-# JavaScript 'bookmarklets' to add to Bookmarks Bar
-
-# Print Labels:
-javascript:(function(){$('#foo').remove();$(".pcss-mark-dispatched").click();var jsCode=document.createElement('script');jsCode.id='foo';jsCode.setAttribute('src','https://dvere.github.io/labels/assets/js/pcse.min.js'),document.body.appendChild(jsCode)})();
+# JavaScript 'bookmarklet' to add to Bookmarks Bar
 
 # Collected Cons:
-javascript:(function(){$('#foo').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='foo';jsCode.setAttribute('src','https://dvere.github.io/labels/assets/js/logistics.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();
-
-# jQuery Print
-javascript:(function(){$('#foo').remove();$(".pcss-mark-dispatched").click();$('<script>',{id:'foo',src:'https://dvere.github.io/labels/assets/js/pcse.min.js'}).appendTo($('body'))})();
+javascript:(function(){$('#foo').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='foo';jsCode.setAttribute('src','https://dvere.github.io/cons-inspector/js/logistics.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();
