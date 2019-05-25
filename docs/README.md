@@ -4,11 +4,11 @@ A simple tool to display the status of records collected on a chosen date. Click
 
 ## css/
 
-[The minified stylesheet](css/logistics.min.css)
+[logistics.min.css](css/logistics.min.css) - The minified stylesheet.
 
 ## js/
 
-[The minified script](js/logistics.min.js)
+[logistics.min.js](js/logistics.min.js) - The minified script.
 
 ## files/
 
