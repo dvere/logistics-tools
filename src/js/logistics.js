@@ -90,8 +90,8 @@ function addPartsToDOM(){
     .appendTo($('head'))
   $('div.page-content').remove()
   $('#cInsert').remove()
-  var cSelect = $('<select>',{id: 'cStatus', name: 'status'})
-  cStatus.each(function(v){
+  var cSelect = $('<select>',{id: 'cStatus'})
+  $.each(cStatus, function(i, v){
     $('<option>',{value: v, text: v})
     .appendTo(cSelect)
   })
