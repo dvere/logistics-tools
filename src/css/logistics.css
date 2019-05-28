@@ -22,13 +22,6 @@
   background-color: rgba(0,0,0,.75);
   z-index: 999;
 }
-#cForm {
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: auto auto;
-  width: 500px;
-  padding: 30px 60px 30px 10px;
-}
 .events-header-item, .event-item, .consignments-header-item, .consignment-item {
   padding: 4px;
 }
@@ -55,6 +48,14 @@
   color: rgba(255,255,255,1);
   background-color: rgba(67,142,185,1);
 }
+#cForm {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 1.4em;
+  width: 500px;
+  padding: 30px 60px 30px 10px;
+}
 #cDate {
   line-height: 1.2em;
   margin-left: 20px;
@@ -62,6 +63,10 @@
 #cButton {
   line-height: 1.4em;
   margin-left: 4px;
+}
+#cStatus {
+  line-height: 1.4em;
+  height: 2.7em;
 }
 #cConsignments {
   width: 580px;
