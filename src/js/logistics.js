@@ -74,7 +74,7 @@ function getCollectedCons() {
         $('<div>', {
           'class': 'consignment-item',
           'text': obj.tracking_number,
-          'onclick': 'showEvents(' + obj.id + ',' + obj.tracking_number + ')',
+          'onclick': 'showEvents(' + obj.id + ',"' + obj.tracking_number + '")',
           'id': obj.id}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.package_type}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.requested_route}).appendTo(cConsignment)
