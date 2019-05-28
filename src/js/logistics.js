@@ -61,8 +61,7 @@ function getCollectedCons() {
 
   $.getJSON(url, data, function(json){
     $.each(json, function(i, obj) {
-      if((obj.status != 'DELIVERED' && obj.status != 'RECONCILED') &&
-          (obj.location === 'SWINDON' || obj.location === 'SW')) {
+      if((obj.status === 'RECEIVED SC') && (obj.location === 'SWINDON' || obj.location === 'SW')) {
         var cConsignment = $('<div>', {class: 'consignment'})
         $('<div>', {'class': 'consignment-item', 'text': obj.tracking_number, 'onclick': 'showEvents(' + obj.id + ')', 'id': obj.id})
           .appendTo(cConsignment)
