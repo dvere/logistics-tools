@@ -1,21 +1,27 @@
 var url = '/consignments/'
 var fields = [
-    'tracking_number',
-    'requested_route',
-    'consolidation_id',
-    'location',
-    'delivery_address_type',
-    'package_type',
-    'status',
-    'package_type'
-  ]
+  'tracking_number',
+  'requested_route',
+  'consolidation_id',
+  'location',
+  'delivery_address_type',
+  'package_type',
+  'status',
+  'package_type'
+]
 var data = {
-    q: 'collected:SW',
-    count: 1000,
-    client_id: 11270,
-    fields: fields.join()
+  q: 'collected:SW',
+  count: 1000,
+  client_id: 11270,
+  fields: fields.join()
   }
-
+const cStatus = [
+  'RECEIVED SC',
+  'COLLECTED',
+  'ROUTED',
+  'RECONCILED',
+  'DELIVERED'
+]
 function showEvents(t){
   var u = url + t + '/events'
   var cEvents = $('<div>', {'id': 'cEvents'})
@@ -53,7 +59,7 @@ function getCollectedCons() {
   $.each(['Traking No','Type','Route','Cons. Id','Location','Status'], function(i, t){
     $('<div>',{class: 'consignments-header-item', text: t}).appendTo(cHeader)
   })
-  
+
   $('#cConsignments').empty()
   $('#cConsignments').append(cHeader)
 
@@ -61,7 +67,7 @@ function getCollectedCons() {
 
   $.getJSON(url, data, function(json){
     $.each(json, function(i, obj) {
-      if(obj.location === 'SWINDON') {
+      if(obj.location === 'SWINDON' && obj.status === $('#cStatus').val()) {
         var cConsignment = $('<div>', {class: 'consignment'})
         $('<div>', {'class': 'consignment-item', 'text': obj.tracking_number, 'onclick': 'showEvents(' + obj.id + ')', 'id': obj.id})
           .appendTo(cConsignment)
@@ -84,8 +90,14 @@ function addPartsToDOM(){
     .appendTo($('head'))
   $('div.page-content').remove()
   $('#cInsert').remove()
+  var cSelect = $('<select>',{id: 'cStatus', name: 'status'})
+  cStatus.each(function(v){
+    $('<option>',{value: v, text: v})
+    .appendTo(cSelect)
+  })
   var cForm = $('<div>',{'id': 'cForm'})
     .append($('<input>', {'id':'cDate', 'type':'date'}))
+    .append(cSelect)
     .append($('<button>', {'id': 'cButton', 'text': 'Lookup Collections', 'onclick': 'getCollectedCons()'}))
   var cInsert = $('<div>',{'id':'cInsert'})
     .append(cForm)
