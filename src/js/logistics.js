@@ -22,7 +22,7 @@ const cStatus = [
   'RECONCILED',
   'DELIVERED'
 ]
-function showEvents(t){
+function showEvents(t, p){
   var u = url + t + '/events'
   var cEvents = $('<div>', {'id': 'cEvents'})
   var cHeader = $('<div>',{class: 'events-header'})
@@ -33,7 +33,7 @@ function showEvents(t){
   
   $('#cAudits').empty()
   $('#cAudits').append(cEvents)
-  $('<h2>',{text: t}).appendTo(cEvents)
+  $('<h2>',{text: p}).appendTo(cEvents)
   $('#cEvents').append(cHeader)
   
   $.getJSON(u,function(json){
@@ -71,8 +71,11 @@ function getCollectedCons() {
       var s = $('#cStatus').val() || 'RECEIVED SC'
       if(obj.location === 'SWINDON' && obj.status === s) {
         var cConsignment = $('<div>', {class: 'consignment'})
-        $('<div>', {'class': 'consignment-item', 'text': obj.tracking_number, 'onclick': 'showEvents(' + obj.id + ')', 'id': obj.id})
-          .appendTo(cConsignment)
+        $('<div>', {
+          'class': 'consignment-item',
+          'text': obj.tracking_number,
+          'onclick': 'showEvents(' + obj.id + ',' + obj.tracking_number + ')',
+          'id': obj.id}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.package_type}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.requested_route}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
