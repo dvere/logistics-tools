@@ -33,6 +33,7 @@ function showEvents(t){
   
   $('#cAudits').empty()
   $('#cAudits').append(cEvents)
+  $('<h2>',{text: t}).appendTo(cEvents)
   $('#cEvents').append(cHeader)
   
   $.getJSON(u,function(json){
