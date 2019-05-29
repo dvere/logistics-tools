@@ -65,10 +65,11 @@ function getCollectedCons() {
 
   data.received_at = $('#cDate').val()
   data.status = $('#cStatus').val()
+  data.location = 'SWINDON'
 
   $.getJSON(url, data, function(json){
     $.each(json, function(i, obj) {
-      if(obj.location === 'SWINDON') {
+      //if(obj.location === 'SWINDON') {
         var cConsignment = $('<div>', {class: 'consignment'})
         $('<div>', {
           'class': 'consignment-item',
@@ -81,7 +82,7 @@ function getCollectedCons() {
         $('<div>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
         $('<div>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
         $('#cConsignments').append(cConsignment)
-      }
+      //}
     })
   })
     .fail(function(){
