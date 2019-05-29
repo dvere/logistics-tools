@@ -57,14 +57,10 @@
   width: 580px;
   padding: 30px 35px 30px 35px;
 }
-#cDate {
-  line-height: 1.em;
-}
-#cButton {
+#cDate, #cButton, #cStatus {
   line-height: 1.4em;
 }
 #cStatus {
-  line-height: 1.4em;
   height: 2.7em;
 }
 #cConsignments {
