@@ -68,6 +68,7 @@ function getCollectedCons() {
   data.location = 'SWINDON'
 
   $.getJSON(url, data, function(json) {
+    console.log(json.length)
     $.each(json, function(i, obj) {
       //if(obj.location === 'SWINDON') {
         var cConsignment = $('<tr>', {class: 'consignment'})
