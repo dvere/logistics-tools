@@ -68,12 +68,16 @@ function getCollectedCons() {
       var cTable = $('<table>', {'id': 'cConsignments'})
       .append(cHeader)
 
-      $.each(['Traking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
+      $.each(['Tracking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
         $('<th>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
       })
 
       $('#cInsert').append(cTable)
       .append($('<div>', {'id': 'cAudits'}))
+
+      $('#cAudits').click(function() {
+        $(this).fadeOut()
+      })
 
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
@@ -117,9 +121,7 @@ function addPartsToDOM() {
 
   $('#breadcrumbs').after(cInsert)
 
-	$('#cAudits').click(function() {
-    $(this).fadeOut()
-  })
+
 }
 
 $.when($.ready).then(function() {
