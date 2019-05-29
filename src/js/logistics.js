@@ -72,6 +72,9 @@ function getCollectedCons() {
         $('<th>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
       })
 
+      $('#cInsert').append(cTable)
+      .append($('<div>', {'id': 'cAudits'}))
+
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
         $('<td>', {
@@ -84,13 +87,8 @@ function getCollectedCons() {
         $('<td>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
-        
         $('#cConsignments').append(cConsignment)
       })
-
-      $('#cInsert').append(cTable)
-      .append($('<div>', {'id': 'cAudits'}))
-
     } else {
       $('#cInsert').append($('<div>', {id: 'noResult', text: 'Lookup returned no consignments.'}))
     }
