@@ -21,23 +21,23 @@ const cStatus = [
   'ROUTED',
   'RECONCILED'
 ]
-function showEvents(t, p){
+function showEvents(t, p) {
   var u = url + t + '/events'
   var cEvents = $('<div>', {'id': 'cEvents'})
-  var cHeader = $('<div>',{class: 'events-header'})
+  var cHeader = $('<div>', {class: 'events-header'})
 
-  $.each(['Timestamp', 'SC','Event','User'], function(i, t){
-    $('<div>',{class: 'events-header-item', text: t}).appendTo(cHeader);
+  $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
+    $('<div>', {class: 'events-header-item', text: t}).appendTo(cHeader);
   })
-  
+
   $('#cAudits').empty()
   $('#cAudits').append(cEvents)
-  $('<h2>',{text: p}).appendTo(cEvents)
+  $('<h2>', {text: p}).appendTo(cEvents)
   $('#cEvents').append(cHeader)
   
-  $.getJSON(u,function(json){
+  $.getJSON(u, function(json) {
     $.each(json, function(i, obj) {
-      var cEvent = $('<div>',{class: 'event'})
+      var cEvent = $('<div>', {class: 'event'})
       obj.service_centre = obj.service_centre || {code: 'NA'}
       obj.user = obj.user || {username: 'NA'}
       $('<div>', {'class': 'event-item', 'text': obj.timestamp}).appendTo(cEvent)
@@ -48,16 +48,16 @@ function showEvents(t, p){
     });
     $('#cAudits').fadeIn()
   })
-    .fail(function(){
+    .fail(function() {
       console.log('Events Request Failed')
   });
 }
 
 function getCollectedCons() {
-  var cHeader = $('<div>',{class: 'consignments-header'})
+  var cHeader = $('<div>', {class: 'consignments-header'})
 
-  $.each(['Traking No','Type','Route','Cons. Id','Location','Status'], function(i, t){
-    $('<div>',{class: 'consignments-header-item', text: t}).appendTo(cHeader)
+  $.each(['Traking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
+    $('<div>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
   })
 
   $('#cConsignments').empty()
@@ -67,7 +67,7 @@ function getCollectedCons() {
   data.status = $('#cStatus').val()
   data.location = 'SWINDON'
 
-  $.getJSON(url, data, function(json){
+  $.getJSON(url, data, function(json) {
     $.each(json, function(i, obj) {
       //if(obj.location === 'SWINDON') {
         var cConsignment = $('<div>', {class: 'consignment'})
@@ -85,32 +85,32 @@ function getCollectedCons() {
       //}
     })
   })
-    .fail(function(){
+    .fail(function() {
       console.log('Consignments Request Failed')
   })
 }
 
-function addPartsToDOM(){
-  $('<link>', {rel: 'stylesheet', href: 'https://dvere.github.io/cons-inspector/css/logistics.min.css?v='+ $.now()})
+function addPartsToDOM() {
+  $('<link>', {rel: 'stylesheet', href: 'https://dvere.github.io/cons-inspector/css/logistics.min.css?v=' + $.now()})
     .appendTo($('head'))
   $('div.page-content').remove()
   $('#cInsert').remove()
-  var cSelect = $('<select>',{id: 'cStatus'})
-  $.each(cStatus, function(i, v){
-    $('<option>',{value: v, text: v})
+  var cSelect = $('<select>', {id: 'cStatus'})
+  $.each(cStatus, function(i, v) {
+    $('<option>', {value: v, text: v})
     .appendTo(cSelect)
   })
-  var cForm = $('<div>',{'id': 'cForm'})
+  var cForm = $('<div>', {'id': 'cForm'})
     .append($('<input>', {'id':'cDate', 'type':'date'}))
     .append(cSelect)
     .append($('<button>', {'id': 'cButton', 'text': 'Lookup Collections', 'onclick': 'getCollectedCons()'}))
-  var cInsert = $('<div>',{'id':'cInsert'})
+  var cInsert = $('<div>', {'id': 'cInsert'})
     .append(cForm)
     .append($('<div>', {'id': 'cConsignments'}))
-    .append($('<div>', {'id':'cAudits'}))
+    .append($('<div>', {'id': 'cAudits'}))
   $('#breadcrumbs').after(cInsert)
 
-	$('#cAudits').click(function(){
+	$('#cAudits').click(function() {
     $(this).fadeOut()
   })
 }
