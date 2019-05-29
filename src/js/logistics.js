@@ -19,8 +19,7 @@ const cStatus = [
   'RECEIVED SC',
   'COLLECTED',
   'ROUTED',
-  'RECONCILED',
-  'DELIVERED'
+  'RECONCILED'
 ]
 function showEvents(t, p){
   var u = url + t + '/events'
@@ -65,11 +64,11 @@ function getCollectedCons() {
   $('#cConsignments').append(cHeader)
 
   data.received_at = $('#cDate').val()
+  data.status = $('#cStatus').val()
 
   $.getJSON(url, data, function(json){
     $.each(json, function(i, obj) {
-      var s = $('#cStatus').val() || 'RECEIVED SC'
-      if(obj.location === 'SWINDON' && obj.status === s) {
+      if(obj.location === 'SWINDON') {
         var cConsignment = $('<div>', {class: 'consignment'})
         $('<div>', {
           'class': 'consignment-item',
