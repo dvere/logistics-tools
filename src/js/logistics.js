@@ -54,23 +54,25 @@ function showEvents(t, p) {
 }
 
 function getCollectedCons() {
-  var cHeader = $('<thead>', {class: 'consignments-header'})
-
-  $.each(['Traking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
-    $('<th>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
-  })
-
-  $('#cConsignments').empty()
-  $('#cConsignments').append(cHeader)
 
   data.received_at = $('#cDate').val()
   data.status = $('#cStatus').val()
   data.location = 'SWINDON'
 
+  $('#cConsignments').remove()
+
   $.getJSON(url, data, function(json) {
-    console.log(json.length)
-    $.each(json, function(i, obj) {
-      //if(obj.location === 'SWINDON') {
+    if (json.length > 0) {
+
+      var cHeader = $('<thead>', {class: 'consignments-header'})
+      var cTable = $('<table>', {'id': 'cConsignments'})
+      .append(cHeader)
+
+      $.each(['Traking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
+        $('<th>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
+      })
+
+      $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
         $('<td>', {
           'class': 'consignment-item',
@@ -82,12 +84,19 @@ function getCollectedCons() {
         $('<td>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
+        
         $('#cConsignments').append(cConsignment)
-      //}
-    })
+      })
+
+      $('#cInsert').append(cTable)
+      .append($('<div>', {'id': 'cAudits'}))
+
+    } else {
+      $('#cInsert').append($('<div>', {id: 'noResult', text: 'Lookup returned no consignments.'}))
+    }
   })
-    .fail(function() {
-      console.log('Consignments Request Failed')
+  .fail(function() {
+    console.log('Consignments Request Failed')
   })
 }
 
@@ -104,11 +113,10 @@ function addPartsToDOM() {
   var cForm = $('<div>', {'id': 'cForm'})
     .append($('<input>', {'id':'cDate', 'type':'date'}))
     .append(cSelect)
-    .append($('<button>', {'id': 'cButton', 'text': 'Lookup Collections', 'onclick': 'getCollectedCons()'}))
+    .append($('<button>', {'id': 'cButton', 'text': 'Look up collections', 'onclick': 'getCollectedCons()'}))
   var cInsert = $('<div>', {'id': 'cInsert'})
     .append(cForm)
-    .append($('<table>', {'id': 'cConsignments'}))
-    .append($('<div>', {'id': 'cAudits'}))
+
   $('#breadcrumbs').after(cInsert)
 
 	$('#cAudits').click(function() {
