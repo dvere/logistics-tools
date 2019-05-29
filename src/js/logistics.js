@@ -94,7 +94,7 @@ function getCollectedCons() {
         $('#cConsignments').append(cConsignment)
       })
     } else {
-      $('#cInsert').append($('<div>', {id: 'noResult', text: 'Lookup returned no consignments.'}))
+      $('#cInsert').append($('<div>', {id: 'cConsignments', text: 'Lookup returned no consignments.'}))
     }
   })
   .fail(function() {
