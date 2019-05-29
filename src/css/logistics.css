@@ -55,15 +55,13 @@
   grid-template-columns: auto auto auto;
   grid-column-gap: 1.4em;
   width: 580px;
-  padding: 30px 60px 30px 10px;
+  padding: 30px 35px 30px 35px;
 }
 #cDate {
-  line-height: 1.2em;
-  margin-left: 20px;
+  line-height: 1.em;
 }
 #cButton {
   line-height: 1.4em;
-  margin-left: 4px;
 }
 #cStatus {
   line-height: 1.4em;

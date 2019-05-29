@@ -54,10 +54,10 @@ function showEvents(t, p) {
 }
 
 function getCollectedCons() {
-  var cHeader = $('<div>', {class: 'consignments-header'})
+  var cHeader = $('<thead>', {class: 'consignments-header'})
 
   $.each(['Traking No', 'Type', 'Route', 'Cons. Id' ,'Location', 'Status'], function(i, t) {
-    $('<div>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
+    $('<th>', {class: 'consignments-header-item', text: t}).appendTo(cHeader)
   })
 
   $('#cConsignments').empty()
@@ -70,17 +70,17 @@ function getCollectedCons() {
   $.getJSON(url, data, function(json) {
     $.each(json, function(i, obj) {
       //if(obj.location === 'SWINDON') {
-        var cConsignment = $('<div>', {class: 'consignment'})
-        $('<div>', {
+        var cConsignment = $('<tr>', {class: 'consignment'})
+        $('<td>', {
           'class': 'consignment-item',
           'text': obj.tracking_number,
           'onclick': 'showEvents(' + obj.id + ',"' + obj.tracking_number + '")',
           'id': obj.id}).appendTo(cConsignment)
-        $('<div>', {'class': 'consignment-item', 'text': obj.package_type}).appendTo(cConsignment)
-        $('<div>', {'class': 'consignment-item', 'text': obj.requested_route}).appendTo(cConsignment)
-        $('<div>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
-        $('<div>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
-        $('<div>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
+        $('<td>', {'class': 'consignment-item', 'text': obj.package_type}).appendTo(cConsignment)
+        $('<td>', {'class': 'consignment-item', 'text': obj.requested_route}).appendTo(cConsignment)
+        $('<td>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
+        $('<td>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
+        $('<td>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
         $('#cConsignments').append(cConsignment)
       //}
     })
@@ -106,7 +106,7 @@ function addPartsToDOM() {
     .append($('<button>', {'id': 'cButton', 'text': 'Lookup Collections', 'onclick': 'getCollectedCons()'}))
   var cInsert = $('<div>', {'id': 'cInsert'})
     .append(cForm)
-    .append($('<div>', {'id': 'cConsignments'}))
+    .append($('<table>', {'id': 'cConsignments'}))
     .append($('<div>', {'id': 'cAudits'}))
   $('#breadcrumbs').after(cInsert)
 
