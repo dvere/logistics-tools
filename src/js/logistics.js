@@ -105,7 +105,7 @@ function getCollectedCons() {
 function addPartsToDOM() {
   $('<link>', {rel: 'stylesheet', href: 'https://dvere.github.io/cons-inspector/css/logistics.min.css?v=' + $.now()})
     .appendTo($('head'))
-  $('div.page-content').empty()
+
   $('#cInsert').remove()
   var cSelect = $('<select>', {id: 'cStatus'})
   $.each(cStatus, function(i, v) {
@@ -119,7 +119,7 @@ function addPartsToDOM() {
   var cInsert = $('<div>', {'id': 'cInsert'})
     .append(cForm)
 
-    $('div.page-content').append(cInsert)
+    $('#main-container > div > div.page-content > div > div').empty().append(cInsert)
 }
 
 $.when($.ready).then(function() {
