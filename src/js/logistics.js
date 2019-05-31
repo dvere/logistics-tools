@@ -15,7 +15,7 @@ var data = {
   client_id: 11270,
   fields: fields.join()
   }
-const cStatus = [
+var cStatus = [
   'RECEIVED SC',
   'COLLECTED',
   'ROUTED',
