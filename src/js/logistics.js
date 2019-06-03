@@ -28,13 +28,13 @@ function showEvents(t, p) {
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
     $('<th>', {class: 'events-header-item', text: t}).appendTo(cHeader);
-  })
+  }).appendTo(cEvents)
 
-  $('#cAudits').empty()
-  $('#cAudits').append(cEvents)
-  $('<h2>', {text: p}).appendTo(cEvents)
-  $('#cEvents').append(cHeader)
-  
+  $('#cAudits')
+    .empty()
+    .append($('<h2>', {text: p}))
+    .append(cEvents)
+
   $.getJSON(u, function(json) {
     $.each(json, function(i, obj) {
       var cEvent = $('<tr>', {class: 'event'})
