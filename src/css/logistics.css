@@ -29,10 +29,6 @@
 .consignment-item:first-of-type:hover {
   cursor: pointer;
 }
-.event, .events-header {
-  display: grid;
-  grid-template-columns: 140px 40px 180px 140px;
-}
 .event {
   border: 1px solid rgba(0,0,0,.7);
   border-top-style: none;
@@ -42,7 +38,7 @@
   display: grid;
   grid-template-columns: 120px 60px 80px 80px 100px 140px;
 }
-.consignment:nth-of-type(odd) {
+.event:nth-of-type(odd), .consignment:nth-of-type(odd) {
   background-color: rgba(0,0,0,0.1)
 }
 .events-header, .consignments-header {

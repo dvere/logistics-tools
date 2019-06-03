@@ -14,7 +14,7 @@ var data = {
   count: 1000,
   client_id: 11270,
   fields: fields.join()
-  }
+}
 var cStatus = [
   'RECEIVED SC',
   'COLLECTED',
@@ -23,11 +23,11 @@ var cStatus = [
 ]
 function showEvents(t, p) {
   var u = url + t + '/events'
-  var cEvents = $('<div>', {'id': 'cEvents'})
-  var cHeader = $('<div>', {class: 'events-header'})
+  var cEvents = $('<table>', {'id': 'cEvents'})
+  var cHeader = $('<thead>', {class: 'events-header'})
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
-    $('<div>', {class: 'events-header-item', text: t}).appendTo(cHeader);
+    $('<th>', {class: 'events-header-item', text: t}).appendTo(cHeader);
   })
 
   $('#cAudits').empty()
@@ -37,13 +37,13 @@ function showEvents(t, p) {
   
   $.getJSON(u, function(json) {
     $.each(json, function(i, obj) {
-      var cEvent = $('<div>', {class: 'event'})
+      var cEvent = $('<tr>', {class: 'event'})
       obj.service_centre = obj.service_centre || {code: 'NA'}
       obj.user = obj.user || {username: 'NA'}
-      $('<div>', {'class': 'event-item', 'text': obj.timestamp}).appendTo(cEvent)
-      $('<div>', {'class': 'event-item', 'text': obj.service_centre.code}).appendTo(cEvent)
-      $('<div>', {'class': 'event-item', 'text': obj.tracking_code.code}).appendTo(cEvent)
-      $('<div>', {'class': 'event-item', 'text': obj.user.username}).appendTo(cEvent)
+      $('<td>', {'class': 'event-item', 'text': obj.timestamp}).appendTo(cEvent)
+      $('<td>', {'class': 'event-item', 'text': obj.service_centre.code}).appendTo(cEvent)
+      $('<td>', {'class': 'event-item', 'text': obj.tracking_code.code}).appendTo(cEvent)
+      $('<td>', {'class': 'event-item', 'text': obj.user.username}).appendTo(cEvent)
       cEvent.appendTo(cEvents)
     });
     $('#cAudits').fadeIn()
