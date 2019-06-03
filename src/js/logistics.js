@@ -28,7 +28,8 @@ function showEvents(t, p) {
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
     $('<th>', {class: 'events-header-item', text: t}).appendTo(cHeader);
-  }).appendTo(cEvents)
+  })
+  cEvents.append(cHeader)
 
   $('#cAudits')
     .empty()
