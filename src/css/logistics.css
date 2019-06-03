@@ -4,9 +4,11 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 40px;
+  padding: 2em;
   padding-top: 0;
+  border-radius: 0.8em;
   max-height: 90%;
+  min-width: 580px;
   background-color: white;
   z-index: 999;
   overflow-y: auto;
@@ -59,4 +61,7 @@
 #cConsignments {
   width: 580px;
   margin: 0 auto;
+}
+#eTable {
+  min-width: 555px;
 }
