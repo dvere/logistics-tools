@@ -21,15 +21,25 @@ var cStatus = [
   'ROUTED',
   'RECONCILED'
 ]
+
+function consDetails(id) {
+	window.open('/route/#/consignments/' + id + '/details')
+}
+
 function showEvents(t, p) {
   var u = url + t + '/events'
   var cEvents = $('<div>', {'id': 'cEvents'})
-  var eTitle = $('<h2>', {text: p})
-  var eTable = $('<table>', {id: 'eTable'})
+  var eTitle = $('<h2>',
+    {
+      'class': 'dlink',
+      'text': p,
+      'onclick': 'consDetails(' + t + ')'
+    })
+  var eTable = $('<table>', {'id': 'eTable'})
   var eHeader = $('<thead>', {class: 'events-header'})
 
-  $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
-    $('<th>', {class: 'events-header-item', text: t}).appendTo(eHeader);
+  $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, v) {
+    $('<th>', {class: 'events-header-item', text: v}).appendTo(eHeader);
   })
 
   eTable.append(eHeader)
