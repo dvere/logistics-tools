@@ -29,19 +29,16 @@
 .consignment-item:first-of-type:hover {
   cursor: pointer;
 }
-.event {
+.event, .consignment {
   border: 1px solid rgba(0,0,0,.7);
   border-top-style: none;
   background-color: rgba(255,255,255,1);
-}
-.consignments-header, .consignment {
-  display: grid;
-  grid-template-columns: 120px 60px 80px 80px 100px 140px;
 }
 .event:nth-of-type(odd), .consignment:nth-of-type(odd) {
   background-color: rgba(0,0,0,0.1)
 }
 .events-header, .consignments-header {
+  border: 1px solid rgba(0,0,0,.7);
   color: rgba(255,255,255,1);
   background-color: rgba(67,142,185,1);
 }
