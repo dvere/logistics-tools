@@ -23,17 +23,21 @@ var cStatus = [
 ]
 function showEvents(t, p) {
   var u = url + t + '/events'
-  var cEvents = $('<table>', {'id': 'cEvents'})
-  var cHeader = $('<thead>', {class: 'events-header'})
+  var cEvents = $('<div>', {'id': 'cEvents'})
+  var eTitle = $('<h2>', {text: p})
+  var eTable = $('<table>', {id: 'eTable'})
+  var eHeader = $('<thead>', {class: 'events-header'})
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, t) {
-    $('<th>', {class: 'events-header-item', text: t}).appendTo(cHeader);
+    $('<th>', {class: 'events-header-item', text: t}).appendTo(eHeader);
   })
-  cEvents.append(cHeader)
+
+  eTable.append(eHeader)
+  cEvents.append(eTitle)
+    .append(eTable)
 
   $('#cAudits')
     .empty()
-    .append($('<h2>', {text: p}))
     .append(cEvents)
 
   $.getJSON(u, function(json) {
@@ -45,12 +49,12 @@ function showEvents(t, p) {
       $('<td>', {'class': 'event-item', 'text': obj.service_centre.code}).appendTo(cEvent)
       $('<td>', {'class': 'event-item', 'text': obj.tracking_code.code}).appendTo(cEvent)
       $('<td>', {'class': 'event-item', 'text': obj.user.username}).appendTo(cEvent)
-      cEvent.appendTo(cEvents)
+      cEvent.appendTo(eTable)
     });
     $('#cAudits').fadeIn()
   })
     .fail(function() {
-      console.log('Events Request Failed')
+      alert('Events Request for ' + p + ' Failed')
   });
 }
 
