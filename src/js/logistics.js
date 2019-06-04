@@ -75,7 +75,6 @@ function getCollectedCons() {
   data.location = 'SWINDON'
 
   $('#cConsignments').remove()
-  $('#cLoading').remove()
   $('<div>', {'id': 'cLoading'}).appendTo($('#cInsert'))
   $('<i>', {'class': 'ace-icon fa fa-gear fa-spin blue'}).appendTo($('#cLoading'))
 
@@ -108,6 +107,7 @@ function getCollectedCons() {
         $('<td>', {'class': 'consignment-item', 'text': obj.consolidation_id}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.location}).appendTo(cConsignment)
         $('<td>', {'class': 'consignment-item', 'text': obj.status}).appendTo(cConsignment)
+        $('#cLoading').remove()
         $('#cConsignments').append(cConsignment)
       })
     } else {
