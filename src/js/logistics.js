@@ -76,11 +76,7 @@ function getCollectedCons() {
 
   $('#cConsignments').remove()
   $('<div>', {'id': 'cLoading'}).appendTo($('#cInsert'))
-  $('<img>', {
-    'src': '/bundles/si/components/select2/select2-spinner.gif',
-    'height': 64,
-    'width': 64
-  }).appendTo($('#cLoading'))
+  $('<i>', {'class': 'ace-icon fa fa-gear fa-spin blue'}).appendTo($('#cLoading'))
 
   $.getJSON(url, data, function(json) {
     $('#cLoading').hide()
