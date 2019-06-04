@@ -25,7 +25,12 @@
   background-color: rgba(0,0,0,.75);
   z-index: 999
 }
-.dlink {
+#cLoading {
+  margin: 0 auto;
+  width: 88px;
+  font-size: 88px;
+}
+  .dlink {
   color: rgba(67,142,185,1)
 }
 .dlink:hover {
