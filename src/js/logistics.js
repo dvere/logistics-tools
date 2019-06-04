@@ -38,6 +38,8 @@ function showEvents(t, p) {
   var eTable = $('<table>', {'id': 'eTable'})
   var eHeader = $('<thead>', {class: 'events-header'})
 
+  $('#cInsert').append($('<div>', {'id': 'cAudits'}))
+
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, v) {
     $('<th>', {class: 'events-header-item', text: v}).appendTo(eHeader);
   })
@@ -60,8 +62,12 @@ function showEvents(t, p) {
       $('<td>', {'class': 'event-item', 'text': obj.tracking_code.code}).appendTo(cEvent)
       $('<td>', {'class': 'event-item', 'text': obj.user.username}).appendTo(cEvent)
       cEvent.appendTo(eTable)
-    });
+    })
+
     $('#cAudits').fadeIn()
+    .click(function() {
+      $(this).remove()
+    })
   })
     .fail(function() {
       alert('Events Request for ' + p + ' Failed')
@@ -89,11 +95,6 @@ function getCollectedCons() {
       })
 
       $('#cInsert').append(cTable)
-      .append($('<div>', {'id': 'cAudits'}))
-
-      $('#cAudits').click(function() {
-        $(this).fadeOut()
-      })
 
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
