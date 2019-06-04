@@ -75,8 +75,15 @@ function getCollectedCons() {
   data.location = 'SWINDON'
 
   $('#cConsignments').remove()
+  $('<div>', {'id': 'cLoading'}).appendTo($('#cInsert'))
+  $('<img>', {
+    'src': '/bundles/si/components/select2/select2-spinner.gif',
+    'height': 64,
+    'width': 64
+  }).appendTo($('#cLoading'))
 
   $.getJSON(url, data, function(json) {
+    $('#cLoading').hide()
     if (json.length > 0) {
 
       var cHeader = $('<thead>', {class: 'consignments-header'})
