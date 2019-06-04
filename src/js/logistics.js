@@ -49,7 +49,6 @@ function showEvents(t, p) {
     .append(eTable)
 
   $('#cAudits')
-    .empty()
     .append(cEvents)
 
   $.getJSON(u, function(json) {
