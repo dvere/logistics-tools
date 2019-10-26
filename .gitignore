@@ -2,3 +2,4 @@
 .vscode/launch.json
 *.code-workspace
 test.css
+.vscode/settings.json
