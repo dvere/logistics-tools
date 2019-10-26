@@ -22,13 +22,13 @@ function addPartsToDOM(){
     id: 'ltButton1',
     class: 'ltButton',
     text: 'Consignments Inspector',
-    onclick: 'goCI()'
+    onclick: goCI()
   }))
   .append($('<button>', {
     id: 'ltButton2',
     class: 'ltButton',
     text: 'Auto Containers',
-    onclick: 'goAC()'
+    onclick: goAC()
   }))
   .append($('<div>', {
     id: 'ltInsert'
