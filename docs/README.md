@@ -16,6 +16,8 @@ Automates parent and child process for records containers.
 
 ### js/
 
+[logistics-tools.min.js](js/logistics-tools.min.js) - menu controller script.
+
 [consinspect.min.js](js/consinspect.min.js) - consinspector minified script.
 
 [autocontainers.min.js](js/autocontainers.min.js) autocontainers minified script.
