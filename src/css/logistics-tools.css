@@ -2,18 +2,6 @@
   margin: 0 auto;
   padding: 2rem;
   line-height: 1.4rem;
-  background-color: rgba(220,255,220,.5);
-}
-
-#aInput {
-  font-family: monospace;
-  font-size: 1.9rem;
-  line-height: 2.2rem;
-  min-width: 12rem;
-  height: 70vh;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
 }
 
 #cEvents {
@@ -106,10 +94,23 @@
   grid-template-columns: auto auto auto;
   grid-gap: 1.4em;
   width: 580px;
-  padding: 30px 35px 30px 35px
+  padding: 30px 35px 30px 35px;
+  background-color: rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,.25);
 }
 
 #aForm {
   grid-template-columns: auto auto;
   width: 380px;
+}
+
+#aInput {
+  font-family: monospace;
+  font-size: 1.9rem;
+  line-height: 2.2rem;
+  min-width: 12rem;
+  height: 70vh;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
 }
