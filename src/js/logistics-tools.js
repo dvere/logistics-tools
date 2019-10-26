@@ -36,10 +36,10 @@ function addPartsToDOM(){
   .appendTo($('body'))
 }
 function goCI() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js'})
+  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
 }
 function goAC() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js'})
+  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
 }
 
 $.when($.ready).then(function() {
