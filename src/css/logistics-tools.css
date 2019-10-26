@@ -1,30 +1,20 @@
-/* 
- * logistics-tools
- */
 #ltInsert {
-  width: 100%;
+  margin: 0 auto;
   padding: 2rem;
   line-height: 1.4rem;
-  background-color: rgba(0,255,0,0.6);
+  background-color: rgba(220,255,220,.5);
 }
 
-/* 
- * autocontainers
- */
-
 #aInput {
-  font-family: monospace monospace;
+  font-family: monospace;
   font-size: 1.9rem;
+  line-height: 2.2rem;
   min-width: 12rem;
-  height: 75vh;
+  height: 70vh;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2;
 }
-
-/* 
- * consinspect
- */
 
 #cEvents {
   position: absolute;
@@ -42,6 +32,7 @@
   overflow-y: auto;
   overscroll-behavior: none
 }
+
 #cAudits {
   display: none;
   position: fixed;
@@ -53,36 +44,62 @@
   background-color: rgba(0,0,0,.75);
   z-index: 999
 }
+
 #cLoading {
   margin: 0 auto;
   width: 88px;
   font-size: 88px;
 }
+
 .dlink {
   color: rgba(67,142,185,1)
 }
+
 .dlink:hover {
   cursor: pointer
 }
+
 .events-header-item, .event-item, .consignments-header-item, .consignment-item {
   padding: 4px
 }
+
 .consignment-item:first-of-type:hover {
   cursor: pointer
 }
+
 .event, .consignment {
   border: 1px solid rgba(0,0,0,.7);
   border-top-style: none;
   background-color: rgba(255,255,255,1)
 }
+
 .event:nth-of-type(odd), .consignment:nth-of-type(odd) {
   background-color: rgba(0,0,0,0.1)
 }
+
 .events-header, .consignments-header {
   border: 1px solid rgba(0,0,0,.7);
   color: rgba(255,255,255,1);
   background-color: rgba(67,142,185,1)
 }
+
+#cDate, #cButton, #cStatus {
+  line-height: 1.4em
+}
+
+#cStatus {
+  height: 2.7em
+}
+
+#cConsignments {
+  width: 580px;
+  margin: 0 auto
+}
+
+#eTable {
+  min-width: 555px
+}
+
 #cForm, #aForm {
   margin: 0 auto;
   display: grid;
@@ -91,21 +108,8 @@
   width: 580px;
   padding: 30px 35px 30px 35px
 }
+
 #aForm {
   grid-template-columns: auto auto;
-}
-
-
-#cDate, #cButton, #cStatus {
-  line-height: 1.4em
-}
-#cStatus {
-  height: 2.7em
-}
-#cConsignments {
-  width: 580px;
-  margin: 0 auto
-}
-#eTable {
-  min-width: 555px
+  width: 380px;
 }
