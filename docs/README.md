@@ -17,11 +17,13 @@ Automates parent and child process for records containers.
 ### js/
 
 [consinspect.min.js](js/consinspect.min.js) - consinspector minified script.
+
 [autocontainers.min.js](js/autocontainers.min.js) autocontainers minified script.
 
 ### files/
 
 Bookmarlets to add to bookmarks bar. When clicked it runs the named script, clearing the page content and replacing it with scrpt output.
 
-[bookmark-ci.txt](files/bookmark.txt): consinspect bookmarklet
-[bookmark-ac.txt](files/bookmark.txt): autocontainers bookmarklet
+[bookmark-ci.txt](files/bookmark.txt): consinspect bookmarklet.
+
+[bookmark-ac.txt](files/bookmark.txt): autocontainers bookmarklet.
