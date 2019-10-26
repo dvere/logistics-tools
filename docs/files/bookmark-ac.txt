@@ -1,0 +1,4 @@
+# JavaScript 'bookmarklet' to add to Bookmarks Bar
+
+# Automate container parent and child process:
+javascript:(function(){$('#autocon').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='autocon';jsCode.setAttribute('src','https://dvere.github.io/logistics/js/autocontainers.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();

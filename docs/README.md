@@ -1,16 +1,27 @@
-# cons-inspector
+# logistics-tools
 
-A simple tool to display the status of records collected on a chosen date. Clicking on a displayed consignment number presents a timestamped list of audit messages.
+A collection of simple tools to add functionality to Logistics.
+
+## consinspect
+
+Displays the status of records collected on a chosen date. Clicking on a displayed consignment number presents a timestamped list of audit messages.
+
+## autocontainers
+
+Automates parent and child process for records containers.
 
 ## css/
 
-[logistics.min.css](css/logistics.min.css) - The minified stylesheet.
+[logistics-tools.min.css](css/coninspect.min.css) - Minified stylesheet for logistics-tools.
 
-## js/
+### js/
 
-[logistics.min.js](js/logistics.min.js) - The minified script.
+[consinspect.min.js](js/consinspect.min.js) - consinspector minified script.
+[autocontainers.min.js](js/autocontainers.min.js) autocontainers minified script.
 
-## files/
+### files/
 
-[bookmark.txt](files/bookmark.txt): Add this as a bookmarlet to bookmarks bar.
-When clicked it runs the script, clearing the page content and replacing it with a date picker.
+Bookmarlets to add to bookmarks bar. When clicked it runs the named script, clearing the page content and replacing it with scrpt output.
+
+[bookmark-ci.txt](files/bookmark.txt): consinspect bookmarklet
+[bookmark-ac.txt](files/bookmark.txt): autocontainers bookmarklet

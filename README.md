@@ -1,3 +1,3 @@
-# cons-inspector
+# logistics
 
-A simple tool to display the status of records collected on a chosen date.
+A collection of simple tools to add functionality to Logistics.

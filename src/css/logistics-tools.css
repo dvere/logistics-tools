@@ -1,3 +1,47 @@
+/* 
+ * autocontainers
+ */
+
+#aInsert, #aInput, #aButton, #aSelect, #aResults {
+  display: block;
+  line-height: 1.4em
+}
+
+#aInput, #aButton, #aSelect, #aResults {
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+#aInsert {
+  margin: 0 auto;
+}
+
+#aInput {
+  font-family: monospace monospace;
+  font-size: 1.9rem;
+  min-width: 12rem;
+  min-height: 30rem;
+  float: left;
+}
+
+#aButton {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(255,255,255,1);
+  background-color: rgba(67,142,185,1);
+  
+}
+
+#aSelect {
+  font-size: 2rem;
+  padding: 1rem 2rem;
+}
+
+
+
+/* 
+ * consinspect
+ */
+
 #cEvents {
   position: absolute;
   float: left;

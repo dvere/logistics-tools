@@ -187,9 +187,11 @@ function getCollectedCons() {
 }
 
 function addPartsToDOM() {
+  $('#lt-style').remove()
   $('<link>', {
-    'rel': 'stylesheet',
-    'href': 'https://dvere.github.io/cons-inspector/css/logistics.min.css?v=' + $.now()
+    id: 'lt-style',
+    rel: 'stylesheet',
+    href: 'https://dvere.github.io/logistics-tools/css/logistics-tools.min.css?v=' + $.now()
   })
   .appendTo($('head'))
 
