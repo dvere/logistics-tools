@@ -1,10 +1,3 @@
-function goCI() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
-}
-function goAC() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
-}
-
 function addPartsToDOM(){
   if (!$('#lt-style').length) {
     $('<link>', {
@@ -22,12 +15,16 @@ function addPartsToDOM(){
     id: 'ltButton1',
     class: 'ltButton',
     text: 'Consignments Inspector'
-  }).on('click', goCI()))
+  }).on('click', function() {
+    $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
+  }))
   .append($('<button>', {
     id: 'ltButton2',
     class: 'ltButton',
     text: 'Auto Containers'
-  }).on('click', goAC()))
+  }).on('click', function() {
+    $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
+  }))
   .append($('<div>', {
     id: 'ltInsert'
   }))
