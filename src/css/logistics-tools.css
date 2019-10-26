@@ -15,7 +15,10 @@
   font-family: monospace monospace;
   font-size: 1.9rem;
   min-width: 12rem;
-  min-height: 30rem;
+  height: 75vh;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
 }
 
 /* 
@@ -83,10 +86,15 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
-  grid-column-gap: 1.4em;
+  grid-gap: 1.4em;
   width: 580px;
   padding: 30px 35px 30px 35px
 }
+#aForm {
+  grid-template-columns: auto auto;
+}
+
+
 #cDate, #cButton, #cStatus {
   line-height: 1.4em
 }
