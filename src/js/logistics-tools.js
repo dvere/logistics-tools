@@ -1,3 +1,10 @@
+function goCI() {
+  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
+}
+function goAC() {
+  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
+}
+
 function addPartsToDOM(){
   if (!$('#lt-style').length) {
     $('<link>', {
@@ -34,12 +41,6 @@ function addPartsToDOM(){
 
   $('<script>', {id: 'ltChild'})
   .appendTo($('body'))
-}
-function goCI() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
-}
-function goAC() {
-  $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
 }
 
 $.when($.ready).then(function() {
