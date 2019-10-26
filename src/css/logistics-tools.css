@@ -1,18 +1,18 @@
 /* 
+ * logistics-tools
+ */
+#ltInsert {
+  width: 100%;
+  padding: 2rem;
+  line-height: 1.4rem;
+}
+
+/* 
  * autocontainers
  */
 
-#aInsert, #aInput, #aButton, #aSelect, #aResults {
-  display: block;
-  line-height: 1.4em
-}
-
 #aInput, #aButton, #aSelect, #aResults {
   border: 1px solid rgba(0,0,0,0.1);
-}
-
-#aInsert {
-  margin: 0 auto;
 }
 
 #aInput {
@@ -20,7 +20,6 @@
   font-size: 1.9rem;
   min-width: 12rem;
   min-height: 30rem;
-  float: left;
 }
 
 #aButton {

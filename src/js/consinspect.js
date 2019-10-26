@@ -38,7 +38,7 @@ function showEvents(t, p) {
   var eTable = $('<table>', {'id': 'eTable'})
   var eHeader = $('<thead>', {class: 'events-header'})
 
-  $('#cInsert').append($('<div>', {'id': 'cAudits'}))
+  $('#ltInsert').append($('<div>', {'id': 'cAudits'}))
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, v) {
     $('<th>', {class: 'events-header-item', text: v}).appendTo(eHeader);
@@ -101,7 +101,7 @@ function getCollectedCons() {
 
   $('#cConsignments').remove()
 
-  $('<div>', {'id': 'cLoading'}).appendTo($('#cInsert'))
+  $('<div>', {'id': 'cLoading'}).appendTo($('#ltInsert'))
 
   $('<i>', {'class': 'ace-icon fa fa-gear fa-spin blue'})
   .appendTo($('#cLoading'))
@@ -129,7 +129,7 @@ function getCollectedCons() {
         .appendTo(cHeader)
       })
 
-      $('#cInsert').append(cTable)
+      $('#ltInsert').append(cTable)
 
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
@@ -175,7 +175,7 @@ function getCollectedCons() {
         $('#cConsignments').append(cConsignment)
       })
     } else {
-      $('#cInsert').append($('<div>', {
+      $('#ltInsert').append($('<div>', {
         'id': 'cConsignments',
         'text': 'Lookup returned no consignments.'
       }))
@@ -186,16 +186,8 @@ function getCollectedCons() {
   })
 }
 
-function addPartsToDOM() {
-  $('#lt-style').remove()
-  $('<link>', {
-    id: 'lt-style',
-    rel: 'stylesheet',
-    href: 'https://dvere.github.io/logistics-tools/css/logistics-tools.min.css?v=' + $.now()
-  })
-  .appendTo($('head'))
+function consInspector() {
 
-  $('#cInsert').remove()
   var cSelect = $('<select>', {id: 'cStatus'})
   $.each(cStatus, function(i, v) {
     $('<option>', {
@@ -215,14 +207,12 @@ function addPartsToDOM() {
     'text': 'Look up collections',
     'onclick': 'getCollectedCons()'
   }))
-  var cInsert = $('<div>', {'id': 'cInsert'})
-  .append(cForm)
 
-  $('#main-container > div > div.page-content > div > div')
+  $('#ltInsert')
   .empty()
-  .append(cInsert)
+  .append(cForm)
 }
 
 $.when($.ready).then(function() {
-	addPartsToDOM();
+	consInspector();
 })

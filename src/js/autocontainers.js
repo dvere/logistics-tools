@@ -21,6 +21,7 @@ const aContainerTypes = {'Trunk': 'trunkcontainers','Location':'locationcontaine
 
 function processContainers() {
   // the heavy lifting
+  alert('processContainers()')
 }
 
 function postConsignment(consignment, container) {
@@ -58,16 +59,8 @@ function resolveErrors() {
 
 
 
-function addPartsToDOM() {
-  $('#lt-style').remove()
-  $('<link>', {
-    id: 'lt-style',
-    rel: 'stylesheet',
-    href: 'https://dvere.github.io/logistics-tools/css/logistics-tools.min.css?v=' + $.now()
-  })
-  .appendTo($('head'))
+function autoContainers() {
 
-  $('#aInsert').remove()
   var aSelect = $('<select>', {id: 'aType'})
 
   $.each(aContainerTypes, function(k, v) {
@@ -88,14 +81,11 @@ function addPartsToDOM() {
     'text': 'Process',
     'onclick': 'processContainers()'
   }))
-  var aInsert = $('<div>', {'id': 'aInsert'})
-  .append(aForm)
-
-  $('#main-container > div > div.page-content > div > div')
+  $('#ltInsert')
   .empty()
-  .append(aInsert)
+  .append(aForm)
 }
 
 $.when($.ready).then(function() {
-	addPartsToDOM();
+	autoContainers();
 })
