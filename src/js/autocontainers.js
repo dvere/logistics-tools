@@ -56,9 +56,6 @@ function resolveErrors() {
   // remove error cons from containers
 }
 
-
-
-
 function autoContainers() {
 
   var aSelect = $('<select>', {id: 'aType'})
@@ -78,8 +75,9 @@ function autoContainers() {
   .append(aSelect)
   .append($('<button>', {
     'id': 'aButton',
-    'text': 'Process',
-    'onclick': 'processContainers()'
+    'text': 'Process'
+  }).on('click', function() {
+    processContainers()
   }))
   $('#ltInsert')
   .empty()
