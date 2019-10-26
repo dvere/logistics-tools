@@ -1,4 +1,3 @@
 # JavaScript 'bookmarklet' to add to Bookmarks Bar
-
-# Collected Cons:
-javascript:(function(){$('#foo').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='foo';jsCode.setAttribute('src','https://dvere.github.io/cons-inspector/js/logistics.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();
+# 
+javascript:(function(){$('#lTools').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='lTools';jsCode.setAttribute('src','https://dvere.github.io/logistics-tools/js/logistics-tools.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();
