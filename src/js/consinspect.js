@@ -32,9 +32,12 @@ function showEvents(t, p) {
   var eTitle = $('<h2>',
     {
       'class': 'dlink',
-      'text': p,
-      'onclick': 'consDetails(' + t + ')'
-    }).on('click', consDetails(t))
+      'text': p
+    })
+    .click(function() {
+      consDetails(t)
+    })
+
   var eTable = $('<table>', {id: 'eTable'})
   var eHeader = $('<thead>', {class: 'events-header'})
 
@@ -133,11 +136,15 @@ function getCollectedCons() {
 
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
+
         $('<td>', {
           class: 'consignment-item',
           text: obj.tracking_number,
           id: obj.id
-        }).on('click', showEvents(obj.id, obj.tracking_number))
+        })
+        .click(function() {
+          showEvents(obj.id, obj.tracking_number)
+        })
         .appendTo(cConsignment)
 
         $('<td>', {
@@ -195,7 +202,8 @@ function consInspector() {
     })
     .appendTo(cSelect)
   })
-  var cForm = $('<div>', {'id': 'cForm'})
+
+  var cForm = $('<div>', {id: 'cForm'})
   .append($('<input>', {
     id:'cDate',
     type:'date'
@@ -204,7 +212,9 @@ function consInspector() {
   .append($('<button>', {
     id: 'cButton',
     text: 'Look up collections'
-  }).on('click', getCollectedCons()))
+  })).click(function(){
+    getCollectedCons()
+  })
 
   $('#ltInsert')
   .empty()

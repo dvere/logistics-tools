@@ -21,39 +21,47 @@ const aContainerTypes = {'Trunk': 'trunkcontainers','Location':'locationcontaine
 
 function processContainers() {
   // the heavy lifting
-  alert('processContainers()')
+  alert('Processing Containers')
 }
 
 function postConsignment(consignment, container) {
   // xhr / fetch cons to containers
+  alert('Checking Consignment')
 }
 
 function parseResopnse(consignment, response) {
   // check result
+  alert('Parsing Response')
 }
 
 function addContainer(container, consignents, type) {
   // add container to loacal storage or idb
+  alert('Storing Container')
 }
 
 function updateContainer(container, consignment, result) {
   // update stored container.consignment with consignment xhr result 
+  alert('Updating Container')
 }
 
 function getContainer(container) {
   // retrieve stored container
+  alert('Retrieving Container')
 }
 
 function getResults(container) {
   // retrieve results from containers
+  alert('')
 }
 
 function showResults(containers) {
   // assemble results to display
+  alert('Creating Output')
 }
 
 function resolveErrors() {
   // remove error cons from containers
+  alert('Resovling Errors')
 }
 
 function autoContainers() {
@@ -76,7 +84,7 @@ function autoContainers() {
   .append($('<button>', {
     'id': 'aButton',
     'text': 'Process'
-  }).on('click', function() {
+  }).click(function() {
     processContainers()
   }))
   $('#ltInsert')
