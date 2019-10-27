@@ -212,9 +212,9 @@ function consInspector() {
   .append($('<button>', {
     id: 'cButton',
     text: 'Look up collections'
-  })).click(function(){
+  }).click(function(){
     getCollectedCons()
-  })
+  }))
 
   $('#ltInsert')
   .empty()
