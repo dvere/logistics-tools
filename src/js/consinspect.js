@@ -28,17 +28,17 @@ function consDetails(id) {
 
 function showEvents(t, p) {
   var u = url + t + '/events'
-  var cEvents = $('<div>', {'id': 'cEvents'})
+  var cEvents = $('<div>', {id: 'cEvents'})
   var eTitle = $('<h2>',
     {
       'class': 'dlink',
       'text': p,
       'onclick': 'consDetails(' + t + ')'
-    })
-  var eTable = $('<table>', {'id': 'eTable'})
+    }).on('click', consDetails(t))
+  var eTable = $('<table>', {id: 'eTable'})
   var eHeader = $('<thead>', {class: 'events-header'})
 
-  $('#ltInsert').append($('<div>', {'id': 'cAudits'}))
+  $('#ltInsert').append($('<div>', {id: 'cAudits'}))
 
   $.each(['Timestamp', 'SC', 'Event', 'User'], function(i, v) {
     $('<th>', {class: 'events-header-item', text: v}).appendTo(eHeader);
@@ -58,26 +58,26 @@ function showEvents(t, p) {
       obj.user = obj.user || {username: 'NA'}
 
       $('<td>', {
-        'class': 'event-item',
-        'text': obj.timestamp
+        class: 'event-item',
+        text: obj.timestamp
       })
       .appendTo(cEvent)
 
       $('<td>', {
-        'class': 'event-item',
-        'text': obj.service_centre.code
+        class: 'event-item',
+        text: obj.service_centre.code
       })
       .appendTo(cEvent)
 
       $('<td>', {
-        'class': 'event-item',
-        'text': obj.tracking_code.code
+        class: 'event-item',
+        text: obj.tracking_code.code
       })
       .appendTo(cEvent)
 
       $('<td>', {
-        'class': 'event-item',
-        'text': obj.user.username
+        class: 'event-item',
+        text: obj.user.username
       })
       .appendTo(cEvent)
 
@@ -101,15 +101,15 @@ function getCollectedCons() {
 
   $('#cConsignments').remove()
 
-  $('<div>', {'id': 'cLoading'}).appendTo($('#ltInsert'))
+  $('<div>', {id: 'cLoading'}).appendTo($('#ltInsert'))
 
-  $('<i>', {'class': 'ace-icon fa fa-gear fa-spin blue'})
+  $('<i>', {class: 'ace-icon fa fa-gear fa-spin blue'})
   .appendTo($('#cLoading'))
 
   $.getJSON(url, data, function(json) {
     if (json.length > 0) {
       var cHeader = $('<thead>', {class: 'consignments-header'})
-      var cTable = $('<table>', {'id': 'cConsignments'})
+      var cTable = $('<table>', {id: 'cConsignments'})
       .append(cHeader)
 
       var tTitles = [
@@ -123,8 +123,8 @@ function getCollectedCons() {
 
       $.each(tTitles, function(i, t) {
         $('<th>', {
-          'class': 'consignments-header-item',
-          'text': t
+          class: 'consignments-header-item',
+          text: t
         })
         .appendTo(cHeader)
       })
@@ -134,40 +134,39 @@ function getCollectedCons() {
       $.each(json, function(i, obj) {
         var cConsignment = $('<tr>', {class: 'consignment'})
         $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.tracking_number,
-          'onclick': 'showEvents(' + obj.id + ',"' + obj.tracking_number + '")',
-          'id': obj.id
+          class: 'consignment-item',
+          text: obj.tracking_number,
+          id: obj.id
+        }).on('click', showEvents(obj.id, obj.tracking_number))
+        .appendTo(cConsignment)
+
+        $('<td>', {
+          class: 'consignment-item',
+          text: obj.package_type
         })
         .appendTo(cConsignment)
 
         $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.package_type
+          class: 'consignment-item',
+          text: obj.requested_route
         })
         .appendTo(cConsignment)
 
         $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.requested_route
+          class: 'consignment-item',
+          text: obj.consolidation_id
         })
         .appendTo(cConsignment)
 
         $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.consolidation_id
+          class: 'consignment-item',
+          text: obj.location
         })
         .appendTo(cConsignment)
 
         $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.location
-        })
-        .appendTo(cConsignment)
-
-        $('<td>', {
-          'class': 'consignment-item',
-          'text': obj.status
+          class: 'consignment-item',
+          text: obj.status
         })
         .appendTo(cConsignment)
 
@@ -176,8 +175,8 @@ function getCollectedCons() {
       })
     } else {
       $('#ltInsert').append($('<div>', {
-        'id': 'cConsignments',
-        'text': 'Lookup returned no consignments.'
+        id: 'cConsignments',
+        text: 'Lookup returned no consignments.'
       }))
     }
   })
@@ -198,15 +197,14 @@ function consInspector() {
   })
   var cForm = $('<div>', {'id': 'cForm'})
   .append($('<input>', {
-    'id':'cDate',
-    'type':'date'
+    id:'cDate',
+    type:'date'
   }))
   .append(cSelect)
   .append($('<button>', {
-    'id': 'cButton',
-    'text': 'Look up collections',
-    'onclick': 'getCollectedCons()'
-  }))
+    id: 'cButton',
+    text: 'Look up collections'
+  }).on('click', getCollectedCons()))
 
   $('#ltInsert')
   .empty()
