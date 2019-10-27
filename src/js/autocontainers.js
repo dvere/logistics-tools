@@ -1,7 +1,7 @@
 // https://logistics.citysprint.co.uk/locationcontainers/CSLC01090115/scan/PCS027509694
 
-const url = 'https://logistics.citysprint.co.uk/'
-const aContainerTypes = {'Trunk': 'trunkcontainers','Location':'locationcontainers'}
+var url = 'https://logistics.citysprint.co.uk/'
+var aContainerTypes = {'Trunk': 'trunkcontainers','Location':'locationcontainers'}
 
 /*
  * url samples
