@@ -16,14 +16,20 @@ function addPartsToDOM(){
     class: 'ltButton',
     text: 'Consignments Inspector'
   }).on('click', function() {
-    $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()})
+    $('#ltChild').replaceWith($('<script>',{ 
+      id: 'ltChild',
+      src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()
+    }))
   }))
   .append($('<button>', {
     id: 'ltButton2',
     class: 'ltButton',
     text: 'Auto Containers'
   }).on('click', function() {
-    $('#ltChild').attr({src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()})
+    $('#ltChild').replaceWith($('<script>',{ 
+      id: 'ltChild',
+      src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()
+    }))
   }))
   .append($('<div>', {
     id: 'ltInsert'
