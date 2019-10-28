@@ -181,6 +181,7 @@ function getCollectedCons() {
         $('#cConsignments').append(cConsignment)
       })
     } else {
+      $('#cLoading').remove()
       $('#ltInsert').append($('<div>', {
         id: 'cConsignments',
         text: 'Lookup returned no consignments.'
