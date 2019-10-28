@@ -1,5 +1,5 @@
 /.vs
-.vscode/launch.json
+/.vscode
 *.code-workspace
-test.css
-.vscode/settings.json
+/test.css
+/scratch.txt
