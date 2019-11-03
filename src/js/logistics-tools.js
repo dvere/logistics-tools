@@ -31,6 +31,16 @@ function addPartsToDOM(){
       src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()
     }))
   }))
+  .append($('<button>', {
+    id: 'ltButton2',
+    class: 'ltButton',
+    text: 'Swap Containers'
+  }).on('click', function() {
+    $('#ltChild').replaceWith($('<script>',{ 
+      id: 'ltChild',
+      src: 'https://dvere.github.io/logistics-tools/js/switchcontainers.min.js?v=' + $.now()
+    }))
+  }))
   .append($('<div>', {
     id: 'ltInsert'
   }))

@@ -94,7 +94,7 @@
   grid-template-columns: auto auto auto;
   grid-gap: 1.4em;
   width: 580px;
-  padding: 30px 35px 30px 35px;
+  padding: 2em 2.5em 2em 2.5em;
   background-color: rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,.25);
 }
