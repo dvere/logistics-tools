@@ -1,7 +1,7 @@
 let scMain = () => {
   let result = {}
-  let source = $('#oldCtr').val().trim()
-  let dest = $('#newCtr').val().trim()
+  let source = $('#old_ctr').val().trim()
+  let dest = $('#new_ctr').val().trim()
   let id = Number(source.replace(/\D/g, ''))
   result.oldContainer = source
   result.newContainer = dest
