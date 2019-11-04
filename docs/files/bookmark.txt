@@ -1,3 +1,4 @@
 # JavaScript 'bookmarklet' to add to Bookmarks Bar
-# 
+# Copy the single line below to the 'URL' field of a bookmark pinned to the Bookmarks Bar
+
 javascript:(function(){$('#lTools').remove();var v=new Date();var jsCode=document.createElement('script');jsCode.id='lTools';jsCode.setAttribute('src','https://dvere.github.io/logistics-tools/js/logistics-tools.min.js?v='+v.getTime()),document.body.appendChild(jsCode)})();

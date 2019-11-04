@@ -10,22 +10,24 @@ Displays the status of records collected on a chosen date. Clicking on a display
 
 Automates parent and child process for records containers.
 
+## switchcontainers
+
+Move consignments from one container to another.
+
 ## css/
 
-[logistics-tools.min.css](css/coninspect.min.css) - Minified stylesheet for logistics-tools.
+[logistics-tools.min.css](css/logistics-tools.min.css) - Stylesheet for logistics-tools.
 
 ### js/
 
 [logistics-tools.min.js](js/logistics-tools.min.js) - menu controller script.
 
-[consinspect.min.js](js/consinspect.min.js) - consinspector minified script.
+[consinspect.min.js](js/consinspect.min.js) - consinspector script.
 
-[autocontainers.min.js](js/autocontainers.min.js) autocontainers minified script.
+[autocontainers.min.js](js/autocontainers.min.js) autocontainers script.
 
 ### files/
 
-Bookmarlets to add to bookmarks bar. When clicked it runs the named script, clearing the page content and replacing it with scrpt output.
+Bookmarlet to add to bookmarks bar to embed and run the main script, clearing an area of the page content and replacing it with a simple menu.
 
-[bookmark-ci.txt](files/bookmark.txt): consinspect bookmarklet.
-
-[bookmark-ac.txt](files/bookmark.txt): autocontainers bookmarklet.
+[bookmark.txt](files/bookmark.txt): bookmarklet.
