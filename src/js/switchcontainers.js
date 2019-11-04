@@ -1,5 +1,5 @@
-let result = {}
-result.records = []
+let scResult = {}
+scResult.records = []
 
 const barcodeToID = barcode =>
   Number(barcode.replace(/\D/g, ''))
@@ -22,33 +22,33 @@ const getRecords = (container) => {
 }
 
 let swapContainers = () => {
-  getRecords(result.oldContainer)
+  getRecords(scResult.oldContainer)
     .done((records) => {
       if (records.length !== 0) {
         $.each(records, (_i, r) => {
-          scanRecord(r, result.newContainer)
+          scanRecord(r, scResult.newContainer)
             .done((response) => {
               let record = { barcode: r, status: response.status }
-              result.records.push(record)
+              scResult.records.push(record)
             })
         })
       } else {
-        result.error = 1
-        result.errormessage = 'Could not get records for ' + result.oldContainer
+        scResult.error = 1
+        scResult.errormessage = 'Could not get records for ' + scResult.oldContainer
       }
       showResult()
     })
 }
 
 let processRequest = () => {
-  result.oldContainer = $('#oldCtr').val().trim()
-  result.newContainer = $('#newCtr').val().trim()
+  scResult.oldContainer = $('#oldCtr').val().trim()
+  scResult.newContainer = $('#newCtr').val().trim()
   swapContainers()
 }
 
 let showResult = () => {
   $('#switch-results')
-    .text(JSON.stringify(result, undefined, 2))
+    .text(JSON.stringify(scResult, undefined, 2))
 }
 
 function addForm() {
