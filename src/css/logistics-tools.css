@@ -115,3 +115,7 @@
   grid-column-end: 3;
   grid-row-start: 2;
 }
+
+.lt-tab {
+  display: none;
+}

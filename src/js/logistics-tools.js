@@ -32,27 +32,6 @@ let scMain = () => {
   })
 }
 let scPrepare = () => {
-  let tcregex = '(CSTC|OOC)[0-9]{8}'
-  let form = $('<div>', { id: 'cForm' })
-    .append($('<input>', {
-      id: 'oldCtr',
-      required: 'required',
-      pattern: tcregex
-    }))
-    .append($('<input>', {
-      id: 'newCtr',
-      required: 'required',
-      pattern: tcregex
-    }))
-    .append($('<button>', {
-      text: 'Move Records',
-      onclick: scMain
-    }))
-  $('#ltInsert')
-    .empty()
-    .append(form)
-    .append($('<div>', { id: 'switch-results' }))
-  $('#oldCtr').focus()
 }
 
 function addPartsToDOM(){
@@ -81,8 +60,10 @@ function addPartsToDOM(){
   }))
   .append($('<button>', {
     class: 'ltButton',
-    onclick: scPrepare,
     text: 'Swap Containers'
+  }).click(function(){
+    $('.lt-tab').hide()
+    $('#scForm').show()
   }))
   .append($('<div>', {id: 'ltInsert'}))
 
@@ -90,6 +71,29 @@ function addPartsToDOM(){
   $('div.page-content > div > div')
   .empty()
   .append(ltContainer)
+
+  // scForm
+  let tcregex = '(CSTC|OOC)[0-9]{8}'
+  let scForm = $('<div>', {id: 'scForm', class: 'lt-tab'})
+  .append($('<input>', {
+    id: 'old_ctr',
+    required: 'required',
+    pattern: tcregex
+  }))
+  .append($('<input>', {
+    id: 'new_ctr',
+    required: 'required',
+    pattern: tcregex
+  }))
+  .append($('<button>', {
+    text: 'Move Records',
+    onclick: scMain
+  }))
+
+  $('#ltInsert')
+  .append(scForm)
+  .append($('<div>', { id: 'switch_results' }))
+
 }
 
 $.when($.ready).then(function() {
