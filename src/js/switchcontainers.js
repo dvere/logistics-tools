@@ -1,4 +1,4 @@
-let scResult = {}
+var scResult = {}
 scResult.records = []
 
 const barcodeToID = barcode =>
