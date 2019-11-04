@@ -1,80 +1,64 @@
-var scResult = {}
-scResult.records = []
+let switchContainers = {
+  swapContainers: () => {
+    let result = {}
+    let source = $('#oldCtr').val().trim()
+    let dest = $('#newCtr').val().trim()
+    let id = Number(source.replace(/\D/g, ''))
 
-const barcodeToID = barcode =>
-  Number(barcode.replace(/\D/g, ''))
+    result.oldContainer = source
+    result.newContainer = dest
+    result.consignments = []
 
-const getEvents = id =>
-  $.getJSON('/trunkcontainers/' + id + '/events')
-
-const scanRecord = (record, container) =>
-  $.post('/truncontainers/' + container + '/scan/' + record)
-
-const getRecords = (container) => {
-  let id = barcodeToID(container)
-  getEvents(id).done((events) => {
-    $.each(events, (_i, e) => {
-      let bc = e.description.split(' ')[1]
-      if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
+    $.getJSON('/trunkcontainers/' + id + '/events')
+    .done((events) => {
+      let cons = []
+      $.each(events, (_i, e) => {
+        let bc = e.description.split(' ')[1]
+        if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
+      })
+      return cons
     })
-  })
-  return cons
-}
-
-let swapContainers = () => {
-  getRecords(scResult.oldContainer)
-    .done((records) => {
+    .then((records) => {
       if (records.length !== 0) {
-        $.each(records, (_i, r) => {
-          scanRecord(r, scResult.newContainer)
+        $.each(records, (_i, record) => {
+          $.post('/trunkcontainers/' + dest + '/scan/' + record)
             .done((response) => {
-              let record = { barcode: r, status: response.status }
-              scResult.records.push(record)
+              let r = { barcode: record, status: response.status }
+              result.consignments.push(r)
             })
         })
       } else {
-        scResult.error = 1
-        scResult.errormessage = 'Could not get records for ' + scResult.oldContainer
+        result.error = 1
+        result.errormessage = 'Could not get records for ' + source
       }
-      showResult()
+      $('#switch-results').text(JSON.stringify(result, undefined, 2))
     })
+  },
+  prepare: () => {
+    let tcregex = '(CSTC|OOC)[0-9]{8}'
+
+    let form = $('<div>', { id: 'cForm' })
+      .append($('<input>', {
+        id: 'oldCtr',
+        required: 'required',
+        pattern: tcregex
+      }))
+      .append($('<input>', {
+        id: 'newCtr',
+        required: 'required',
+        pattern: tcregex
+      }))
+      .append($('<button>', {
+        text: 'Move Records',
+        onclick: switchContainers.swapContainers
+      }))
+
+    $('#ltInsert')
+      .empty()
+      .append(form)
+      .append($('<div>', { id: 'switch-results' }))
+
+    $('#oldCtr').focus()
+  }
 }
-
-let processRequest = () => {
-  scResult.oldContainer = $('#oldCtr').val().trim()
-  scResult.newContainer = $('#newCtr').val().trim()
-  swapContainers()
-}
-
-let showResult = () => {
-  $('#switch-results')
-    .text(JSON.stringify(scResult, undefined, 2))
-}
-
-let switchContainers = () => {
-
-  let tcregex = '(CSTC|OOC)[0-9]{8}'
-
-  let form = $('<div>', { id: 'cForm' })
-    .append($('<input>', {
-      id: 'oldCtr',
-      required: 'required',
-      pattern: tcregex
-    }))
-    .append($('<input>', {
-      id: 'newCtr',
-      required: 'required',
-      pattern: tcregex
-    }))
-    .append($('<button>', {
-      text: 'Move Records',
-      onclick: processRequest
-    }))
-
-  $('#ltInsert')
-    .empty()
-    .append(form)
-    .append($('<div>', { id: 'switch-results' }))
-
-  $('#oldContainer').focus()
-}
+export default switchContainers
