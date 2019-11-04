@@ -89,6 +89,7 @@
 }
 
 #cForm, #aForm {
+  line-height: 1.4rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;

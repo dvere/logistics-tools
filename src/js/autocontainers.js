@@ -67,7 +67,7 @@ scanDb.containerAddCons = (cons, container) => {
 /* cons - string 'barcode' */
 scanDb.getConsContainer = (cons) => {
   // of dubious utility and probably difficult
-  
+
 }
 /* cons - string 'barcode', container - int id */
 
@@ -85,16 +85,13 @@ scanDb.addContainer = (container) => {
 
 }
 /* container - int id */
-scanDb.removeContainer = (container) => { 
+scanDb.removeContainer = (container) => {
 
 }
-
 /* IDB Code ends */
-
 
 function processInput() {
   var input = parseInput()
-
 }
 
 function parseInput(){
@@ -103,7 +100,7 @@ function parseInput(){
   var barcodes = rawInput.slice(0)
   var currentContainer
   var inputContainers = []
-  
+
   while((barcode = barcodes.shift()) !== undefined ) {
 
     if (barcode.match(/^PCS[0-9]{9}$/) === null) {
@@ -128,12 +125,10 @@ function parseInput(){
   return inputContainers
 }
 
-
 function postConsignment(container, consignment) {
   var url = '/' + container.type + 'containers/' + container.barcode + '/scan/' + consignment
     fetch(url,{method: 'POST'})
 }
-
 
 function getContainer(id){
   $.getJSON('/trunkcontainers/' + id, (data) => {
@@ -168,7 +163,3 @@ function autoContainers() {
 
   $('#aInput').focus()
 }
-
-$.when($.ready).then(function() {
-	autoContainers();
-})

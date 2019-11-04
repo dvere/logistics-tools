@@ -1,57 +1,52 @@
 function addPartsToDOM(){
-  if (!$('#lt-style').length) {
-    $('<link>', {
-      id: 'lt-style',
-      rel: 'stylesheet',
-      href: 'https://dvere.github.io/logistics-tools/css/logistics-tools.min.css?v=' + $.now()
-    })
-    .appendTo($('head'))
-  }
-  
+
+  var lt = 'https://dvere.github.io/logistics-tools/'
+
+  $('<link>', {
+    id: 'lt-style',
+    rel: 'stylesheet',
+    href: lt + 'css/logistics-tools.min.css?v=' + $.now()
+  })
+  .appendTo($('head'))
+
+  $('body')
+  .append($('<script>', {
+    id: 'lt-ci',
+    src: lt + 'js/consinspect.min.js?v=' + $.now()
+  }))
+  .append($('<script>', {
+    id: 'lt-ac',
+    src: lt + 'js/autocontainers.min.js?v=' + $.now()
+  }))
+  .append($('<script>', {
+    id: 'lt-sc',
+    src: 'js/switchcontainers.min.js?v=' + $.now()
+  }))
+
   var ltContainer = $('<div>', {
     id: 'ltContainer'
   })
   .append($('<button>', {
-    id: 'ltButton1',
     class: 'ltButton',
+    onclick: consInspector,
     text: 'Consignments Inspector'
-  }).on('click', function() {
-    $('#ltChild').replaceWith($('<script>',{ 
-      id: 'ltChild',
-      src: 'https://dvere.github.io/logistics-tools/js/consinspect.min.js?v=' + $.now()
-    }))
   }))
   .append($('<button>', {
-    id: 'ltButton2',
     class: 'ltButton',
+    onclick: autoContainers,
     text: 'Auto Containers'
-  }).on('click', function() {
-    $('#ltChild').replaceWith($('<script>',{ 
-      id: 'ltChild',
-      src: 'https://dvere.github.io/logistics-tools/js/autocontainers.min.js?v=' + $.now()
-    }))
   }))
   .append($('<button>', {
-    id: 'ltButton2',
     class: 'ltButton',
+    onclick: switchContainers,
     text: 'Swap Containers'
-  }).on('click', function() {
-    $('#ltChild').replaceWith($('<script>',{ 
-      id: 'ltChild',
-      src: 'https://dvere.github.io/logistics-tools/js/switchcontainers.min.js?v=' + $.now()
-    }))
   }))
-  .append($('<div>', {
-    id: 'ltInsert'
-  }))
+  .append($('<div>', {id: 'ltInsert'}))
 
   $('div.breadcrumbs').hide()
   $('div.page-content > div > div')
   .empty()
   .append(ltContainer)
-
-  $('<script>', {id: 'ltChild'})
-  .appendTo($('body'))
 }
 
 $.when($.ready).then(function() {

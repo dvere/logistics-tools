@@ -51,37 +51,30 @@ let showResult = () => {
     .text(JSON.stringify(scResult, undefined, 2))
 }
 
-function addForm() {
+let switchContainers = () => {
 
-  let regex = '(CSTC|OOC)[0-9]{8}'
+  let tcregex = '(CSTC|OOC)[0-9]{8}'
 
-  var aForm = $('<div>', { id: 'cForm' })
+  let form = $('<div>', { id: 'cForm' })
     .append($('<input>', {
       id: 'oldCtr',
       required: 'required',
-      pattern: regex
+      pattern: tcregex
     }))
     .append($('<input>', {
       id: 'newCtr',
       required: 'required',
-      pattern: regex
+      pattern: tcregex
     }))
     .append($('<button>', {
-      class: 'lt-button',
-      text: 'Move Records'
-    })
-      .click(function () {
-        processRequest()
-      }))
+      text: 'Move Records',
+      onclick: processRequest
+    }))
 
   $('#ltInsert')
     .empty()
-    .append(aForm)
+    .append(form)
     .append($('<div>', { id: 'switch-results' }))
 
   $('#oldContainer').focus()
 }
-
-$.when($.ready).then(function () {
-  addForm();
-})
