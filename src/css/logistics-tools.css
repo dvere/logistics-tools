@@ -36,8 +36,8 @@
   grid-row-start: 2;
 }
 
-#lt_insert input {
-  padding: 1rem;
+#lt_insert input, #lt_insert select {
+  padding: 0.5rem 1rem;
 }
 
 .lt-tab {
