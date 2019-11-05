@@ -1,0 +1,45 @@
+#lt_insert {
+  margin: 0 auto;
+  padding: 2rem;
+  line-height: 1.4rem;
+}
+
+#lt_result {
+  width: 580px;
+  margin: 0 auto
+}
+
+#ci_form, #ac_form, #sc_form {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 1.4em;
+  width: 580px;
+  padding: 2em 2.5em 2em 2.5em;
+  background-color: rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,.25);
+}
+
+#ac_form {
+  grid-template-columns: auto auto;
+  width: 380px;
+}
+
+#ac_data {
+  font-family: monospace;
+  font-size: 1.9rem;
+  line-height: 2.2rem;
+  min-width: 12rem;
+  height: 70vh;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+}
+
+#lt_insert input {
+  padding: 1rem;
+}
+
+.lt-tab {
+  display: none;
+}
