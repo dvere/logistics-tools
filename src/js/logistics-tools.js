@@ -1,7 +1,6 @@
-let scMain = () => {
+let scMain = (source, dest) => {
   let result = {}
-  let source = $('#old_ctr').val().trim()
-  let dest = $('#new_ctr').val().trim()
+
   let id = Number(source.replace(/\D/g, ''))
   result.oldContainer = source
   result.newContainer = dest
@@ -74,7 +73,16 @@ function addPartsToDOM(){
 
   // scForm
   let tcregex = '(CSTC|OOC)[0-9]{8}'
-  let scForm = $('<div>', {id: 'scForm', class: 'lt-tab'})
+  $('#ltInsert')
+  .append($('<div>', {
+	id: 'scForm',
+	class: 'lt-tab'
+  }))
+  .append($('<div>', {
+	id: 'switch_results'
+  }))
+
+  $('#scForm')
   .append($('<input>', {
     id: 'old_ctr',
     required: 'required',
@@ -86,14 +94,15 @@ function addPartsToDOM(){
     pattern: tcregex
   }))
   .append($('<button>', {
-    text: 'Move Records',
-    onclick: scMain
+    id: 'sc_btn',
+    text: 'Move Records'
   }))
 
-  $('#ltInsert')
-  .append(scForm)
-  .append($('<div>', { id: 'switch_results' }))
-
+  $('#sc_button').click(() => {
+	let source = $('#old_ctr').val().trim()
+    let dest = $('#new_ctr').val().trim()
+    scMain(source, dest)
+  })
 }
 
 $.when($.ready).then(function() {
