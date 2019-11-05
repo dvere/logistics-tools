@@ -48,20 +48,20 @@ let ciMain = (data) => {
   })
 }
 
-function addPartsToDOM(){
+let addPartsToDOM = () => {
   var lt = 'https://dvere.github.io/logistics-tools/'
 
   $('<link>', {
     id: 'lt-style',
     rel: 'stylesheet',
-    href: lt + 'css/logistics-tools.min.css?v=' + $.now()
+    href: lt + 'css/logistics-tools.css?v=' + $.now()
   })
   .appendTo($('head'))
 
   var ltContainer = $('<div>', { id: 'lt_container' })
-  .append($('<button>', { id: 'ci', class: 'lt-button', text: 'Consignments Inspector'}))
-  .append($('<button>', { id: 'ac', class: 'lt-button', text: 'Auto Containers' }))
-  .append($('<button>', { id: 'sc', class: 'lt-button', text: 'Swap Containers' }))
+  .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
+  .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
+  .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<div>', { id: 'lt_insert' }))
   .append($('<div>', { id: 'lt_results' }))
 
@@ -70,13 +70,13 @@ function addPartsToDOM(){
   .empty()
   .append(ltContainer)
 
-  // ciForm
   let ciStatus = ['RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED']
 
-  let ciForm = $('<div>', {id: 'ciForm', class: 'lt-tab'})
-  .append($('<input>', { id:'ci_date', type:'date'}))
-  .append($('<select>', {id: 'ci_status'}))
-  .append($('<button>', { id: 'ci_btn', text: 'Look up collections'}))
+  let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
+  .append($('<div>', { id: 'ci_form' })
+    .append($('<input>', { id:'ci_date', type:'date' }))
+    .append($('<select>', { id: 'ci_status' }))
+    .append($('<button>', { id: 'ci_btn', text: 'Look up collections' })))
 
   $('#lt_insert')
   .append(ciForm)
@@ -84,7 +84,7 @@ function addPartsToDOM(){
   $.each(ciStatus, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
 
   $('#ci_btn').click(() => {
-    let fields = [
+    let ciFields = [
       'tracking_number',
       'requested_route',
       'consolidation_id',
@@ -93,26 +93,26 @@ function addPartsToDOM(){
       'package_type',
       'status'
     ]
-    let data = {
+    let ciData = {
       q: 'collected:SW',
       count: 1000,
       client_id: 11270,
-      fields: fields.join(),
+      fields: ciFields.join(),
       received_at: $('#ci_date').val(),
       status: $('#ci_status').val(),
       location: 'SWINDON'
     }
-    ciMain(data)
+    ciMain(ciData)
   })
 
-  // scForm
-  let tcregex = '(CSTC|OOC)[0-9]{8}'
-  let scValid = { required: 'required',  pattern: tcregex }
+  let scRegex = '(CSTC|OOC)[0-9]{8}'
+  let scValid = { required: 'required',  pattern: scRegex }
 
-  let scForm = $('<div>', { id: 'scForm', class: 'lt-tab' })
-  .append($('<input>', { id: 'sc_old' }).attr(scValid))
-  .append($('<input>', { id: 'sc_new' }).attr(scValid))
-  .append($('<button>', { id: 'sc_btn' }).text('Move Records'))
+  let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
+  .append($('<div>', { id: 'ci_form' })
+    .append($('<input>', { id: 'sc_old' }).attr(scValid))
+    .append($('<input>', { id: 'sc_new' }).attr(scValid))
+    .append($('<button>', { id: 'sc_btn' }).text('Move Records')))
 
   $('#lt_insert')
   .append(scForm)
@@ -123,14 +123,14 @@ function addPartsToDOM(){
     scMain(source, dest)
   })
 
-  $('#ci').on('click',() => {
+  $('#lt_ci').on('click',() => {
     $('.lt-tab').hide()
-    $('#ciForm').show()
+    $('#ci_tab').show()
   })
-  $('#sc').on('click',() => {
+  $('#lt_sc').on('click',() => {
     $('.lt-tab').hide()
-    $('#scForm').show()
-    $('#old_ctr').focus()
+    $('#sc_tab').show()
+    $('#sc_old').focus()
   })
 }
 
