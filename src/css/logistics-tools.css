@@ -89,7 +89,6 @@
 }
 
 #cForm, #aForm, #scForm {
-  line-height: 1.4rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -114,6 +113,10 @@
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2;
+}
+
+#ltInsert input, #ltInsert button {
+  height: 2.7rem;
 }
 
 .lt-tab {
