@@ -59,19 +59,9 @@ function addPartsToDOM(){
   .appendTo($('head'))
 
   var ltContainer = $('<div>', { id: 'lt_container' })
-  .append($('<button>', { class: 'ltButton', text: 'Consignments Inspector'})
-    .click(() => {
-      $('.lt-tab').hide()
-      $('#ciForm').show()
-    }))
-  .append($('<button>', { class: 'ltButton', text: 'Auto Containers' }))
-  .append($('<button>', { class: 'ltButton', text: 'Swap Containers' })
-    .click(() => {
-      $('.lt-tab').hide()
-      $('#scForm').show()
-      $('#old_ctr').focus()
-    })
-  )
+  .append($('<button>', { id: 'ci', class: 'lt-button', text: 'Consignments Inspector'}))
+  .append($('<button>', { id: 'ac', class: 'lt-button', text: 'Auto Containers' }))
+  .append($('<button>', { id: 'sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<div>', { id: 'lt_insert' }))
   .append($('<div>', { id: 'lt_results' }))
 
@@ -80,28 +70,10 @@ function addPartsToDOM(){
   .empty()
   .append(ltContainer)
 
-  // scForm
-  let tcregex = '(CSTC|OOC)[0-9]{8}'
-  let scValid = { required: 'required',  pattern: tcregex }
-
-  let scForm = $('<div>', { id: 'scForm', class: 'lt-tab' })
-  .append($('<input>', { id: 'sc_old' }).attr(scValid))
-  .append($('<input>', { id: 'sc_new' }).attr(scValid))
-  .append($('<button>', { id: 'sc_btn' }).text('Move Records'))
-
-  $('#lt_insert')
-  .append(scForm)
-
-  $('#sc_btn').click(() => {
-    let source = $('#sc_old').val().trim()
-    let dest = $('#sc_new').val().trim()
-    scMain(source, dest)
-  })
-
   // ciForm
   let ciStatus = ['RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED']
 
-  let ciForm = $('<div>', {id: 'ciForm'})
+  let ciForm = $('<div>', {id: 'ciForm', class: 'lt-tab'})
   .append($('<input>', { id:'ci_date', type:'date'}))
   .append($('<select>', {id: 'ci_status'}))
   .append($('<button>', { id: 'ci_btn', text: 'Look up collections'}))
@@ -131,6 +103,34 @@ function addPartsToDOM(){
       location: 'SWINDON'
     }
     ciMain(data)
+  })
+
+  // scForm
+  let tcregex = '(CSTC|OOC)[0-9]{8}'
+  let scValid = { required: 'required',  pattern: tcregex }
+
+  let scForm = $('<div>', { id: 'scForm', class: 'lt-tab' })
+  .append($('<input>', { id: 'sc_old' }).attr(scValid))
+  .append($('<input>', { id: 'sc_new' }).attr(scValid))
+  .append($('<button>', { id: 'sc_btn' }).text('Move Records'))
+
+  $('#lt_insert')
+  .append(scForm)
+
+  $('#sc_btn').click(() => {
+    let source = $('#sc_old').val().trim()
+    let dest = $('#sc_new').val().trim()
+    scMain(source, dest)
+  })
+
+  $('#ci').click(() => {
+    $('.lt-tab').hide()
+    $('#ciForm').show()
+  })
+  $('#sc').click(() => {
+    $('.lt-tab').hide()
+    $('#scForm').show()
+    $('#old_ctr').focus()
   })
 }
 
