@@ -115,8 +115,8 @@
   grid-row-start: 2;
 }
 
-#ltInsert input, #ltInsert button {
-  height: 2.7rem;
+#ltInsert input {
+  padding: 1rem;
 }
 
 .lt-tab {
