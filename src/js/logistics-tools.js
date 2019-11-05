@@ -27,7 +27,7 @@ let scMain = (source, dest) => {
       result.error = 1
       result.errormessage = 'Could not get records for ' + source
     }
-    $('#lt_results').text('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
+    $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
   })
 }
 
@@ -37,7 +37,7 @@ let ciMain = (data) => {
   $.getJSON(url, data)
   .done((json) => {
     if (json.length > 0) {
-      $('#lt_results').text('<pre>'+ JSON.stringify(json, undefined, 2) + '</pre>')
+      $('#lt_results').html('<pre>'+ JSON.stringify(json, undefined, 2) + '</pre>')
     } else {
       $('#lt_results').text('Lookup returned no consignments.')
     }
