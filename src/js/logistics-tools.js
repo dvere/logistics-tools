@@ -123,11 +123,11 @@ function addPartsToDOM(){
     scMain(source, dest)
   })
 
-  $('#ci').click(() => {
+  $('#ci').on('click',() => {
     $('.lt-tab').hide()
     $('#ciForm').show()
   })
-  $('#sc').click(() => {
+  $('#sc').on('click',() => {
     $('.lt-tab').hide()
     $('#scForm').show()
     $('#old_ctr').focus()
