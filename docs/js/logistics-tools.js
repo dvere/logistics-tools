@@ -48,10 +48,7 @@ let ciMain = (data) => {
   })
 }
 let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
-
-let showResults = (r) => {
-  $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'))
-}
+let showResults = (r) => $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>')
 
 let addPartsToDOM = () => {
   var lt = 'https://dvere.github.io/logistics-tools/'
