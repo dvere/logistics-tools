@@ -2,6 +2,7 @@ let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
 let showResults = (r) => $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>')
 let postCons = (record, dest) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
 
+
 let scMain = (source, dest) => {
   let result = {}
   let id = Number(source.replace(/\D/g, ''))
@@ -22,7 +23,6 @@ let scMain = (source, dest) => {
         postCons(c, dest).done((data) => result.consignments.push({barcode: c, obj: data}))
       })
     }
-    showResults(result)
   })
 }
 
@@ -115,7 +115,7 @@ let addPartsToDOM = () => {
   $('#sc_btn').click(() => {
     let source = $('#sc_old').val().trim()
     let dest = $('#sc_new').val().trim()
-    scMain(source, dest)
+    scMain(source, dest).done((result) =>  showResults(result))
   })
 
   $('#lt_ci').on('click',() => {
