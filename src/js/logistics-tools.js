@@ -1,3 +1,7 @@
+let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
+let showResults = (r) => $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>')
+let postCons = (record, dest) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
+
 let scMain = (source, dest) => {
   let result = {}
   let id = Number(source.replace(/\D/g, ''))
@@ -14,23 +18,13 @@ let scMain = (source, dest) => {
     if (cons.length === 0) {
       result.error = { status: 1, message: 'No records returned for ' + source }
     } else {
-      $.each(cons, (_i, record) => {
-        postRecord(dest, record)
-        .done((_d, text, jqxhr) => {
-          let r = { barcode: record, status: jqxhr.status, text: text }
-          result.consignments.push(r)
-          showResults(result)
-        })
-        .fail((jqxhr, text, err) => {
-          let r = { barcode: record, error: err, status: jqxhr.status, text: text }
-          result.consignments.push(r)
-        })
+      $.each(cons, (_i, c) => {
+        postCons(c, dest).done((data) => result.consignments.push({barcode: c, obj: data}))
       })
     }
+    showResults(result)
   })
 }
-
-let postRecord = (dest, record) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
 
 let ciMain = (data) => {
   let url = '/consignments/'
@@ -48,8 +42,6 @@ let ciMain = (data) => {
     console.log('Ooops, CI Error: ' + e + '\n' + s)
   })
 }
-let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
-let showResults = (r) => $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>')
 
 let addPartsToDOM = () => {
   var lt = 'https://dvere.github.io/logistics-tools/'
