@@ -14,17 +14,18 @@ let scMain = (source, dest) => {
     if (cons.length === 0) {
       result.error = { status: 1, message: 'No records returned for ' + source }
     } else {
-      $.when($.each(cons, (_i, record) => {
+      $.each(cons, (_i, record) => {
         postRecord(dest, record)
         .done((_d, text, jqxhr) => {
           let r = { barcode: record, status: jqxhr.status, text: text }
           result.consignments.push(r)
+          showResults(result)
         })
         .fail((jqxhr, text, err) => {
           let r = { barcode: record, error: err, status: jqxhr.status, text: text }
           result.consignments.push(r)
         })
-      })).done(() => showResults(result))
+      })
     }
   })
 }
