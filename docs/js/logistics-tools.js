@@ -5,34 +5,38 @@ let scMain = (source, dest) => {
   result.oldContainer = source
   result.newContainer = dest
   result.consignments = []
-  $.when( $.getJSON('/trunkcontainers/' + id + '/events')
-    .then((data, _s, _o) => {
-      let cons = []
-      $.each(data, (_i, e) => {
-        let bc = e.description.split(' ')[1]
-        if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
-      })
-      console.log(cons)
-      if (cons.length !== 0) {
-        $.each(cons, (_i, record) => {
-          $.post('/trunkcontainers/' + dest + '/scan/' + record)
-          .then((_d, text, jqxhr) => {
-            let r = { barcode: record, status: jqxhr.status, text: text }
-            result.consignments.push(r)
-          },
-          (jqxhr, text, err) => {
-            let r = { barcode: record, error: err, status: jqxhr.status, text: text }
-            result.consignments.push(r)
-          })
-        })
-      } else {
-        result.error = { status: 1, message: 'No records returned for ' + source }
-      }
-    },
-    (jqxhr, text, err) => {
-      result.error = { status: jqxhr.status, text: text, error: err }
+  $.getJSON('/trunkcontainers/' + id + '/events')
+  .then((data, _s, _o) => {
+    $.each(data, (_i, e) => {
+      let bc = e.description.split(' ')[1]
+      if (bc.match(/^PCS[0-9]{9}$/)) result.consignments.push({barcode: bc})
     })
-  ).then((_x) => $('#lt_results').append($('<pre>').text(JSON.stringify(result, undefined, 2))))
+  },
+  (jqxhr, text, err) => {
+    result.error = { status: jqxhr.status, text: text, error: err }
+  })
+  .then(() => {
+    let cons = result.consignments
+    if (cons.length === 0) {
+      result.error = { status: 1, message: 'No records returned for ' + source }
+    } else {
+      $.each(cons, (_i, record) => {
+        $.post('/trunkcontainers/' + dest + '/scan/' + record)
+        .then((_d, text, jqxhr) => {
+          let r = { barcode: record, status: jqxhr.status, text: text }
+          result.consignments.push(r)
+        },
+        (jqxhr, text, err) => {
+          let r = { barcode: record, error: err, status: jqxhr.status, text: text }
+          result.consignments.push(r)
+        })
+      })
+    }
+    return result
+  })
+  .then((result) => {
+    $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
+  })
 }
 
 let ciMain = (data) => {
