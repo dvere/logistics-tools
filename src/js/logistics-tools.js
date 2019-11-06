@@ -12,23 +12,21 @@ let scMain = (source, dest) => {
       let bc = e.description.split(' ')[1]
       if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
     })
-    return cons
-  })
-  .then((records) => {
-    if (records.length !== 0) {
-      $.each(records, (_i, record) => {
+    console.log(cons)
+    if (cons.length !== 0) {
+      $.each(cons, (_i, record) => {
         $.post('/trunkcontainers/' + dest + '/scan/' + record)
-          .done((response) => {
-            let r = { barcode: record, status: response.status }
-            result.consignments.push(r)
-          })
+        .done((response) => {
+          let r = { barcode: record, status: response.status }
+          result.consignments.push(r)
+        })
       })
     } else {
       result.error = 1
       result.errormessage = 'Could not get records for ' + source
     }
-    $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
   })
+  .then($('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>'))
 }
 
 let ciMain = (data) => {
