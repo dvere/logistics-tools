@@ -7,16 +7,17 @@ let scMain = (source, dest) => {
   result.consignments = []
   $.getJSON('/trunkcontainers/' + id + '/events')
   .then((data, _s, _o) => {
+    let cons = []
     $.each(data, (_i, e) => {
       let bc = e.description.split(' ')[1]
-      if (bc.match(/^PCS[0-9]{9}$/)) result.consignments.push({barcode: bc})
+      if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
     })
+    return cons
   },
   (jqxhr, text, err) => {
     result.error = { status: jqxhr.status, text: text, error: err }
   })
-  .then(() => {
-    let cons = result.consignments
+  .then((cons) => {
     if (cons.length === 0) {
       result.error = { status: 1, message: 'No records returned for ' + source }
     } else {
@@ -32,11 +33,8 @@ let scMain = (source, dest) => {
         })
       })
     }
-    return result
   })
-  .then((result) => {
-    $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>')
-  })
+  .then(() => $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>'))
 }
 
 let ciMain = (data) => {
