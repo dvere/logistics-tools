@@ -1,41 +1,35 @@
 let scMain = (source, dest) => {
   let result = {}
-
   let id = Number(source.replace(/\D/g, ''))
+  let cons = []
   result.oldContainer = source
   result.newContainer = dest
   result.consignments = []
-  $.getJSON('/trunkcontainers/' + id + '/events')
-  .then((data, _s, _o) => {
-    let cons = []
-    $.each(data, (_i, e) => {
+
+  getEvents(id).done((events) => {
+    $.each(events, (_i, e) => {
       let bc = e.description.split(' ')[1]
       if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
     })
-    return cons
-  },
-  (jqxhr, text, err) => {
-    result.error = { status: jqxhr.status, text: text, error: err }
-  })
-  .then((cons) => {
     if (cons.length === 0) {
       result.error = { status: 1, message: 'No records returned for ' + source }
     } else {
-      $.each(cons, (_i, record) => {
-        $.post('/trunkcontainers/' + dest + '/scan/' + record)
-        .then((_d, text, jqxhr) => {
+      $.when($.each(cons, (_i, record) => {
+        postRecord(dest, record)
+        .done((_d, text, jqxhr) => {
           let r = { barcode: record, status: jqxhr.status, text: text }
           result.consignments.push(r)
-        },
-        (jqxhr, text, err) => {
+        })
+        .fail((jqxhr, text, err) => {
           let r = { barcode: record, error: err, status: jqxhr.status, text: text }
           result.consignments.push(r)
         })
-      })
+      })).done(() => showResults(result))
     }
   })
-  .then(() => $('#lt_results').html('<pre>' + JSON.stringify(result, undefined, 2) + '</pre>'))
 }
+
+let postRecord = (dest, record) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
 
 let ciMain = (data) => {
   let url = '/consignments/'
@@ -43,15 +37,20 @@ let ciMain = (data) => {
   $.getJSON(url, data)
   .done((json) => {
     if (json.length > 0) {
-      $('#lt_results').html('<pre>'+ JSON.stringify(json, undefined, 2) + '</pre>')
+      showResults(json)
     } else {
-      $('#lt_results').text('Lookup returned no consignments.')
+      showResults([{error: 'Lookup returned no consignments.'}])
     }
   })
   .fail((o, s, e) => {
-    $('#lt_results').text(s)
-    console.log('Ooops, CI Error: ' + e + '\n' + o)
+    showResults(o)
+    console.log('Ooops, CI Error: ' + e + '\n' + s)
   })
+}
+let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
+
+let showResults = (r) => {
+  $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'))
 }
 
 let addPartsToDOM = () => {
