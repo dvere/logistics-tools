@@ -45,7 +45,7 @@ let ciMain = (data) => {
     if (json.length > 0) {
       head = $('<div>', { class: 'ci-row ci-head' })
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
-      $('#ci_results').append(head)
+      output.append(head)
 
       $.each(json, (_i, o ) => {
 
@@ -58,7 +58,7 @@ let ciMain = (data) => {
     } else {
       output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
     }
-    $('#ci_results').append(output)
+    showResults(output)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + s + '\n' + e)
