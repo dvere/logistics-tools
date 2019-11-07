@@ -67,8 +67,10 @@
 }
 
 .ci-row {
-  /* needs precision */
-  grid-template-columns: 8rem 12rem 12rem 12rem 8rem 10rem 10rem;
+  grid-template-columns: 12rem 12rem 12rem 8rem 10rem 10rem;
+}
+.ci-row > div:first-child {
+  display: none;
 }
 
 .ci-head {
@@ -76,6 +78,7 @@
   background-color: rgba(0,0,0,0.2);
 }
 
-.lt-error {
+.sc-row.lt-error {
   color: red;
+  width: 580px
 }
