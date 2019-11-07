@@ -17,8 +17,8 @@ let scMain = (source, dest) => {
       showResults($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
         let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c)
-        .done(() => {
-          let r = [{barcode: c, obj: jqxhr.status}]
+        .done((_d) => {
+          let r = [{barcode: c, status: jqxhr.status}]
           let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
           $('#sc_results').append($('<div', {class: 'sc-row'}).html(html))
         })
