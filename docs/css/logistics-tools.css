@@ -6,7 +6,7 @@
 
 #lt_results {
   padding: 2rem 2.5rem;
-  width: 580px;
+  width: fit-content;
   margin: 0 auto;
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
@@ -58,7 +58,7 @@
   display: grid;
   grid-template-columns: 30% auto;
 }
-.sc-row:first-child {
+.sc-row:first-child, .ci-row:first-child {
   border-top-style: solid;
 }
 .sc-col-r.sc-error {
@@ -68,12 +68,12 @@
 
 .ci-row {
   /* needs precision */
-  grid-template-columns: auto auto auto auto auto auto auto;
+  grid-template-columns: 8rem 12rem 12rem 12rem 8rem 10rem 10rem;
 }
 
 .ci-head {
   font-weight: 700;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,0.2);
 }
 
 .lt-error {
