@@ -116,7 +116,7 @@ let addPartsToDOM = () => {
   $('#sc_btn').click(() => {
     let source = $('#sc_old').val().trim()
     let dest = $('#sc_new').val().trim()
-    scMain(source, dest).done((result) =>  showResults(result))
+    scMain(source, dest)
   })
 
   $('#lt_ci').on('click',() => {
