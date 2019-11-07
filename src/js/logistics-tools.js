@@ -1,15 +1,10 @@
 let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
-let showResults = (r) => $('#lt_results').html('<pre>' + JSON.stringify(r, undefined, 2) + '</pre>')
+let showResults = (r) => $('#lt_results').html(r)
 let postCons = (record, dest) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
 
-
 let scMain = (source, dest) => {
-  let result = {}
   let id = Number(source.replace(/\D/g, ''))
   let cons = []
-  result.oldContainer = source
-  result.newContainer = dest
-  result.consignments = []
 
   getEvents(id).done((events) => {
     $.each(events, (_i, e) => {
@@ -17,10 +12,15 @@ let scMain = (source, dest) => {
       if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
     })
     if (cons.length === 0) {
-      result.error = { status: 1, message: 'No records returned for ' + source }
+      showResults($('<div>', {class: 'lt-error'}).text('No records returned for ' + source))
     } else {
+      showResults($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
-        postCons(c, dest).done((data) => result.consignments.push({barcode: c, obj: data}))
+        postCons(c, dest).done((data) => {
+          let r = [{barcode: c, obj: data}]
+          let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
+          $('#sc_results').append($('<div', {class: 'sc-row'})).html(html)
+        })
       })
     }
   })
@@ -28,18 +28,19 @@ let scMain = (source, dest) => {
 
 let ciMain = (data) => {
   let url = '/consignments/'
-
+  let html = ''
   $.getJSON(url, data)
   .done((json) => {
     if (json.length > 0) {
-      showResults(json)
+      html = '<pre>' + JSON.stringify(json, undefined, 2) + '</pre>'
     } else {
-      showResults([{error: 'Lookup returned no consignments.'}])
+      html = $('<div>', {class: 'lt-error'}).text('Query returned no results')
     }
+    showResults(html)
   })
   .fail((o, s, e) => {
-    showResults(o)
-    console.log('Ooops, CI Error: ' + e + '\n' + s)
+    console.error('Ooops, CI GET Error: ' + e + '\n' + e)
+    showResults($('<pre>').text(o))
   })
 }
 
