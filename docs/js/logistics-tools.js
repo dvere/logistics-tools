@@ -40,7 +40,7 @@ let ciMain = (data) => {
   let url = '/consignments/'
   $.getJSON(url, data)
   .done((json) => {
-    showResults($('<div>', {id: 'lt_results'}))
+    showResults($('<div>', {id: 'ci_results'}))
     let output = ''
     if (json.length > 0) {
       $.each(json, (_i, o ) => {
@@ -50,7 +50,7 @@ let ciMain = (data) => {
     } else {
       output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
     }
-    $('#lt_results').append(output)
+    $('#ci_results').append(output)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + e + '\n' + e)
