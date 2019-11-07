@@ -17,11 +17,20 @@ let scMain = (source, dest) => {
       showResults($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
         let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c)
-        jqxhr.always(() => console.log('Post returned: ' + jqxhr.status))
-        //  let r = [{barcode: c, status: jqxhr.status}]
-        //  let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
-        //  $('#sc_results').append($('<div', {class: 'sc-row'}).html(html))
-        // })
+        jqxhr.always(() => {
+          console.log(c +': ' + jqxhr.status)
+          let output = $('<div>', { class: 'sc-row' })
+
+          output.append($('<div>', { class: 'sc-col-l' }).text(c))
+          if (jqxhr.status !== 204) {
+            output.append($('<div>', { class: 'sc-col-r sc-error' })
+              .text(jqxhr.status + 'Error adding record to ' + dest))
+          } else {
+            output.append($('<div>', { class: 'sc-col-r' })
+              .text('Record moved to ' + dest))
+          }
+          $('#lt_results').append(output)
+        })
       })
     }
   })
