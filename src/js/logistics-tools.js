@@ -16,10 +16,11 @@ let scMain = (source, dest) => {
     } else {
       showResults($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
-        postCons(c, dest).done((data) => {
-          let r = [{barcode: c, obj: data}]
+        let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c)
+        .done(() => {
+          let r = [{barcode: c, obj: jqxhr.status}]
           let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
-          $('#sc_results').append($('<div', {class: 'sc-row'})).html(html)
+          $('#sc_results').append($('<div', {class: 'sc-row'}).html(html))
         })
       })
     }
