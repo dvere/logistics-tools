@@ -58,6 +58,7 @@
   display: grid;
   grid-template-columns: 30% auto;
 }
+
 .sc-row:first-child {
   border-top: 1px solid rgba(0,0,0,0.25);
 }

@@ -29,7 +29,7 @@ let scMain = (source, dest) => {
             output.append($('<div>', { class: 'sc-col-r' })
               .text('Record moved to ' + dest))
           }
-          $('#lt_results').append(output)
+          $('#sc_results').append(output)
         })
       })
     }
