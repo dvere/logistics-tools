@@ -17,11 +17,11 @@ let scMain = (source, dest) => {
       showResults($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
         let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c)
-        .done((_d) => {
-          let r = [{barcode: c, status: jqxhr.status}]
-          let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
-          $('#sc_results').append($('<div', {class: 'sc-row'}).html(html))
-        })
+        jqxhr.always(() => console.log('Post returned: ' + jqxhr.status))
+        //  let r = [{barcode: c, status: jqxhr.status}]
+        //  let html = '<pre>' + JSON.stringify(r, undefined, 2) + '</pre>'
+        //  $('#sc_results').append($('<div', {class: 'sc-row'}).html(html))
+        // })
       })
     }
   })
