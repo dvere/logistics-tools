@@ -38,15 +38,19 @@ let scMain = (source, dest) => {
 
 let ciMain = (data) => {
   let url = '/consignments/'
-  let html = ''
   $.getJSON(url, data)
   .done((json) => {
+    showResults($('<div>', {id: 'lt_results'}))
+    let output = ''
     if (json.length > 0) {
-      html = '<pre>' + JSON.stringify(json, undefined, 2) + '</pre>'
+      $.each(json, (_i, o ) => {
+        output = $('<div>', { class: 'sc-row' })
+        $.each(o, (k, v) => output.append($('<div>', {class: 'ci-' + k}).text(v)))
+      })
     } else {
-      html = $('<div>', {class: 'lt-error'}).text('Query returned no results')
+      output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
     }
-    showResults(html)
+    $('#lt_results').append(output)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + e + '\n' + e)
