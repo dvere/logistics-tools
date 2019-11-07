@@ -47,8 +47,9 @@ let ciMain = (data) => {
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
       $('#ci_results').append(head)
       $.each(json, (_i, o ) => {
-        output.append($('<div>', { class: 'ci-row' })
-        .append($.each(o, (k, v) => output += $('<div>', {class: 'ci-' + k}).text(v))))
+        $('<div>', { class: 'ci-row' })
+        .append($.each(o, (k, v) => output += $('<div>', {class: 'ci-' + k}).text(v)))
+        .appendTo(output)
       })
     } else {
       output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
