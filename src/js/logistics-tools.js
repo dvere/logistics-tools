@@ -42,7 +42,11 @@ let ciMain = (data) => {
   .done((json) => {
     showResults($('<div>', {id: 'ci_results'}))
     let output = ''
+    let head = ''
     if (json.length > 0) {
+      head = $('<div>', { class: 'ci-row ci-head' })
+      $each(Object.keys(json[0]), (_i, k) => head.append($'<div>').text(k))
+      $('#ci_results').append(head)
       $.each(json, (_i, o ) => {
         output = $('<div>', { class: 'ci-row' })
         $.each(o, (k, v) => output.append($('<div>', {class: 'ci-' + k}).text(v)))
@@ -53,7 +57,7 @@ let ciMain = (data) => {
     $('#ci_results').append(output)
   })
   .fail((o, s, e) => {
-    console.error('Ooops, CI GET Error: ' + e + '\n' + e)
+    console.error('Ooops, CI GET Error: ' + s + '\n' + e)
     showResults($('<pre>').text(o))
   })
 }
