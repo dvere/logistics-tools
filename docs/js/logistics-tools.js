@@ -48,7 +48,7 @@ let ciMain = (data) => {
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
       $('#ci_results').append(head)
       $.each(json, (_i, o ) => {
-        output = $('<div>', { class: 'ci-row' })
+        output.append($('<div>', { class: 'ci-row' }))
         $.each(o, (k, v) => output.append($('<div>', {class: 'ci-' + k}).text(v)))
       })
     } else {
