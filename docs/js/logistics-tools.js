@@ -50,7 +50,7 @@ let ciMain = (data) => {
 }
 
 let addPartsToDOM = () => {
-  var lt = 'https://dvere.github.io/logistics-tools/'
+  let lt = 'https://dvere.github.io/logistics-tools/'
 
   $('<link>', {
     id: 'lt-style',
@@ -59,10 +59,13 @@ let addPartsToDOM = () => {
   })
   .appendTo($('head'))
 
-  var ltContainer = $('<div>', { id: 'lt_container' })
+  let ltMenu = $('<div>', {id: 'lt_menu'})
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
+
+  var ltContainer = $('<div>', { id: 'lt_container' })
+  .append(ltMenu)
   .append($('<div>', { id: 'lt_insert' }))
   .append($('<div>', { id: 'lt_results' }))
 

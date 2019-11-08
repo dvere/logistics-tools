@@ -1,3 +1,11 @@
+#lt_container {
+  width: fit-content;
+  margin: 0 auto;
+}
+#lt_menu {
+  width: fit-content;
+  margin: 2rem auto;
+}
 #lt_insert {
   margin: 0 auto;
 }
