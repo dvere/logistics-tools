@@ -2,29 +2,25 @@
 
 A collection of simple tools to add functionality to Logistics.
 
-## consinspect
+## Consignments Inspector
 
-Displays the status of records collected on a chosen date. Clicking on a displayed consignment number presents a timestamped list of audit messages.
+Displays the status of records collected on a chosen date.
 
-## autocontainers
+## Auto Containers
 
-Automates parent and child process for records containers.
+Automates parent and child process for records containers. (Currently no-op)
 
-## switchcontainers
+## Swap Containers
 
 Move consignments from one container to another.
 
-## css/
+### css/
 
 [logistics-tools.min.css](css/logistics-tools.min.css) - Stylesheet for logistics-tools.
 
 ### js/
 
-[logistics-tools.min.js](js/logistics-tools.min.js) - menu controller script.
-
-[consinspect.min.js](js/consinspect.min.js) - consinspector script.
-
-[autocontainers.min.js](js/autocontainers.min.js) autocontainers script.
+[logistics-tools.js](js/logistics-tools.min.js) - the script.
 
 ### files/
 
