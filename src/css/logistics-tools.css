@@ -1,17 +1,17 @@
 #lt_insert {
   margin: 0 auto;
-  padding: 2rem;
-  line-height: 1.4rem;
 }
-
 #lt_results {
   padding: 2rem 2.5rem;
   width: fit-content;
   margin: 0 auto;
+}
+#ci_results, #ac_results, #sc_results {
+  padding: 2rem;
+  line-height: 1.4rem;
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
 }
-
 #ci_form, #ac_form, #sc_form {
   margin: 0 auto;
   display: grid;
@@ -22,12 +22,10 @@
   background-color: rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,.25);
 }
-
 #ac_form {
   grid-template-columns: auto auto;
   width: 380px;
 }
-
 #ac_data {
   font-family: monospace;
   font-size: 1.9rem;
@@ -38,16 +36,13 @@
   grid-column-end: 3;
   grid-row-start: 2;
 }
-
 #lt_insert input, #lt_insert select {
   height: 2.7rem;
   padding: 0 1rem;
 }
-
 .lt-tab {
   display: none;
 }
-
 .sc-row, .ci-row {
   padding: .2rem 1rem .1rem;
   border: 1px solid rgba(0,0,0,0.25);
@@ -56,29 +51,25 @@
   background-color: white;
   line-height: 1.6rem;
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: 12rem 42rem;
 }
 .sc-row:first-child, .ci-row:first-child {
   border-top-style: solid;
 }
-.sc-col-r.sc-error {
+.sc-error, .lt-error {
   color: rgba(255,0,0,1);
   font-weight: 700;
 }
-
+.lt-error {
+  width: 580px
+}
 .ci-row {
   grid-template-columns: 12rem 12rem 12rem 8rem 10rem 10rem;
 }
 .ci-row > div:first-child {
   display: none;
 }
-
 .ci-head {
   font-weight: 700;
   background-color: rgba(0,0,0,0.2);
-}
-
-.sc-row.lt-error {
-  color: red;
-  width: 580px
 }

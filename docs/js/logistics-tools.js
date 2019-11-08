@@ -1,35 +1,25 @@
-let getEvents = (id) => $.getJSON('/trunkcontainers/' + id + '/events')
-let showResults = (r) => $('#lt_results').html(r)
-let postCons = (record, dest) => $.post('/trunkcontainers/' + dest + '/scan/' + record)
-
 let scMain = (source, dest) => {
-  let id = Number(source.replace(/\D/g, ''))
-  let cons = []
-
-  getEvents(id).done((events) => {
-    $.each(events, (_i, e) => {
-      let bc = e.description.split(' ')[1]
-      if (bc.match(/^PCS[0-9]{9}$/)) cons.push(bc)
-    })
+  let data = { count: 5000, fields: 'tracking_number', q: 'trunk_container:' + source }
+  $.getJSON('/consignments/', data)
+  .done((cons) => {
     if (cons.length === 0) {
-      showResults($('<div>', {class: 'lt-error'}).text('No records returned for ' + source))
+      $('#lt_results').html($('<div>', {class: 'lt-error'}).text('No records returned for ' + source))
     } else {
-      showResults($('<div>', {id: 'sc_results'}))
+      $('#lt_results').html($('<div>', {id: 'sc_results'}))
       $.each(cons, (_i, c) => {
-        let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c)
+        let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c.tracking_number)
         jqxhr.always(() => {
-          console.log(c +': ' + jqxhr.status)
-          let output = $('<div>', { class: 'sc-row' })
-
-          output.append($('<div>', { class: 'sc-col-l' }).text(c))
+          let row = $('<div>', { class: 'sc-row' })
+          row.append($('<div>', { class: 'sc-col-l' }).text(c.tracking_number))
+          let mesg = 'Record moved to ' + dest
+          let cell = $('<div>', { class: 'sc-col-r' })
           if (jqxhr.status !== 204) {
-            output.append($('<div>', { class: 'sc-col-r sc-error' })
-              .text(jqxhr.status + 'Error adding record to ' + dest))
-          } else {
-            output.append($('<div>', { class: 'sc-col-r' })
-              .text('Record moved to ' + dest))
+            mesg = jqxhr.status + ': Error adding record to ' + dest
+            cell.addClass('sc-error')
           }
-          $('#sc_results').append(output)
+          cell.text(mesg)
+          row.append(cell)
+          $('#sc_results').append(row)
         })
       })
     }
@@ -37,32 +27,25 @@ let scMain = (source, dest) => {
 }
 
 let ciMain = (data) => {
-  let url = '/consignments/'
-  $.getJSON(url, data)
-  .done((json) => {
+  $.getJSON('/consignments/', data).done((json) => {
     let output = $('<div>', {id: 'ci_results'})
-    let head = ''
     if (json.length > 0) {
-      head = $('<div>', { class: 'ci-row ci-head' })
+      let head = $('<div>', { class: 'ci-row ci-head' })
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
       output.append(head)
-
       $.each(json, (_i, o ) => {
-
         let row = $('<div>', { class: 'ci-row' })
-
         $.each(o, (k, v) => $('<div>', {class: 'ci-' + k}).text(v).appendTo(row))
-
         output.append(row)
       })
     } else {
       output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
     }
-    showResults(output)
+    $('#lt_results').html(output)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + s + '\n' + e)
-    showResults($('<pre>').text(o))
+    $('#lt_results').html($('<pre>').text(o))
   })
 }
 
@@ -128,9 +111,9 @@ let addPartsToDOM = () => {
 
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'sc_old' }).attr(scValid))
-    .append($('<input>', { id: 'sc_new' }).attr(scValid))
-    .append($('<button>', { id: 'sc_btn' }).text('Move Records')))
+    .append($('<input>', { id: 'sc_old', class: 'lt-advance' }).attr(scValid))
+    .append($('<input>', { id: 'sc_new', class: 'lt-advance' }).attr(scValid))
+    .append($('<button>', { id: 'sc_btn', class: 'lt-advance' }).text('Move Records')))
 
   $('#lt_insert')
   .append(scForm)
