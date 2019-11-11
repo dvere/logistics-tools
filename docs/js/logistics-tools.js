@@ -1,3 +1,63 @@
+let ciMain = (data) => {
+  $.getJSON('/consignments/', data).done((json) => {
+    let output = $('<div>', {id: 'ci_results'})
+    if (json.length > 0) {
+      let head = $('<div>', { class: 'ci-row ci-head' })
+      $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
+      output.append(head)
+      $.each(json, (_i, o ) => {
+        let row = $('<div>', { class: 'ci-row' })
+        $.each(o, (k, v) => $('<div>', {class: 'ci-' + k}).text(v).appendTo(row))
+        output.append(row)
+      })
+    } else {
+      output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
+    }
+    $('#lt_results').html(output)
+  })
+  .fail((o, s, e) => {
+    console.error('Ooops, CI GET Error: ' + s + '\n' + e)
+    $('#lt_results').html($('<pre>').text(o))
+  })
+}
+
+let acMain = (data) => {
+  let containers = []
+  var current
+  $.each(data, (_i, bc) => {
+    if (bc.match(/^PCS[0-9]{9}$/) === null) {
+      containers.push({id: bc, records: []})
+      current = bc
+    } else {
+      var idx = containers.findIndex(e => e.id === current)
+      containers[idx].records.push(bc)
+    }
+  })
+  if (containers.length === 0) {
+    $('#lt_results').html($('<div>', {class: 'lt-error'}).text('Unable to build list of containers'))
+  } else {
+    $('#lt_results').html($('<div>', {id: 'ac_results'}))
+    $.each(containers, (_i, o) => {
+      $.each(o.records, (_i, r) => {
+        let jqxhr = $.post('/'+ o.type + 'containers/' + o.id + '/scan/' + r)
+        jqxhr.always(() => {
+          let row = $('<div>', { class: 'ac-row' })
+          row.append($('<div>', { class: 'ac-col-l' }).text(r))
+          let mesg = 'Record added to ' + o.id
+          let cell = $('<div>', { class: 'ac-col-r' })
+          if (jqxhr.status !== 204) {
+            mesg = jqxhr.status + ': Error adding record to ' + o.id
+            cell.addClass('sc-error')
+          }
+          cell.text(mesg)
+          row.append(cell)
+          $('#ac_results').append(row)
+        })
+      })
+    })
+  }
+}
+
 let scMain = (source, dest) => {
   let data = { count: 5000, fields: 'tracking_number', q: 'trunk_container:' + source }
   $.getJSON('/consignments/', data)
@@ -26,29 +86,6 @@ let scMain = (source, dest) => {
   })
 }
 
-let ciMain = (data) => {
-  $.getJSON('/consignments/', data).done((json) => {
-    let output = $('<div>', {id: 'ci_results'})
-    if (json.length > 0) {
-      let head = $('<div>', { class: 'ci-row ci-head' })
-      $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
-      output.append(head)
-      $.each(json, (_i, o ) => {
-        let row = $('<div>', { class: 'ci-row' })
-        $.each(o, (k, v) => $('<div>', {class: 'ci-' + k}).text(v).appendTo(row))
-        output.append(row)
-      })
-    } else {
-      output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
-    }
-    $('#lt_results').html(output)
-  })
-  .fail((o, s, e) => {
-    console.error('Ooops, CI GET Error: ' + s + '\n' + e)
-    $('#lt_results').html($('<pre>').text(o))
-  })
-}
-
 let addPartsToDOM = () => {
   let lt = 'https://dvere.github.io/logistics-tools/'
 
@@ -59,22 +96,30 @@ let addPartsToDOM = () => {
   })
   .appendTo($('head'))
 
+  let ciFields = [
+    'tracking_number',
+    'requested_route',
+    'consolidation_id',
+    'location',
+    'delivery_address_type',
+    'package_type',
+    'status'
+  ]
+  let ciData = {
+    q: 'collected:SW',
+    count: 1000,
+    client_id: 11270,
+    fields: ciFields.join(),
+    location: 'SWINDON'
+  }
+  let ciOpts = ['RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED']
+  let scRegex = '(CSTC|OOC)[0-9]{8}'
+  let scValid = { required: 'required',  pattern: scRegex }
+
   let ltMenu = $('<div>', {id: 'lt_menu'})
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
-
-  var ltContainer = $('<div>', { id: 'lt_container' })
-  .append(ltMenu)
-  .append($('<div>', { id: 'lt_insert' }))
-  .append($('<div>', { id: 'lt_results' }))
-
-  $('div.breadcrumbs').hide()
-  $('div.page-content > div > div')
-  .empty()
-  .append(ltContainer)
-
-  let ciStatus = ['RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED']
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
@@ -82,35 +127,11 @@ let addPartsToDOM = () => {
     .append($('<select>', { id: 'ci_status' }))
     .append($('<button>', { id: 'ci_btn', text: 'Look up collections' })))
 
-  $('#lt_insert')
-  .append(ciForm)
-
-  $.each(ciStatus, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
-
-  $('#ci_btn').click(() => {
-    let ciFields = [
-      'tracking_number',
-      'requested_route',
-      'consolidation_id',
-      'location',
-      'delivery_address_type',
-      'package_type',
-      'status'
-    ]
-    let ciData = {
-      q: 'collected:SW',
-      count: 1000,
-      client_id: 11270,
-      fields: ciFields.join(),
-      received_at: $('#ci_date').val(),
-      status: $('#ci_status').val(),
-      location: 'SWINDON'
-    }
-    ciMain(ciData)
-  })
-
-  let scRegex = '(CSTC|OOC)[0-9]{8}'
-  let scValid = { required: 'required',  pattern: scRegex }
+  let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
+  .append($('<div>', {id: 'ac_form' })
+    .append($('<textarea>', { id:'ac_data' }))
+    .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
+    .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
 
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
@@ -118,8 +139,30 @@ let addPartsToDOM = () => {
     .append($('<input>', { id: 'sc_new', class: 'lt-advance' }).attr(scValid))
     .append($('<button>', { id: 'sc_btn', class: 'lt-advance' }).text('Move Records')))
 
-  $('#lt_insert')
-  .append(scForm)
+  let ltContainer = $('<div>', { id: 'lt_container' })
+    .append(ltMenu)
+    .append($('<div>', { id: 'lt_insert' })
+      .append(ciForm)
+      .append(acForm)
+      .append(scForm))
+    .append($('<div>', { id: 'lt_results' }))
+
+  $('div.breadcrumbs').hide()
+  $('div.page-content > div > div')
+  .empty()
+  .append(ltContainer)
+
+  $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
+
+  $('#ci_btn').click(() => {
+    ciData.received_at = $('#ci_date').val()
+    ciData.status = $('#ci_status').val()
+    ciMain(ciData)
+  })
+
+  $('#ac_btn').click(() => {
+    acMain($('#ac_data').val().toUpperCase().trim().split('\n'))
+  })
 
   $('#sc_btn').click(() => {
     let source = $('#sc_old').val().trim()
@@ -127,11 +170,15 @@ let addPartsToDOM = () => {
     scMain(source, dest)
   })
 
-  $('#lt_ci').on('click',() => {
+  $('#lt_ci').click(() => {
     $('.lt-tab').hide()
     $('#ci_tab').show()
   })
-  $('#lt_sc').on('click',() => {
+  $('#lt_ac').click(() => {
+    $('.lt-tab').hide()
+    ('#ac_tab').show()
+  })
+  $('#lt_sc').click(() => {
     $('.lt-tab').hide()
     $('#sc_tab').show()
     $('#sc_old').focus()
