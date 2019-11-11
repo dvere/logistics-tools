@@ -26,7 +26,8 @@ let acMain = (data) => {
   var current
   $.each(data, (_i, bc) => {
     if (bc.match(/^PCS[0-9]{9}$/) === null) {
-      containers.push({id: bc, records: []})
+      let t = (bc.match(/^CSLC[0-9]{8}$/)) ? 'location' : 'trunk'
+      containers.push({id: bc, type: t, records: []})
       current = bc
     } else {
       var idx = containers.findIndex(e => e.id === current)
