@@ -30,7 +30,7 @@ let acMain = (data) => {
       containers.push({id: bc, type: t, records: []})
       current = bc
     } else {
-      var idx = containers.findIndex(e => e.id === current)
+      let idx = containers.findIndex(e => e.id === current)
       containers[idx].records.push(bc)
     }
   })
