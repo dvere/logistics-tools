@@ -176,7 +176,7 @@ let addPartsToDOM = () => {
   })
   $('#lt_ac').click(() => {
     $('.lt-tab').hide()
-    ('#ac_tab').show()
+    $('#ac_tab').show()
   })
   $('#lt_sc').click(() => {
     $('.lt-tab').hide()
