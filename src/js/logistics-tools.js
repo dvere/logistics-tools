@@ -169,7 +169,7 @@ let addPartsToDOM = () => {
   })
 
   $('#ac_btn').click(() => acMain($('#ac_data').val().toUpperCase().trim().split('\n')))
-  $('#ac_clr').click(() => $('#ca_data').val(''))
+  $('#ac_clr').click(() => $('#ac_data').val(''))
 
   $('#sc_btn').click(() => {
     let source = $('#sc_old').val().trim()
