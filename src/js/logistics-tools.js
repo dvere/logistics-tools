@@ -40,12 +40,10 @@ let acMain = (data) => {
     $('#lt_results').html($('<div>', {id: 'ac_results'}))
     $.each(containers, (_i, o) => {
       let row = $('<div>', { id: o.id, class: 'ac-row' })
-        .append($('<div>', { class: 'ac-col-l' }).text(o.id)
+        .append($('<div>', { class: 'ac-col-l' }).text(o.id))
         .append($('<div>', { class: 'ac-col-r' })
           .append($('<ul>', { class: 'ac-list' })
-            .append($('<li>', { class: 'ac-summary' }))
-          )
-        ))
+            .append($('<li>', { class: 'ac-summary' }))))
 
       $('#ac_results').append(row)
 
@@ -61,8 +59,8 @@ let acMain = (data) => {
           } else {
             added++
           }
+          $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
         })
-        $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
       })
     })
   }
