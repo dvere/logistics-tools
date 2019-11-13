@@ -39,21 +39,30 @@ let acMain = (data) => {
   } else {
     $('#lt_results').html($('<div>', {id: 'ac_results'}))
     $.each(containers, (_i, o) => {
+      let row = $('<div>', { id: o.id, class: 'ac-row' })
+        .append($('<div>', { class: 'ac-col-l' }).text(o.id)
+        .append($('<div>', { class: 'ac-col-r' })
+          .append($('<ul>', { class: 'ac-list' })
+            .append($('<li>', { class: 'ac-summary' }))
+          )
+        ))
+
+      $('#ac_results').append(row)
+
+      let errors = 0
+      let added = 0
       $.each(o.records, (_i, r) => {
         let jqxhr = $.post('/'+ o.type + 'containers/' + o.id + '/scan/' + r)
         jqxhr.always(() => {
-          let row = $('<div>', { class: 'ac-row' })
-          row.append($('<div>', { class: 'ac-col-l' }).text(r))
-          let mesg = 'Record added to ' + o.id
-          let cell = $('<div>', { class: 'ac-col-r' })
+
           if (jqxhr.status !== 204) {
-            mesg = jqxhr.status + ': Error adding record to ' + o.id
-            cell.addClass('sc-error')
+            $('#'+ o.id +' ul.ac-list').append($('<li>', { class: 'sc-error' }).text(r + ' - ' + jqxhr.responseJSON.message))
+            errors++
+          } else {
+            added++
           }
-          cell.text(mesg)
-          row.append(cell)
-          $('#ac_results').append(row)
         })
+        $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
       })
     })
   }
