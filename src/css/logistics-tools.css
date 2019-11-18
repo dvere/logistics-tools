@@ -56,7 +56,7 @@ input[type=date]::-webkit-inner-spin-button {
   font-size: 1.9rem;
   line-height: 2.2rem;
   min-width: 12rem;
-  height: 70vh;
+  height: 40vh;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2;
