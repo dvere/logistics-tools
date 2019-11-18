@@ -133,7 +133,7 @@ let addPartsToDOM = () => {
   .append($('<div>', { id: 'ci_form' })
     .append($('<input>', { id:'ci_date', type:'date' }))
     .append($('<select>', { id: 'ci_status' }))
-    .append($('<button>', { id: 'ci_btn', text: 'Look up collections' })))
+    .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' })))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
   .append($('<div>', {id: 'ac_form' })
@@ -143,9 +143,9 @@ let addPartsToDOM = () => {
 
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'sc_old', class: 'lt-advance' }).attr(scValid))
-    .append($('<input>', { id: 'sc_new', class: 'lt-advance' }).attr(scValid))
-    .append($('<button>', { id: 'sc_btn', class: 'lt-advance' }).text('Move Records')))
+    .append($('<input>', { id: 'sc_old', class: 'lt-button lt-advance' }).attr(scValid))
+    .append($('<input>', { id: 'sc_new', class: 'lt-button lt-advance' }).attr(scValid))
+    .append($('<button>', { id: 'sc_btn', class: 'lt-button lt-advance' }).text('Move Records')))
 
   let ltContainer = $('<div>', { id: 'lt_container' })
     .append(ltMenu)

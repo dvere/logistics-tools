@@ -18,6 +18,16 @@
   width: fit-content;
   margin: 0 auto;
 }
+.lt-button {
+  border: 1px solid rgba(0,0,0,.25);
+  border-radius: .3rem;
+  padding: 1rem 2rem;
+  background: rgba(98,168,209,1);
+  color: rgba(255,255,255,1);
+}
+.lt-button:hover, .lt-button:active {
+ background: rgba(60,128,166,1);
+}
 #ci_results, #ac_results, #sc_results {
   padding: 2rem;
   line-height: 1.4rem;
