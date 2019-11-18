@@ -11,7 +11,7 @@ let ciMain = (data) => {
         output.append(row)
       })
     } else {
-      output = $('<div>', {class: 'sc-row lt-error'}).text('Query returned no results')
+      output = $('<div>', { class: 'sc-row lt-error' }).html('<span>Query returned no results</span>')
     }
     $('#lt_results').html(output)
   })
@@ -35,9 +35,9 @@ let acMain = (data) => {
     }
   })
   if (containers.length === 0) {
-    $('#lt_results').html($('<div>', {class: 'lt-error'}).text('Unable to build list of containers'))
+    $('#lt_results').html($('<div>', { class: 'lt-error' }).text('Unable to build list of containers'))
   } else {
-    $('#lt_results').html($('<div>', {id: 'ac_results'}))
+    $('#lt_results').html($('<div>', { id: 'ac_results' }))
     $.each(containers, (_i, o) => {
       let row = $('<div>', { id: o.id, class: 'ac-row' })
         .append($('<div>', { class: 'ac-col-l' }).text(o.id))
@@ -71,9 +71,9 @@ let scMain = (source, dest) => {
   $.getJSON('/consignments/', data)
   .done((cons) => {
     if (cons.length === 0) {
-      $('#lt_results').html($('<div>', {class: 'lt-error'}).text('No records returned for ' + source))
+      $('#lt_results').html($('<div>', { class: 'lt-error' }).text('No records returned for ' + source))
     } else {
-      $('#lt_results').html($('<div>', {id: 'sc_results'}))
+      $('#lt_results').html($('<div>', { id: 'sc_results' }))
       $.each(cons, (_i, c) => {
         let jqxhr = $.post('/trunkcontainers/' + dest + '/scan/' + c.tracking_number)
         jqxhr.always(() => {
@@ -120,11 +120,11 @@ let addPartsToDOM = () => {
     fields: ciFields.join(),
     location: 'SWINDON'
   }
-  let ciOpts = ['RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED']
+  let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
   let scValid = { required: 'required',  pattern: scRegex }
 
-  let ltMenu = $('<div>', {id: 'lt_menu'})
+  let ltMenu = $('<div>', { id: 'lt_menu' })
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
@@ -136,7 +136,7 @@ let addPartsToDOM = () => {
     .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' })))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
-  .append($('<div>', {id: 'ac_form' })
+  .append($('<div>', { id: 'ac_form' })
     .append($('<textarea>', { id:'ac_data' }))
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
