@@ -1,3 +1,6 @@
+input[type=date]::-webkit-inner-spin-button {
+  display: none;
+}
 #lt_container {
   width: fit-content;
   margin: 0 auto;
@@ -59,7 +62,6 @@
   grid-row-start: 2;
 }
 #lt_insert input, #lt_insert select {
-  height: 2.7rem;
   padding: 0 1rem;
 }
 .lt-tab {
@@ -74,6 +76,10 @@
   line-height: 1.6rem;
   display: grid;
   grid-template-columns: 12rem 42rem;
+}
+.sc-row.lt-error span {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 .sc-row:first-child, .ci-row:first-child, .ac-row:first-child {
   border-top-style: solid;
