@@ -55,8 +55,12 @@ let acMain = (data) => {
 
           if (jqxhr.status !== 204) {
             $('#'+ o.id +' ul.ac-list').append($('<li>', { class: 'sc-error' }).text(r + ' - ' + jqxhr.responseJSON.message))
+            let audio = new Audio('/audio/wrongContainer.mp3')
+	    audio.play()
             errors++
           } else {
+            let audio = new Audio('/audio/success.mp3')
+            audio.play()
             added++
           }
           $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
