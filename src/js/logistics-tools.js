@@ -55,12 +55,8 @@ let acMain = (data) => {
 
           if (jqxhr.status !== 204) {
             $('#'+ o.id +' ul.ac-list').append($('<li>', { class: 'sc-error' }).text(r + ' - ' + jqxhr.responseJSON.message))
-            let audio = new Audio('/audio/wrongContainer.mp3')
-	    audio.play()
             errors++
           } else {
-            let audio = new Audio('/audio/success.mp3')
-            audio.play()
             added++
           }
           $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
@@ -97,6 +93,17 @@ let scMain = (source, dest) => {
     }
   })
 }
+
+let validateBarcodes = (arr) => {
+	let regex = /^(PCS[0-9]{9}|(CSTC|CSLC|OOC)[0-9]{8})$/
+	$.each(arr, (_i, bc) => {
+		if (bc.match(regex)) === null) {
+		  return false
+	  }
+	})
+  return true
+}
+
 
 let addPartsToDOM = () => {
   let lt = 'https://dvere.github.io/logistics-tools/'
@@ -172,7 +179,16 @@ let addPartsToDOM = () => {
     ciMain(ciData)
   })
 
-  $('#ac_btn').click(() => acMain($('#ac_data').val().toUpperCase().trim().split('\n')))
+  $('#ac_btn').click(() => {
+		let acData = $('#ac_data').val().toUpperCase().trim().split('\n')
+		if (validateBarcodes(acData)) {
+			acMain(acData)
+		} else {
+			alert('Invalid Data, please check input and try again')
+			return false
+		}
+	})
+
   $('#ac_clr').click(() => $('#ac_data').val(''))
 
   $('#sc_btn').click(() => {
