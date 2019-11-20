@@ -95,12 +95,14 @@ let scMain = (source, dest) => {
 }
 
 let validateBarcodes = (arr) => {
-	let regex = /^(PCS[0-9]{9}|(CSTC|CSLC|OOC)[0-9]{8})$/
+  let regex = /^(PCS[0-9]{9}|(CSTC|CSLC|OOC)[0-9]{8})$/
+  let count = 0
 	$.each(arr, (_i, bc) => {
 		if (bc.match(regex) === null) {
-		  return false
-	  }
+		  count++
+		}
 	})
+  if (count > 0) return false
   return true
 }
 
