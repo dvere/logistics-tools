@@ -150,6 +150,7 @@ let addPartsToDOM = () => {
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ac_form' })
+    .append($('<input>', { id: 'ti' }))
     .append($('<textarea>', { id:'ac_data' }))
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
@@ -181,6 +182,14 @@ let addPartsToDOM = () => {
     ciMain(ciData)
   })
 
+  $('#ac_ti').keypress((e) => {
+    if (e.which == 13) {
+      $('#ac_data').val((_i, text) => text + $('#ac_ti').val() + '\n')
+      $('#ac_data').scrollTop($('#ac_data')[0].scrollHeight)
+      $('#ac_ti').select()
+      return false
+    }
+  })
   $('#ac_btn').click(() => {
 		let acData = $('#ac_data').val().toUpperCase().trim().split('\n')
 		if (validateBarcodes(acData)) {
@@ -206,6 +215,7 @@ let addPartsToDOM = () => {
   $('#lt_ac').click(() => {
     $('.lt-tab').hide()
     $('#ac_tab').show()
+    $('#ac_ti').focus()
   })
   $('#lt_sc').click(() => {
     $('.lt-tab').hide()
