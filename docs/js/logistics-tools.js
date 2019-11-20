@@ -150,7 +150,7 @@ let addPartsToDOM = () => {
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ac_form' })
-    .append($('<input>', { id: 'ti' }))
+    .append($('<input>', { id: 'ac_ti' }))
     .append($('<textarea>', { id:'ac_data' }))
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
