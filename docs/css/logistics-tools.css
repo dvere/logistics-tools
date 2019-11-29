@@ -68,6 +68,9 @@ input[type=date]::-webkit-inner-spin-button {
 #lt_insert input, #lt_insert select {
   padding: 0 1rem;
 }
+#lt_insert select {
+  height: 4rem;
+}
 .lt-tab {
   display: none;
 }
