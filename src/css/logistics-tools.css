@@ -99,9 +99,13 @@ input[type=date]::-webkit-inner-spin-button {
   width: 580px
 }
 .ci-row {
-  grid-template-columns: 12rem 12rem 12rem 8rem 10rem 10rem;
+  display: table-row;
 }
-.ci-row > div:first-child {
+.ci-row > td {
+  display: table-cell;
+  padding: 0 0.5rem;
+}
+.ci-row > td:first-child {
   display: none;
 }
 .ci-head {
