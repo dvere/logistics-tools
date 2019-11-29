@@ -1,17 +1,17 @@
 let ciMain = (data) => {
   $.getJSON('/consignments/', data).done((json) => {
-    let output = $('<div>', {id: 'ci_results'})
+    let output = $('<table>', {id: 'ci_results'})
     if (json.length > 0) {
-      let head = $('<div>', { class: 'ci-row ci-head' })
-      $.each(Object.keys(json[0]), (_i, k) => head.append($('<div>').text(k)))
+      let head = $('<tr>', { class: 'ci-row ci-head' })
+      $.each(Object.keys(json[0]), (_i, k) => head.append($('<td>').text(k)))
       output.append(head)
       $.each(json, (_i, o ) => {
-        let row = $('<div>', { class: 'ci-row' })
-        $.each(o, (k, v) => $('<div>', {class: 'ci-' + k}).text(v).appendTo(row))
+        let row = $('<tr>', { class: 'ci-row' })
+        $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
         output.append(row)
       })
     } else {
-      output = $('<div>', { class: 'sc-row lt-error' }).html('<span>Query returned no results</span>')
+      output = $('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>')
     }
     $('#lt_results').html(output)
   })
