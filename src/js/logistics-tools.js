@@ -157,9 +157,9 @@ let addPartsToDOM = () => {
 
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'sc_old', class: 'lt-button lt-advance' }).attr(scValid))
-    .append($('<input>', { id: 'sc_new', class: 'lt-button lt-advance' }).attr(scValid))
-    .append($('<button>', { id: 'sc_btn', class: 'lt-button lt-advance' }).text('Move Records')))
+    .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scValid))
+    .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scValid))
+    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let ltContainer = $('<div>', { id: 'lt_container' })
     .append(ltMenu)
@@ -210,15 +210,18 @@ let addPartsToDOM = () => {
 
   $('#lt_ci').click(() => {
     $('.lt-tab').hide()
+    $('#lt_results').empty()
     $('#ci_tab').show()
   })
   $('#lt_ac').click(() => {
     $('.lt-tab').hide()
+    $('#lt_results').empty()
     $('#ac_tab').show()
     $('#ac_ti').focus()
   })
   $('#lt_sc').click(() => {
     $('.lt-tab').hide()
+    $('#lt_results').empty()
     $('#sc_tab').show()
     $('#sc_old').focus()
   })
