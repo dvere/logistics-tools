@@ -112,3 +112,17 @@ input[type=date]::-webkit-inner-spin-button {
   font-weight: 700;
   background-color: rgba(0,0,0,0.2);
 }
+.lt-loader {
+  display: none;
+  margin: 0 auto;
+  border: 0.2rem solid rgba(42,145,216,1);
+  border-radius: 50%;
+  border-top: 0.2rem solid rgba(0,0,0,0,0.7);
+  height: 3rem;
+  width: 3rem;
+  animation: spin 1.2s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+
