@@ -1,5 +1,5 @@
 let ciMain = (data) => {
-  $('#lt_results').append($('<div>',{ class: 'lt-loader' }))
+  $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   $.getJSON('/consignments/', data).done((json) => {
     let output = $('<table>', {id: 'ci_results'})
     if (json.length > 0) {
@@ -23,7 +23,7 @@ let ciMain = (data) => {
 }
 
 let acMain = (data) => {
-  $('#lt_results').append($('<div>',{ class: 'lt-loader' }))
+  $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   let containers = []
   var current
   $.each(data, (_i, bc) => {
@@ -69,7 +69,7 @@ let acMain = (data) => {
 }
 
 let scMain = (source, dest) => {
-  $('#lt_results').append($('<div>',{ class: 'lt-loader' }))
+  $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   let data = { count: 5000, fields: 'tracking_number', q: 'trunk_container:' + source }
   $.getJSON('/consignments/', data)
   .done((cons) => {
