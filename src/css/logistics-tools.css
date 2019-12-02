@@ -115,7 +115,6 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.2);
 }
 .lt-loader {
-  display: none;
   margin: 0 auto;
   border: 0.2rem solid rgba(42,145,216,1);
   border-radius: 50%;
