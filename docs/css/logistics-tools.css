@@ -118,7 +118,7 @@ input[type=date]::-webkit-inner-spin-button {
   margin: 0 auto;
   border: 0.2rem solid rgba(42,145,216,1);
   border-radius: 50%;
-  border-top: 0.2rem solid rgba(0,0,0,0,0.7);
+  border-top: 0.2rem solid rgba(220,220,220,1);
   height: 3rem;
   width: 3rem;
   animation: spin 1.2s linear infinite;
