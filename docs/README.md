@@ -16,11 +16,12 @@ Move consignments from one container to another.
 
 ### css/
 
-[logistics-tools.min.css](css/logistics-tools.min.css) - Stylesheet for logistics-tools.
+[logistics-tools.css](css/logistics-tools.css) - Stylesheet for logistics-tools.
 
 ### js/
 
-[logistics-tools.js](js/logistics-tools.min.js) - the script.
+[logistics-tools.js](js/logistics-tools.js) - the script.
+[pkg-track.js](js/pkg-track.js) - mapping add-on to track individual consignment
 
 ### files/
 
