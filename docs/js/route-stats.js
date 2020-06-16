@@ -32,7 +32,12 @@ $(() => {
         'id': v.id,
         'class': 'route'
         }).html(
-        `<h2>Route: ${v.route_planned_code}</h2><b>Consignments:</b> ${v.number_of_consignments}<br /><b>Reconciled:</b> ${v.reconciled}<br /><b>Collected:</b> ${v.collected}<br /><b>Delivered:</b> ${v.delivered}<br /><b>Undelivered:</b> ${v.undelivered}`
+          `<h2>Route: ${v.route_planned_code}</h2>
+          <b>Consignments:</b> ${v.number_of_consignments}<br />
+          <b>Reconciled:</b> ${v.reconciled}<br />
+          <b>Collected:</b> ${v.collected}<br />
+          <b>Delivered:</b> ${v.delivered}<br />
+          <b>Undelivered:</b> ${v.undelivered}`
         ).appendTo($('#routes-data'))
     })
     $('#routes-data').css({
@@ -40,11 +45,23 @@ $(() => {
       margin: '0 auto',
       fontSize: "1.4em",         
       display: 'flex',
-      flexFlow: 'row wrap'
+      flexFlow: 'row wrap',
+      '--pvar': "\f00d"
     })
     $('#routes-data > div').css({
       padding: '2em',
       flex: '0 1 auto'
     })
+    let cbs = {
+      cursor: 'pointer',
+      position:"absolute",
+      top:10,
+      left:10
+    }
+    let cb = $('<span>')
+    cb.html("&#10006;")
+    cb.on('click', ()=> $('#routes-data').remove())
+    cb.css(cbs)
+    $('#routes-data').append(cb)
   })
 })
