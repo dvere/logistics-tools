@@ -109,10 +109,10 @@ let validateBarcodes = (arr) => {
   return true
 }
 
-
 let addPartsToDOM = () => {
   let lt = 'https://dvere.github.io/logistics-tools/'
-
+  let $pageContent = $('#main-container > div:first-child > div.page-content')
+  
   $('<link>', {
     id: 'lt-style',
     rel: 'stylesheet',
@@ -173,9 +173,7 @@ let addPartsToDOM = () => {
     .append($('<div>', { id: 'lt_results' }))
 
   $('div.breadcrumbs').hide()
-  $('div.page-content > div > div')
-  .empty()
-  .append(ltContainer)
+  $pageContent.prepend(ltContainer)
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
 
