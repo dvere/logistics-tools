@@ -166,13 +166,6 @@ let addPartsToDOM = () => {
 
   let ltClose = $('<span>', {id: 'lt_close'})
     .html("&#10006;")
-    .css({
-      cursor: 'pointer',
-      position:"absolute",
-      fontSize: '1.8em',
-      top: '0.2em',
-      right: '1em'
-    })
     .click(() =>  $('#lt_container').remove())
   
   let ltContainer = $('<div>', { id: 'lt_container' })
