@@ -162,7 +162,7 @@ let addPartsToDOM = () => {
   .append($('<div>', { id: 'ci_form' })
     .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scValid))
     .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scValid))
-    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records'))
+    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let ltClose = $('<span>', {id: 'lt_close'})
     .html("&#10006;")
