@@ -162,8 +162,19 @@ let addPartsToDOM = () => {
   .append($('<div>', { id: 'ci_form' })
     .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scValid))
     .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scValid))
-    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
+    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records'))
 
+  let ltClose = $('<span>', {id: 'lt_close'})
+    .html("&#10006;")
+    .css({
+      cursor: 'pointer',
+      position:"absolute",
+      fontSize: '1.8em',
+      top: '0.2em',
+      right: '1em'
+    })
+    .click(() =>  $('#lt_container').remove())
+  
   let ltContainer = $('<div>', { id: 'lt_container' })
     .append(ltMenu)
     .append($('<div>', { id: 'lt_insert' })
@@ -171,8 +182,8 @@ let addPartsToDOM = () => {
       .append(acForm)
       .append(scForm))
     .append($('<div>', { id: 'lt_results' }))
+    .append(ltClose)
 
-  $('div.breadcrumbs').hide()
   $pageContent.prepend(ltContainer)
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
@@ -226,6 +237,7 @@ let addPartsToDOM = () => {
     $('#sc_tab').show()
     $('#sc_old').focus()
   })
+  $('#lt_close').c
 }
 
 $.when($.ready).then(function() {
