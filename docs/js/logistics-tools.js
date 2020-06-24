@@ -237,7 +237,6 @@ let addPartsToDOM = () => {
     $('#sc_tab').show()
     $('#sc_old').focus()
   })
-  $('#lt_close').c
 }
 
 $.when($.ready).then(function() {
