@@ -18,7 +18,8 @@ let ciMain = (data) => {
           if (k === 'trunk_container') {
             v = v.barcode
           }
-          $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
+          $('<td>', {class: 'ci-' + k}).text(v).appendTo(row)
+        })
         output.append(row)
       })
     } else {
