@@ -3,7 +3,6 @@ let ciMain = (data) => {
     data.fields += ',trunk_container.barcode'
     data.status = 'RECEIVED SC'
   }
-  
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   $.getJSON('/consignments/', data).done((json) => {
     let output = $('<table>', {id: 'ci_results'})
@@ -15,7 +14,11 @@ let ciMain = (data) => {
       $.each(json, (_i, o ) => {
         let row = $('<tr>', { class: 'ci-row' })
         row.append($('<td>').text(_i + 1))
-        $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
+        $.each(o, (k, v) => {
+          if (k === 'trunk_container') {
+            v = v.barcode
+          }
+            $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
         output.append(row)
       })
     } else {
