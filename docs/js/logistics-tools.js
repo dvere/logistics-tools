@@ -1,13 +1,20 @@
 let ciMain = (data) => {
+  if (data.status === 'SCANNED') {
+    data.fields += ',trunk_container.barcode'
+    data.status = 'RECEIVED SC'
+  }
+  
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   $.getJSON('/consignments/', data).done((json) => {
     let output = $('<table>', {id: 'ci_results'})
     if (json.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
+      head.append($('<td>').html('&nbsp;')
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<td>').text(k)))
       output.append(head)
       $.each(json, (_i, o ) => {
         let row = $('<tr>', { class: 'ci-row' })
+        row.append($('<td>').text(_i + 1)
         $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
         output.append(row)
       })
@@ -180,6 +187,7 @@ let addPartsToDOM = () => {
   $pageContent.prepend(ltContainer)
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
+  $('<option>', { value: 'SCANNED', text: 'SCANNED' }).appendTo($('#ci_status'))
 
   $('#ci_btn').click(() => {
     ciData.received_at = $('#ci_date').val()
