@@ -9,12 +9,12 @@ let ciMain = (data) => {
     let output = $('<table>', {id: 'ci_results'})
     if (json.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
-      head.append($('<td>').html('&nbsp;')
+      head.append($('<td>').html('&nbsp;'))
       $.each(Object.keys(json[0]), (_i, k) => head.append($('<td>').text(k)))
       output.append(head)
       $.each(json, (_i, o ) => {
         let row = $('<tr>', { class: 'ci-row' })
-        row.append($('<td>').text(_i + 1)
+        row.append($('<td>').text(_i + 1))
         $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
         output.append(row)
       })
