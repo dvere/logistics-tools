@@ -198,6 +198,7 @@ let addPartsToDOM = () => {
   $('#ac_btn').click(() => {
 		let acData = $('#ac_data').val().toUpperCase().trim().split('\n')
 		if (validateBarcodes(acData)) {
+      $('#ac_ti').focus()
 			acMain(acData)
 		} else {
 			alert('Invalid Data, please check input and try again')
@@ -205,7 +206,10 @@ let addPartsToDOM = () => {
 		}
 	})
 
-  $('#ac_clr').click(() => $('#ac_data').val(''))
+  $('#ac_clr').click(() => {
+    $('#ac_data').val('')
+    $('#ac_ti').focus()
+  })
 
   $('#sc_btn').click(() => {
     let source = $('#sc_old').val().trim()
