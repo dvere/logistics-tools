@@ -189,6 +189,8 @@ let addPartsToDOM = () => {
 
   $('#ac_ti').keypress((e) => {
     if (e.which == 13) {
+      let audio = new Audio('/audio/success')
+      audio.play()
       $('#ac_data').val((_i, text) => text + $('#ac_ti').val() + '\n')
       $('#ac_data').scrollTop($('#ac_data')[0].scrollHeight)
       $('#ac_ti').select()
