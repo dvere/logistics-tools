@@ -112,7 +112,7 @@ let validateBarcodes = (arr) => {
 let addPartsToDOM = () => {
   let lt = 'https://dvere.github.io/logistics-tools/'
   let $pageContent = $('#main-container > div:first-child > div.page-content')
-  
+  let sc = $('span.user-info > small').text()
   $('<link>', {
     id: 'lt-style',
     rel: 'stylesheet',
@@ -130,7 +130,7 @@ let addPartsToDOM = () => {
     'status'
   ]
   let ciData = {
-    q: 'collected:SW',
+    q: 'collected:' + sc,
     count: 1000,
     client_id: 11270,
     fields: ciFields.join(),
