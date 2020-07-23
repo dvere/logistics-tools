@@ -109,10 +109,10 @@ let validateBarcodes = (arr) => {
   return true
 }
 
-let addPartsToDOM = () => {
+let addPartsToDOM = (sc) => {
   let lt = 'https://dvere.github.io/logistics-tools/'
   let $pageContent = $('#main-container > div:first-child > div.page-content')
-  let sc = $('span.user-info > small').text()
+  
   $('<link>', {
     id: 'lt-style',
     rel: 'stylesheet',
@@ -130,11 +130,11 @@ let addPartsToDOM = () => {
     'status'
   ]
   let ciData = {
-    q: 'collected:' + sc,
+    q: 'collected:' + sc.code,
     count: 1000,
     client_id: 11270,
     fields: ciFields.join(),
-    location: 'SWINDON'
+    location: sc.description
   }
   let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
@@ -239,5 +239,9 @@ let addPartsToDOM = () => {
 }
 
 $.when($.ready).then(function() {
-  addPartsToDOM();
+  $.getJSON('/user/me')
+  .then(r => {
+    $.getJSON('/servicecentres/' + r.service_centre)
+    .then(s => addPartsToDOM(s))
+  })
 })
