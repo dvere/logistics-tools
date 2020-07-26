@@ -1,15 +1,40 @@
 let ciMain = (data) => {
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
-  $.getJSON('/consignments/', data).done((json) => {
-    let output = $('<table>', {id: 'ci_results'})
-    if (json.length > 0) {
+
+  $.getJSON('/consignments/', data.query).done((cons) => {
+
+    props = ['id', 'tracking_number', 'requested_route', 'consolidation_id', 'location', 'status']
+    cons2 = []
+    $.each(cons, (i, con) => cons2.push(
+      Object.fromEntries(
+        Object.entries(con).filter(
+          ([key, val]) => props.includes(key)
+        )
+      )
+    ))
+    cons = cons2
+
+    let out_html = $('<table>', {id: 'ci_results'})
+
+    if (data.ncr) {
+      data.query.fields = 'id,trunk_container.barcode'
+      $.getJSON('/consignments/', query).done(gons => {
+        exc = []
+        $.each(gons, (i,g) => exc.push(g.id))
+        out_cons = ( $.grep(cons, con => $.inArray(con.id, exc), false))
+      })
+    } else {
+      out_cons = cons
+    }
+
+    if (out_cons.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
-      $.each(Object.keys(json[0]), (_i, k) => head.append($('<td>').text(k)))
-      output.append(head)
-      $.each(json, (_i, o ) => {
+      $.each(Object.keys(out_cons[0]), (_i, k) => head.append($('<td>').text(k)))
+      out_html.append(head)
+      $.each(out_cons, (_i, o ) => {
         let row = $('<tr>', { class: 'ci-row' })
         $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
-        output.append(row)
+        out_html.append(row)
       })
     } else {
       output = $('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>')
@@ -120,20 +145,11 @@ let addPartsToDOM = (sc) => {
   })
   .appendTo($('head'))
 
-  let ciFields = [
-    'tracking_number',
-    'requested_route',
-    'consolidation_id',
-    'location',
-    'delivery_address_type',
-    'package_type',
-    'status'
-  ]
-  let ciData = {
+  let ciData = {}
+  ciData.query = {
     q: 'collected:' + sc.code,
-    count: 1000,
+    count: 5000,
     client_id: 11270,
-    fields: ciFields.join(),
     location: sc.description
   }
   let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
@@ -147,7 +163,9 @@ let addPartsToDOM = (sc) => {
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id:'ci_date', type:'date' }))
+    .append($('<input>', { id: 'ci_ncr', type: 'checkbox'}))
+    .append($('<label>', { for: 'ci_ncr' }).text('Exclude records with parent container')) 
+    .append($('<input>', { id: 'ci_date', type:'date' }))
     .append($('<select>', { id: 'ci_status' }))
     .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' })))
 
@@ -182,8 +200,9 @@ let addPartsToDOM = (sc) => {
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
   
   $('#ci_btn').click(() => {
-    ciData.received_at = $('#ci_date').val()
-    ciData.status = $('#ci_status').val()
+    ciData.query.received_at = $('#ci_date').val()
+    ciData.query.status = $('#ci_status').val()
+    ciData.ncr = ($('#ci_ncr').is(':checked')) ? 1 : 0 
     ciMain(ciData)
   })
 
