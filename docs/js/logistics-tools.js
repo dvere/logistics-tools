@@ -15,6 +15,7 @@ let ciMain = (data) => {
     cons = cons2
 
     let out_html = $('<table>', {id: 'ci_results'})
+    let out_cons = []
 
     if (data.ncr) {
       data.query.fields = 'id,trunk_container.barcode'
