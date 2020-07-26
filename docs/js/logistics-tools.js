@@ -18,7 +18,7 @@ let ciMain = (data) => {
 
     if (data.ncr) {
       data.query.fields = 'id,trunk_container.barcode'
-      $.getJSON('/consignments/', query).done(gons => {
+      $.getJSON('/consignments/', data.query).done(gons => {
         exc = []
         $.each(gons, (i,g) => exc.push(g.id))
         out_cons = ( $.grep(cons, con => $.inArray(con.id, exc), false))
