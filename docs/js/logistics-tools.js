@@ -49,7 +49,7 @@ let filterTrunk = async (cons, query) => {
   $.getJSON('/consignments/', query).done(gons => {
     let exclude = []
     $.each(gons, (i,g) => exclude.push(g.id))
-    return ($.grep(cons, con => $.inArray(con.id, exc), false))
+    return ($.grep(cons, con => $.inArray(con.id, exclude), false))
   })
 }
 
