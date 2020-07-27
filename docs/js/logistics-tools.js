@@ -4,41 +4,31 @@ let ciMain = (data) => {
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
-  $.getJSON('/consignments/', data.query).done((cons) => {
+  $.getJSON('/consignments/', data.query).done((json) => {
 
     props = ['id', 'tracking_number', 'requested_route', 'consolidation_id', 'location', 'status']
-    cons2 = []
-    $.each(cons, (i, con) => cons2.push(
+    cons = []
+    $.each(json, (i, con) => cons.push(
       Object.fromEntries(
         Object.entries(con).filter(
           ([key, val]) => props.includes(key)
         )
       )
     ))
-    cons = cons2
 
     console.log(cons)
 
     let out_html = $('<table>', {id: 'ci_results'})
-    let out_cons = []
 
     if (data.ncr === 1) {
-      data.query.fields = 'id,trunk_container.barcode'
-      $.getJSON('/consignments/', data.query).done(gons => {
-        exc = []
-        $.each(gons, (i,g) => exc.push(g.id))
-        out_cons = ($.grep(cons, con => $.inArray(con.id, exc), false))
-        delete data.query.fields
-      })
-    } else {
-      out_cons = cons
+      cons = await filterTrunk(cons, data.query)
     }
 
-    if (out_cons.length > 0) {
+    if (cons.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
-      $.each(Object.keys(out_cons[0]), (_i, k) => head.append($('<td>').text(k)))
+      $.each(Object.keys(cons[0]), (_i, k) => head.append($('<td>').text(k)))
       out_html.append(head)
-      $.each(out_cons, (_i, o ) => {
+      $.each(cons, (_i, o ) => {
         let row = $('<tr>', { class: 'ci-row' })
         $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
         out_html.append(row)
@@ -51,6 +41,15 @@ let ciMain = (data) => {
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + s + '\n' + e)
     $('#lt_results').html($('<pre>').text(o))
+  })
+}
+
+let filterTrunk = async (cons, query) => {
+  query.fields = 'id,trunk_container.barcode'
+  $.getJSON('/consignments/', query).done(gons => {
+    let exclude = []
+    $.each(gons, (i,g) => exclude.push(g.id))
+    return ($.grep(cons, con => $.inArray(con.id, exc), false))
   })
 }
 
