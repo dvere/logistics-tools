@@ -2,6 +2,7 @@ let ciMain = (data) => {
 
   console.log(data)
   let query = data.query
+  query.fields = 'id,tracking_number,requested_route,consolidation_id,status'
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
@@ -152,8 +153,7 @@ let addPartsToDOM = (sc) => {
     q: 'collected:' + sc.code,
     count: 5000,
     client_id: 11270,
-    location: sc.description,
-    fields: 'id,tracking_number,requested_route,consolidation_id,status'
+    location: sc.description
   }
   let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
