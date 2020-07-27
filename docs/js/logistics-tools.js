@@ -169,11 +169,11 @@ let addPartsToDOM = (sc) => {
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'ci_ncr', type: 'checkbox'}))
-    .append($('<label>', { for: 'ci_ncr' }).text('Exclude records with parent container')) 
     .append($('<input>', { id: 'ci_date', type:'date' }))
     .append($('<select>', { id: 'ci_status' }))
-    .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' })))
+    .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
+    .append($('<input>', { id: 'ci_ncr', type: 'checkbox'}))
+    .append($('<label>', { for: 'ci_ncr' }).text('Exclude records with parent container')))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ac_form' })
