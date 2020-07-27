@@ -5,7 +5,7 @@ let ciMain = (data) => {
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
-  $.getJSON('/consignments/', query).done((json) => {
+  $.getJSON('/consignments/', query).done((cons) => {
 
     let out_html = $('<table>', {id: 'ci_results'})
 
