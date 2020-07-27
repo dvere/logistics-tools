@@ -169,7 +169,7 @@ let addPartsToDOM = (sc) => {
     .append($('<input>', { id: 'ci_date', type:'date' }))
     .append($('<select>', { id: 'ci_status' }))
     .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
-    .append($('<label>').css({gridColumn: '1 / 3', marginBottom: '0'})
+    .append($('<label>').css({gridColumn: '1 / 3', marginBottom: '-0.57em'})
       .html('<input id="ci_ncr" type="checkbox" />&nbsp;Exclude records processed to trunk container')))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab' })
