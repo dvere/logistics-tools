@@ -1,4 +1,7 @@
 let ciMain = (data) => {
+
+  console.log(data)
+
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
   $.getJSON('/consignments/', data.query).done((cons) => {
@@ -13,12 +16,13 @@ let ciMain = (data) => {
       )
     ))
     cons = cons2
+
     console.log(cons)
 
     let out_html = $('<table>', {id: 'ci_results'})
     let out_cons = []
 
-    if (data.ncr) {
+    if (data.ncr === 1) {
       data.query.fields = 'id,trunk_container.barcode'
       $.getJSON('/consignments/', data.query).done(gons => {
         exc = []
