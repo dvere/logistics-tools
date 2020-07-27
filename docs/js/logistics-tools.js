@@ -5,27 +5,13 @@ let ciMain = (data) => {
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
-  $.getJSON('/consignments/', query).done((cons) => {
-
-    let out_html = $('<table>', {id: 'ci_results'})
+  $.getJSON('/consignments/', query).done((json) => {
 
     if (data.ncr === 1) {
-      filterTrunk(cons, data.query)
-    }
-
-    if (cons.length > 0) {
-      let head = $('<tr>', { class: 'ci-row ci-head' })
-      $.each(Object.keys(cons[0]), (_i, k) => head.append($('<td>').text(k)))
-      out_html.append(head)
-      $.each(cons, (_i, o ) => {
-        let row = $('<tr>', { class: 'ci-row' })
-        $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
-        out_html.append(row)
-      })
+      filterProcessed(json, query)
     } else {
-      out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
+      ciOutput(json)
     }
-    $('#lt_results').html(out_html)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + s + '\n' + e)
@@ -33,13 +19,34 @@ let ciMain = (data) => {
   })
 }
 
-let filterTrunk = async (cons, query) => {
-  query.fields = 'id,trunk_container.barcode'
-  $.getJSON('/consignments/', query).done(gons => {
+let filterProcessed = (allCons, q) => {
+  q.fields = 'id,trunk_container.barcode'
+  $.getJSON('/consignments/', q).done(processedCons => {
     let exclude = []
-    $.each(gons, (i,g) => exclude.push(g.id))
-    return ($.grep(cons, con => $.inArray(con.id, exclude), false))
+    $.each(processedCons, (i,p) => exclude.push(p.id))
+
+    let unprocessedCons = $.grep(allCons, c => $.inArray(c.id, exclude), true))
+    ciOutput(unprocessedCons)
   })
+}
+
+let ciOutput = (cons) => {
+  let out_html = $('<table>', {id: 'ci_results'})
+
+  if (cons.length > 0) {
+    let head = $('<tr>', { class: 'ci-row ci-head' })
+
+    $.each(Object.keys(cons[0]), (_i, k) => head.append($('<td>').text(k)))
+    out_html.append(head)
+    $.each(cons, (_i, o ) => {
+      let row = $('<tr>', { class: 'ci-row' })
+      $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
+      out_html.append(row)
+    })
+    } else {
+      out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
+    }
+    $('#lt_results').html(out_html)
 }
 
 let acMain = (data) => {
