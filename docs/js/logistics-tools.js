@@ -28,6 +28,7 @@ let ciMain = (data) => {
         exc = []
         $.each(gons, (i,g) => exc.push(g.id))
         out_cons = ($.grep(cons, con => $.inArray(con.id, exc), false))
+        delete data.query.fields
       })
     } else {
       out_cons = cons
