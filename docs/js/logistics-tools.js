@@ -13,6 +13,7 @@ let ciMain = (data) => {
       )
     ))
     cons = cons2
+    console.log(cons)
 
     let out_html = $('<table>', {id: 'ci_results'})
     let out_cons = []
@@ -22,7 +23,7 @@ let ciMain = (data) => {
       $.getJSON('/consignments/', data.query).done(gons => {
         exc = []
         $.each(gons, (i,g) => exc.push(g.id))
-        out_cons = ( $.grep(cons, con => $.inArray(con.id, exc), false))
+        out_cons = ($.grep(cons, con => $.inArray(con.id, exc), false))
       })
     } else {
       out_cons = cons
@@ -38,9 +39,9 @@ let ciMain = (data) => {
         out_html.append(row)
       })
     } else {
-      output = $('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>')
+      out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
     }
-    $('#lt_results').html(output)
+    $('#lt_results').html(out_html)
   })
   .fail((o, s, e) => {
     console.error('Ooops, CI GET Error: ' + s + '\n' + e)
