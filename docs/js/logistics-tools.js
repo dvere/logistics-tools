@@ -21,7 +21,7 @@ let ciMain = (data) => {
     let out_html = $('<table>', {id: 'ci_results'})
 
     if (data.ncr === 1) {
-      cons = await filterTrunk(cons, data.query)
+      cons = async filterTrunk(cons, data.query)
     }
 
     if (cons.length > 0) {
@@ -44,7 +44,7 @@ let ciMain = (data) => {
   })
 }
 
-let filterTrunk = async (cons, query) => {
+let filterTrunk = (cons, query) => {
   query.fields = 'id,trunk_container.barcode'
   $.getJSON('/consignments/', query).done(gons => {
     let exclude = []
