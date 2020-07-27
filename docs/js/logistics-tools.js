@@ -21,7 +21,7 @@ let ciMain = (data) => {
     let out_html = $('<table>', {id: 'ci_results'})
 
     if (data.ncr === 1) {
-      cons = filterTrunk(cons, data.query)
+      filterTrunk(cons, data.query)
     }
     console.log(cons)
 
