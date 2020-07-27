@@ -1,29 +1,17 @@
 let ciMain = (data) => {
 
   console.log(data)
+  let query = data.query
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
-  $.getJSON('/consignments/', data.query).done((json) => {
-
-    props = ['id', 'tracking_number', 'requested_route', 'consolidation_id', 'location', 'status']
-    cons = []
-    $.each(json, (i, con) => cons.push(
-      Object.fromEntries(
-        Object.entries(con).filter(
-          ([key, val]) => props.includes(key)
-        )
-      )
-    ))
-
-    console.log(cons)
+  $.getJSON('/consignments/', query).done((json) => {
 
     let out_html = $('<table>', {id: 'ci_results'})
 
     if (data.ncr === 1) {
       filterTrunk(cons, data.query)
     }
-    console.log(cons)
 
     if (cons.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
@@ -157,7 +145,8 @@ let addPartsToDOM = (sc) => {
     q: 'collected:' + sc.code,
     count: 5000,
     client_id: 11270,
-    location: sc.description
+    location: sc.description,
+    fields: 'id,tracking_number,requested_route,consolidation_id,status'
   }
   let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
