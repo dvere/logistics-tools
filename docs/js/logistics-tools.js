@@ -23,6 +23,7 @@ let ciMain = (data) => {
     if (data.ncr === 1) {
       cons = filterTrunk(cons, data.query)
     }
+    console.log(cons)
 
     if (cons.length > 0) {
       let head = $('<tr>', { class: 'ci-row ci-head' })
