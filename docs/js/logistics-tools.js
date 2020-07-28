@@ -32,6 +32,7 @@ let filterProcessed = (allCons, q) => {
     processedCons.forEach(p => ex.push(p.id))
 
     let unprocessedCons = allCons.filter(c => !ex.includes(c.id))
+    console.dir(unprocessedCons)
     ciOutput(unprocessedCons)
   })
 }
