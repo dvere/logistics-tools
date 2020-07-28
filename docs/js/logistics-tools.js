@@ -1,6 +1,6 @@
 let ciMain = (data) => {
 
-  console.log(data)
+  console.dir(data)
   let query = data.query
   query.fields = 'id,tracking_number,requested_route,consolidation_id,status'
 
@@ -22,7 +22,9 @@ let ciMain = (data) => {
 
 let filterProcessed = (allCons, q) => {
   q.fields = 'id,trunk_container.barcode'
+  console.dir(q)
   $.getJSON('/consignments/', q).done(processedCons => {
+    console.dir(processedCons)
     let exclude = []
     $.each(processedCons, (i,p) => exclude.push(p.id))
 
