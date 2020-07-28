@@ -26,7 +26,7 @@ let filterProcessed = (allCons, q) => {
     let exclude = []
     $.each(processedCons, (i,p) => exclude.push(p.id))
 
-    let unprocessedCons = $.grep(allCons, c => $.inArray(c.id, exclude), false)
+    let unprocessedCons = $.grep(allCons, c => $.inArray(c.id, exclude), true)
     ciOutput(unprocessedCons)
   })
 }
