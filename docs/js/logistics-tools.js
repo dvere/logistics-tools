@@ -24,6 +24,7 @@ let filterProcessed = (allCons, q) => {
   q.fields = 'id,trunk_container.barcode'
   delete q.status
   console.dir(q)
+  console.dir(allCons)
   
   $.getJSON('/consignments/', q).done(processedCons => {
     console.dir(processedCons)
