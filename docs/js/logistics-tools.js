@@ -28,10 +28,10 @@ let filterProcessed = (allCons, q) => {
   
   $.getJSON('/consignments/', q).done(processedCons => {
     console.dir(processedCons)
-    let exclude = []
-    $.each(processedCons, (i,p) => exclude.push(p.id))
+    let ex = []
+    processedCons.forEach(p => ex.push(p.id))
 
-    let unprocessedCons = $.grep(allCons, c => $.inArray(c.id, exclude), true)
+    let unprocessedCons = allCons.filter(c => !ex.includes(c.id)
     ciOutput(unprocessedCons)
   })
 }
