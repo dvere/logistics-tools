@@ -31,7 +31,7 @@ let filterProcessed = (allCons, q) => {
     let ex = []
     processedCons.forEach(p => ex.push(p.id))
 
-    let unprocessedCons = allCons.filter(c => !ex.includes(c.id)
+    let unprocessedCons = allCons.filter(c => !ex.includes(c.id))
     ciOutput(unprocessedCons)
   })
 }
