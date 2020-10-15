@@ -163,7 +163,7 @@ let addPartsToDOM = (sc) => {
   }
   let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
-  let scValid = { required: 'required',  pattern: scRegex }
+  let scAttr = { required: 'required',  pattern: scRegex, autocomplete: 'off' }
 
   let ltMenu = $('<div>', { id: 'lt_menu' })
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
@@ -180,15 +180,15 @@ let addPartsToDOM = (sc) => {
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab'})
   .append($('<div>', { id: 'ac_form' })
-    .append($('<input>', { id: 'ac_ti', autocomplete: 'off' }))
+    .append($('<input>', { id: 'ac_ti' }).attr({autocomplete: 'off'}))
     .append($('<textarea>', { id:'ac_data' }))
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
 
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'sc_old', class: 'lt-input', autocomplete: 'off' }).attr(scValid))
-    .append($('<input>', { id: 'sc_new', class: 'lt-input', autocomplete: 'off' }).attr(scValid))
+    .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scAttr))
+    .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scAttr))
     .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let ltClose = $('<span>', {id: 'lt_close'})
