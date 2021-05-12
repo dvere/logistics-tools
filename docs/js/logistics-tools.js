@@ -29,8 +29,9 @@ let filterProcessed = (allCons, q) => {
   $.getJSON('/consignments/', q).done(processedCons => {
     console.dir(processedCons)
     let ex = []
-    processedCons.forEach(p => if(p.trunk_container.length > 0) ex.push(p.id))
-
+    processedCons.forEach(p => {
+      if(p.trunk_container.length > 0) ex.push(p.id))
+    }
     let unprocessedCons = allCons.filter(c => !ex.includes(c.id))
     console.dir(unprocessedCons)
     ciOutput(unprocessedCons)
