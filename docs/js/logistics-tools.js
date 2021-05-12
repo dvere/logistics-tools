@@ -161,7 +161,7 @@ let addPartsToDOM = (sc) => {
     client_id: 11270,
     location: sc.description
   }
-  let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
+  let ciOpts = [ 'RECEIVED', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
   let scAttr = { required: 'required',  pattern: scRegex, autocomplete: 'off' }
 
