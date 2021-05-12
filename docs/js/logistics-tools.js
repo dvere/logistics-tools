@@ -30,8 +30,10 @@ let filterProcessed = (allCons, q) => {
     console.dir(processedCons)
     let ex = []
     processedCons.forEach(p => {
-      if(p.trunk_container.length > 0) ex.push(p.id)
-    }
+      if(p.trunk_container.length > 0) {
+        ex.push(p.id)
+      }
+    })
     let unprocessedCons = allCons.filter(c => !ex.includes(c.id))
     console.dir(unprocessedCons)
     ciOutput(unprocessedCons)
