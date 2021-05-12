@@ -136,7 +136,7 @@ let addPartsToDOM = () => {
     fields: ciFields.join(),
     location: 'SWINDON'
   }
-  let ciOpts = [ 'RECEIVED SC', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
+  let ciOpts = [ 'RECEIVED', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
   let scRegex = '(CSTC|OOC)[0-9]{8}'
   let scValid = { required: 'required',  pattern: scRegex }
 
