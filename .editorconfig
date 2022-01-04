@@ -13,8 +13,7 @@ insert_final_newline = true
 [*.{js,py}]
 charset = utf-8
 
-
 # Indentation override for all JS under lib directory
-assets/js/**.js]
+[docs/js/**.js]
 indent_style = space
 indent_size = 2
