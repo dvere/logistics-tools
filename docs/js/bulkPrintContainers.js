@@ -2,10 +2,17 @@
  *** WORK IN PROGRESS - NON FUNCTIONAL AS STAND ALONE SCRIPT! ***
  * Bulk create, sort and print logistics containers
  */  
-
+ 
 if (window.location.protocol !== 'https:') {
   throw new Error('Connect with https to run this script')
 }
+// UGLY!
+const inp = document.getElementById('targetElement')
+if(inp) inp.remove()
+
+const target = document.createElement('input')
+target.setAttribute('type', 'hidden')
+target.id = 'targetElement'
 
 const origin = window.location.origin
 const date = new Date()
@@ -144,7 +151,13 @@ const getRouteData = async routeGroups => {
       })
     })
   })
-  return routes
+  const loadedEvent = new CustomEvent('routes.loaded', {
+    detail: {
+      routes
+    }
+  })
+  target.dispatchEvent(loadedEvent)
+  // return routes
 }
 
 const sortByRoutePlannedCode = routes => {
@@ -177,20 +190,26 @@ const addContainersToRoute = async route => {
 }
 
 const sendToPrint = async routes => {
-    for(i=0;i<routes.length;i++) {
-        printLabels(routes[i].printData)
-        await timer(2000)
-    }
+  for(i=0;i<routes.length;i++) {
+    printLabels(routes[i].printData)
+    await timer(2000)
+  }
 }
 
 // doit
 let routes = await getRouteData(routeGroups)
 
-// break here!
-routes.sort((a, b) => (a.rpc > b.rpc) ? 1 : -1)
+const sortAndAddContainers = e => {
+  const routes = e.detail.routes
+  routes.sort((a, b) => (a.rpc > b.rpc) ? 1 : -1)
+  
+}
 
 // break here!
 routes.forEach(r => addContainersToRoute(r))
 
 // break here!
 sendToPrint(routes)
+
+target.addEventListener('routes.loaded', sortAndAddContainers)
+target.addEventListener('routes.ready', )
