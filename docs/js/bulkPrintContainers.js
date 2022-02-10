@@ -1,19 +1,11 @@
 /* 
- *** WORK IN PROGRESS - NON FUNCTIONAL AS STAND ALONE SCRIPT! ***
+ *** WORK IN PROGRESS - BUT DOES RUN AS STAND ALONE SCRIPT! ***
  * Bulk create, sort and print logistics containers
  */  
  
-if (window.location.protocol !== 'https:') {
+ if (window.location.protocol !== 'https:') {
   throw new Error('Connect with https to run this script')
 }
-// UGLY!
-const inp = document.getElementById('targetElement')
-if(inp) inp.remove()
-
-const target = document.createElement('input')
-target.setAttribute('type', 'hidden')
-target.id = 'targetElement'
-
 const origin = window.location.origin
 const date = new Date()
 const today = date.getDay()
@@ -131,39 +123,30 @@ const getPrintData = route => {
 }
 
 const getRouteData = async routeGroups => {
-  let routes = []
-  await routeGroups.forEach(async (group) => {
-    addGroupDate(group)
-    addShortDate(group)
-    getRouteKeys(group)
-    .then(() => {
-      group.routes.forEach(async (route, x) => {
-        let locations = await getLocations(route.rpc)
-        let cid = []
-        locations.forEach(location => {
-          cid.push(location.consolidation_id)
+  return new Promise(resolve => {
+    let routes = []
+    routeGroups.forEach(async group => {
+      addGroupDate(group)
+      addShortDate(group)
+      getRouteKeys(group)
+      .then(() => {
+        group.routes.forEach(async (route, x) => {
+          let locations = await getLocations(route.rpc)
+          let cid = []
+          locations.forEach(location => {
+            cid.push(location.consolidation_id)
+          })
+          group.routes[x].consolidation_id = cid
+          group.routes[x].locations = locations
+          group.routes[x].date = group.date
+          group.routes[x].sdate = group.sdate
+          routes.push(group.routes[x])
         })
-        group.routes[x].consolidation_id = cid
-        group.routes[x].locations = locations
-        group.routes[x].date = group.date
-        group.routes[x].sdate = group.sdate
-        routes.push(group.routes[x])
       })
     })
+    resolve(routes)
   })
-  const loadedEvent = new CustomEvent('routes.loaded', {
-    detail: {
-      routes
-    }
-  })
-  target.dispatchEvent(loadedEvent)
-  // return routes
 }
-
-const sortByRoutePlannedCode = routes => {
-    routes.sort((a,b) => (a.rpc > b.rpc)?1:-1)
-    return routes
-  }
   
 const getRouteContainers = async routeKey => {
   const url = origin + '/routes/' + routeKey + '?fields=location_containers'
@@ -175,8 +158,8 @@ const getRouteContainers = async routeKey => {
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
 const addContainersToRoute = async route => {
-  let cid = route.consolidation_id.join(',')
-  await addContainers(route.key, cid)  
+  //let cid = route.consolidation_id.join(',')
+  //await addContainers(route.key, cid)  
 
   let c = await getRouteContainers(route.key)
   c.sort((a,b) => (a.consolidation_id > b.consolidation_id) ? 1: -1)
@@ -196,20 +179,19 @@ const sendToPrint = async routes => {
   }
 }
 
-// doit
-let routes = await getRouteData(routeGroups)
-
-const sortAndAddContainers = e => {
-  const routes = e.detail.routes
-  routes.sort((a, b) => (a.rpc > b.rpc) ? 1 : -1)
-  
-}
-
-// break here!
-routes.forEach(r => addContainersToRoute(r))
-
-// break here!
-sendToPrint(routes)
-
-target.addEventListener('routes.loaded', sortAndAddContainers)
-target.addEventListener('routes.ready', )
+getRouteData(routeGroups)
+.then(routes => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      routes.sort((a, b) => (a.rpc > b.rpc)? 1: -1)
+      resolve(routes)
+    }, 5000)
+  })
+})
+.then(routes => {
+  return new Promise(resolve => {
+    routes.forEach(route => addContainersToRoute(route))
+    resolve(routes)
+  })
+})
+.then(routes => sendToPrint(routes))
