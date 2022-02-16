@@ -159,17 +159,15 @@ const getGroups = async (groupDate = today) => {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8'
           },
-          referrer: 'https://logistics.citysprint.co.uk/route/',
+          referrer: baseUrl + '/route/',
           body: JSON.stringify(printBody), 
           method: 'POST',
           mode: 'cors',
           credentials: 'include'
         }
-        await fetch('https://logistics.citysprint.co.uk/crossOrigin', printReq)
+        await fetch(baseUrl + '/crossOrigin', printReq)
         await timer(2000)
       }
     }
   })
 }
-
-
