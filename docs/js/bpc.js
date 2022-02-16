@@ -172,4 +172,4 @@ const getGroups = async (groupDate = today) => {
   })
 }
 
-getGroups()
+
