@@ -157,6 +157,12 @@ let addPartsToDOM = (sc) => {
   })
   .appendTo($('head'))
 
+  $('<script',{
+    id: 'lt-bpc',
+    src: lt + 'js/bpc.js'
+  })
+  .appendTo($('body'))
+
   let ciData = {}
   ciData.query = {
     q: 'collected:' + sc.code,
@@ -172,6 +178,7 @@ let addPartsToDOM = (sc) => {
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
+  .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'getGroups()' }))
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
