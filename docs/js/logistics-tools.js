@@ -157,7 +157,7 @@ let addPartsToDOM = (sc) => {
   })
   .appendTo($('head'))
 
-  $('<script',{
+  $('<script>',{
     id: 'lt-bpc',
     src: lt + 'js/bpc.js'
   })
