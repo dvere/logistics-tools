@@ -248,6 +248,7 @@ let addPartsToDOM = (sc) => {
 
   $('#ac_clr').click(() => {
     $('#ac_data').val('')
+    $('#lt_results').empty()
     $('#ac_ti').focus()
   })
 
