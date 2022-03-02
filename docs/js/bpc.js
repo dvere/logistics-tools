@@ -88,6 +88,7 @@ const getGroups = async (groupDate = today) => {
         const url = baseUrl +'/routes/'+ route.key +'?fields=location_containers'
         const res = await fetch(url, params)
         const data = await res.json()
+        // XXX DELETE to EOF to NOT create containers
         // if no containers..generate and add them to data.location_containers
         if(!data.location_containers.length) {
           const cid = []
@@ -114,7 +115,7 @@ const getGroups = async (groupDate = today) => {
               consolidation_id: rcids[i]
             })
           }
-        }
+        } // XXX EOF <<
         data.location_containers.sort((a, b) => (a.consolidation_id > b.consolidation_id)? 1: -1)
         route.containers = data.location_containers
       }
@@ -148,6 +149,7 @@ const getGroups = async (groupDate = today) => {
     }
     return groups
   })
+  // XXX DELETE to EOF to suppress printing
   .then(async groups => {
     for(let group of groups) {
       for(let route of group.routes) {
@@ -169,5 +171,5 @@ const getGroups = async (groupDate = today) => {
         await timer(2000)
       }
     }
-  })
+  }) // XXX EOF <<
 }
