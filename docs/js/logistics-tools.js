@@ -1,7 +1,7 @@
 let ciMain = (data) => {
 
   let query = data.query
-  query.fields = 'id,tracking_number,requested_route,consolidation_id,status'
+  query.fields = 'id,tracking_number,requested_route,consolidation_id,status,audit.description'
   console.dir(query)
     
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
@@ -9,7 +9,7 @@ let ciMain = (data) => {
   $.getJSON('/consignments/', query).done((json) => {
 
     if (data.ncr === 1) {
-      filterProcessed(json, query)
+      filterProcessed(json)
     } else {
       ciOutput(json)
     }
@@ -20,24 +20,17 @@ let ciMain = (data) => {
   })
 }
 
-let filterProcessed = (allCons, q) => {
-  q.fields = 'id,trunk_container.barcode'
-  delete q.status
-  console.dir(q)
-  console.dir(allCons)
-  
-  $.getJSON('/consignments/', q).done(processedCons => {
-    console.dir(processedCons)
-    let ex = []
-    processedCons.forEach(p => {
-      if(p.trunk_container.length > 0) {
-        ex.push(p.id)
-      }
-    })
-    let unprocessedCons = allCons.filter(c => !ex.includes(c.id))
-    console.dir(unprocessedCons)
-    ciOutput(unprocessedCons)
-  })
+let filterProcessed = (allCons) => {
+  const re = /SCANNED TO TRUNK CONTAINER/
+  let unprocessedCons = []
+  for (const con of allCons) {
+    let ev = con.consignment_events[0]
+    if(!ev.description.match(re)) {
+      unprocessedCons.push(con)
+    }    
+  }
+  console.dir(unprocessedCons)
+  ciOutput(unprocessedCons)
 }
 
 let ciOutput = (cons) => {
