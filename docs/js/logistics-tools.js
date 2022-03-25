@@ -7,10 +7,10 @@ let ciMain = (data) => {
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
   $.getJSON('/consignments/', query).done((json) => {
-
-    json.latest_event = json.consignment_events[0].description
-    delete json.consignment_events 
-
+	  for( let con of json) {
+      con.latest_event = con.consignment_events[0].description
+        delete con.consignment_events
+    }
     if (data.ncr === 1) {
       filterProcessed(json)
     } else {
