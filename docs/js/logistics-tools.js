@@ -1,7 +1,7 @@
 let ciMain = (data) => {
 
   let query = data.query
-  query.fields = 'id,tracking_number,requested_route,consolidation_id,status,audit.description'
+  query.fields = 'id,tracking_number,requested_route,consolidation_id,status,location,audit.description'
   console.dir(query)
     
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
