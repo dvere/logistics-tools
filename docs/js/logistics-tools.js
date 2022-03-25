@@ -8,6 +8,9 @@ let ciMain = (data) => {
 
   $.getJSON('/consignments/', query).done((json) => {
 
+    json.latest_event = json.consignment_events[0].description
+    delete json.consignment_events 
+
     if (data.ncr === 1) {
       filterProcessed(json)
     } else {
@@ -24,8 +27,7 @@ let filterProcessed = (allCons) => {
   const re = /SCANNED TO TRUNK CONTAINER/
   let unprocessedCons = []
   for (const con of allCons) {
-    let ev = con.consignment_events[0]
-    if(!ev.description.match(re)) {
+    if(!con.latest_event.match(re)) {
       unprocessedCons.push(con)
     }    
   }
