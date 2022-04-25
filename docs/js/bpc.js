@@ -1,5 +1,17 @@
-if (window.location.protocol !== 'https:') {
-  throw new Error('Connect with https to run this script')
+if (location.protocol !== 'https:') {
+  const message = `This script requires a secure connection in order to run
+
+Click "OK" to reload this page using https, you can then re-run Logistics Tools
+
+Click "Cancel" to abort the creation and printing GP containers and remain on this page`
+
+  if (confirm(message)) {
+    rel = "https://" + location.host + location.pathname + location.hash
+    location.assign(rel)
+  } else {
+    alert('Print GP Containers aborted')
+    throw new Error('Not using https - aborting')
+  }
 }
 const date = new Date()
 const today = [
