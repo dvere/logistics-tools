@@ -1,18 +1,4 @@
-if (location.protocol !== 'https:') {
-  const message = `This script requires a secure connection in order to run
 
-Click "OK" to reload this page using https, you can then re-run Logistics Tools
-
-Click "Cancel" to abort the creation and printing GP containers and remain on this page`
-
-  if (confirm(message)) {
-    rel = "https://" + location.host + location.pathname + location.hash
-    location.assign(rel)
-  } else {
-    alert('Print GP Containers aborted')
-    throw new Error('Not using https - aborting')
-  }
-}
 const date = new Date()
 const today = [
   date.getFullYear(),
@@ -31,6 +17,21 @@ let config = {}
 let groups = []
 
 const getGroups = async (groupDate = today) => {
+  if (location.protocol !== 'https:') {
+    const message = `This script requires a secure connection in order to run
+  
+  Click "OK" to reload this page using https, you can then re-run Logistics Tools
+  
+  Click "Cancel" to abort the creation and printing GP containers and remain on this page`
+  
+    if (confirm(message)) {
+      rel = "https://" + location.host + location.pathname + location.hash
+      location.assign(rel)
+    } else {
+      alert('Print GP Containers aborted')
+      throw new Error('Not using https - aborting')
+    }
+  }
   fetch(baseUrl + '/user/me', params)
   .then(res => res.json())
   .then(json => {
