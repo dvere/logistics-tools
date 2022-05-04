@@ -1,18 +1,15 @@
 let ciMain = (data) => {
 
   let query = data.query
-  query.fields = 'id,tracking_number,requested_route,consolidation_id,status,location,audit.description'
+  query.fields = 'id,tracking_number,requested_route,consolidation_id,status,location'
   console.dir(query)
     
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
 
   $.getJSON('/consignments/', query).done((json) => {
-	  for( let con of json) {
-      con.latest_event = con.consignment_events[0].description
-        delete con.consignment_events
-    }
+
     if (data.ncr === 1) {
-      filterProcessed(json)
+      filterProcessed(json, query)
     } else {
       ciOutput(json)
     }
@@ -23,16 +20,20 @@ let ciMain = (data) => {
   })
 }
 
-let filterProcessed = (allCons) => {
-  const re = /SCANNED TO TRUNK CONTAINER/
-  let unprocessedCons = []
-  for (const con of allCons) {
-    if(!con.latest_event.match(re)) {
-      unprocessedCons.push(con)
-    }    
-  }
-  console.dir(unprocessedCons)
-  ciOutput(unprocessedCons)
+let filterProcessed = (json, query) => {
+  query.fields = 'id,trunk_container.barcode'
+  delete query.status
+  
+  $.getJSON('/consignments/', query).done(processedCons => {
+    let ex = []
+    processedCons.forEach(p => {
+      if(p.trunk_container.length > 0) {
+        ex.push(p.id)
+      }
+    })
+    let unprocessedCons = json.filter(c => !ex.includes(c.id))
+    ciOutput(unprocessedCons)
+  })
 }
 
 let ciOutput = (cons) => {
@@ -48,10 +49,10 @@ let ciOutput = (cons) => {
       $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
       out_html.append(row)
     })
-    } else {
-      out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
-    }
-    $('#lt_results').html(out_html)
+  } else {
+    out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
+  }
+  $('#lt_results').html(out_html)
 }
 
 let acMain = (data) => {
