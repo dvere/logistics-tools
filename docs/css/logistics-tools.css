@@ -14,14 +14,14 @@ input[type=date]::-webkit-inner-spin-button {
 }
 #lt_menu {
   width: fit-content;
-  margin: 2rem auto;
+  margin: 2rem auto 1rem;
   display: grid;
   grid-gap: 1.4em;
   grid-template-columns: auto auto auto auto;
   padding: 1rem 2.5rem;
 }
 #lt_insert {
-  margin: 0 auto;
+  margin: 1rem auto 2rem;
 }
 #lt_results {
   padding: 2rem 2.5rem;
