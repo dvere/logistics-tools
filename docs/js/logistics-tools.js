@@ -263,7 +263,7 @@ let addPartsToDOM = (sc) => {
     if (e.which == 13) {
       let audio = new Audio('/audio/success')
       audio.play()
-      $('#br_data').val((_i, text) => text + $('#ac_ti').val() + '\n')
+      $('#br_data').val((_i, text) => text + $('#br_ti').val() + '\n')
       $('#br_data').scrollTop($('#br_data')[0].scrollHeight)
       $('#br_ti').select()
       return false
