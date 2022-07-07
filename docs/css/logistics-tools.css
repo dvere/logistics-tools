@@ -60,6 +60,9 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: auto auto;
   width: 380px;
 }
+#br_form {
+  background-color: rgba(255, 128, 1);
+}
 #ac_ti, #br_ti {
   font-size: 2rem;
   font-weight: 600;
@@ -93,7 +96,10 @@ input[type=date]::-webkit-inner-spin-button {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
-.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti, .br-row, .br-error {
+.br-row {
+  grid-template-columns: auto;
+}
+.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti {
   grid-column-start: 1;
   grid-column-end: 3;
 }
