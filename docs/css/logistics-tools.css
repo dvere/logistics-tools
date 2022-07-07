@@ -97,7 +97,9 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 12rem 42rem;
 }
 .br-row {
-  grid-template-columns: auto;
+  grid-template-columns: 54rem;
+  font-size: 2rem;
+  line-height: 2.2rem;
 }
 .sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti {
   grid-column-start: 1;
