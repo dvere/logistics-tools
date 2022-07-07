@@ -40,7 +40,7 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-button:hover, .lt-button:active {
  background: rgba(60,128,166,1);
 }
-#ci_results, #ac_results, #bc_results, #sc_results {
+#ci_results, #ac_results, #br_results, #sc_results {
   padding: 2rem;
   line-height: 1.4rem;
   border: 1px solid rgba(0,0,0,0.25);

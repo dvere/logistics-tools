@@ -102,7 +102,7 @@ let acMain = (data) => {
 }
 
 const brMain = (data) => {
-  $('#lt_results').html($('<div>',{ id: 'br-results' }))
+  $('#lt_results').html($('<div>',{ id: 'br_results' }))
   $.each(data, (_i, tn) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
@@ -269,7 +269,6 @@ let addPartsToDOM = (sc) => {
       return false
     }
   })
-
 
   $('#ac_btn').click(() => {
     let regex = /^(PCS[0-9]{9}|(CSTC|CSLC|OOC)[0-9]{8})$/
