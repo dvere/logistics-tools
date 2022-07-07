@@ -40,13 +40,13 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-button:hover, .lt-button:active {
  background: rgba(60,128,166,1);
 }
-#ci_results, #ac_results, #br_results, #sc_results {
+#ci_results, #ac_results, #lp_results, #sc_results {
   padding: 2rem;
   line-height: 1.4rem;
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
 }
-#ci_form, #ac_form, #br_form, #sc_form {
+#ci_form, #ac_form, #lp_form, #sc_form {
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -56,18 +56,18 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,.25);
 }
-#ac_form, #br_form {
+#ac_form, #lp_form {
   grid-template-columns: auto auto;
   width: 380px;
 }
-#br_form {
+#lp_form {
   background-color: rgba(255, 128, 0, 0.4);
 }
-#ac_ti, #br_ti {
+#ac_ti, #lp_ti {
   font-size: 2rem;
   font-weight: 600;
 }
-#ac_data, #br_data {
+#ac_data, #lp_data {
   font-family: monospace;
   font-size: 1.9rem;
   line-height: 2.2rem;
@@ -86,7 +86,7 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-tab {
   display: none;
 }
-.sc-row, .ci-row, .ac-row, .br-row {
+.sc-row, .ci-row, .ac-row, .lp-row {
   padding: .2rem 1rem .1rem;
   border: 1px solid rgba(0,0,0,0.25);
   border-style: none solid solid;
@@ -96,23 +96,23 @@ input[type=date]::-webkit-inner-spin-button {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
-.br-row {
+.lp-row {
   grid-template-columns: 18rem 18rem 18rem;
   /*font-size: rem;
   line-height: 2.2rem;*/
 }
-.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti {
+.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #lp_ti {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.br-row.br-error span {
+.lp-row.lp-error span {
   grid-column-start: 1;
   grid-column-end: 4;
 }
-.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .br-row:first-child {
+.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child {
   border-top-style: solid;
 }
-.sc-error, .lt-error, .br-error {
+.sc-error, .lt-error, .lp-error {
   color: rgba(255,0,0,1);
   font-weight: 700;
 }

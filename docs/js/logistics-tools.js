@@ -101,9 +101,9 @@ let acMain = (data) => {
   }
 }
 
-const brMain = (data) => {
-  $('#lt_results').html($('<div>',{ id: 'br_results' })
-  .append($('<div>', { id: 'br_head', class: 'br-row' })
+const lpMain = (data) => {
+  $('#lt_results').html($('<div>',{ id: 'lp_results' })
+  .append($('<div>', { id: 'lp_head', class: 'lp-row' })
     .append($('<span>').text('Barcode'))
     .append($('<span>').text('Route'))
     .append($('<span>').text('Stop Id'))))
@@ -111,17 +111,17 @@ const brMain = (data) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
     .then(j => {
-      let row = $('<div>', { id: `tn_${tn}`, class: 'br-row'})
+      let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
       if(!j.id) {
-        row.addClass('br-error').text(`${tn} not manifested`)
+        row.addClass('lp-error').text(`${tn} not manifested`)
       } else if (!j.requested_route) {
-        row.addClass('br-error').text(`${tn} not routed`)
+        row.addClass('lp-error').text(`${tn} not routed`)
       } else {
         row.append($('<span>').text(tn))
           .append($('<span>').text(j.requested_route))
           .append($('<span>').text(j.consolidation_id))
       }
-      $('#br_results').append(row)
+      $('#lp_results').append(row)
     })
   })
 }
@@ -216,12 +216,12 @@ let addPartsToDOM = (sc) => {
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
 
-  let brForm = $('<div>', { id: 'br_tab', class: 'lt-tab' })
-  .append($('<div>', { id: 'br_form' })
-    .append($('<input>', { id: 'br_ti' }).attr({autocomplete: 'off' }))
-    .append($('<textarea>', { id:'br_data' }))
-    .append($('<button>', { id: 'br_btn', class: 'lt-button', text: 'Process' }))
-    .append($('<button>', { id: 'br_clr', class: 'lt-button', text: 'Clear' })))
+  let lpForm = $('<div>', { id: 'lp_tab', class: 'lt-tab' })
+  .append($('<div>', { id: 'lp_form' })
+    .append($('<input>', { id: 'lp_ti' }).attr({autocomplete: 'off' }))
+    .append($('<textarea>', { id:'lp_data' }))
+    .append($('<button>', { id: 'lp_btn', class: 'lt-button', text: 'Process' }))
+    .append($('<button>', { id: 'lp_clr', class: 'lt-button', text: 'Clear' })))
   
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'ci_form' })
@@ -238,7 +238,7 @@ let addPartsToDOM = (sc) => {
     .append($('<div>', { id: 'lt_insert' })
       .append(ciForm)
       .append(acForm)
-      .append(brForm)
+      .append(lpForm)
       .append(scForm))
     .append($('<div>', { id: 'lt_results' }))
     .append(ltClose)
@@ -265,13 +265,13 @@ let addPartsToDOM = (sc) => {
     }
   })
 
-  $('#br_ti').keypress((e) => {
+  $('#lp_ti').keypress((e) => {
     if (e.which == 13) {
       let audio = new Audio('/audio/success')
       audio.play()
-      $('#br_data').val((_i, text) => text + $('#br_ti').val() + '\n')
-      $('#br_data').scrollTop($('#br_data')[0].scrollHeight)
-      $('#br_ti').select()
+      $('#lp_data').val((_i, text) => text + $('#lp_ti').val() + '\n')
+      $('#lp_data').scrollTop($('#lp_data')[0].scrollHeight)
+      $('#lp_ti').select()
       return false
     }
   })
@@ -294,22 +294,22 @@ let addPartsToDOM = (sc) => {
     $('#ac_ti').focus()
   })
 
-  $('#br_btn').click(() => {
+  $('#lp_btn').click(() => {
     let regex = /^PCS[0-9]{9}$/
-		let brData = $('#br_data').val().toUpperCase().trim().split('\n')
-		if (validateBarcodes(brData, regex)) {
-      $('#br_ti').focus()
-			brMain(brData)
+		let lpData = $('#lp_data').val().toUpperCase().trim().split('\n')
+		if (validateBarcodes(lpData, regex)) {
+      $('#lp_ti').focus()
+			lpMain(lpData)
 		} else {
 			alert('Invalid Data, please check input and try again')
 			return false
 		}
 	})
 
-  $('#br_clr').click(() => {
-    $('#br_data').val('')
+  $('#lp_clr').click(() => {
+    $('#lp_data').val('')
     $('#lt_results').empty()
-    $('#br_ti').focus()
+    $('#lp_ti').focus()
   })
 
   $('#sc_btn').click(() => {
@@ -332,8 +332,8 @@ let addPartsToDOM = (sc) => {
   $('#lt_br').click(() => {
     $('.lt-tab').hide()
     $('#lt_results').empty()
-    $('#br_tab').show()
-    $('#br_ti').focus()
+    $('#lp_tab').show()
+    $('#lp_ti').focus()
   })
   $('#lt_sc').click(() => {
     $('.lt-tab').hide()
