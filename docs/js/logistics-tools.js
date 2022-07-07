@@ -115,7 +115,7 @@ const brMain = (data) => {
       } else {
         row.text(`${tn} Route: ${j.requested_route} Stop Id: ${j.consolidation_id}`)
       }
-      $('#br-results').append(row)
+      $('#br_results').append(row)
     })
   })
 }
