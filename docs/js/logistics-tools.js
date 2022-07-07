@@ -102,11 +102,11 @@ let acMain = (data) => {
 }
 
 const brMain = (data) => {
-  $('#lt_results').html($('<div>',{ id: 'br_results' }))
+  $('#lt_results').html($('<div>',{ id: 'br_results' })
   .append($('<div>', { id: 'br_head', class: 'br-row' })
     .append($('<span>').text('Barcode'))
     .append($('<span>').text('Route'))
-    .append($('<span>').text('Stop Id')))
+    .append($('<span>').text('Stop Id'))))
   $.each(data, (_i, tn) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
