@@ -103,6 +103,10 @@ let acMain = (data) => {
 
 const brMain = (data) => {
   $('#lt_results').html($('<div>',{ id: 'br_results' }))
+  .append($('<div>', { id: 'br_head', class: 'br-row' })
+    .append($('<span>').text('Barcode'))
+    .append($('<span>').text('Route'))
+    .append($('<span>').text('Stop Id')))
   $.each(data, (_i, tn) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
@@ -113,7 +117,9 @@ const brMain = (data) => {
       } else if (!j.requested_route) {
         row.addClass('br-error').text(`${tn} not routed`)
       } else {
-        row.text(`${tn} Route: ${j.requested_route} Stop Id: ${j.consolidation_id}`)
+        row.append($('<span>').text(tn))
+          .append($('<span>').text(j.requested_route))
+          .append($('<span>').text(j.consolidation_id))
       }
       $('#br_results').append(row)
     })

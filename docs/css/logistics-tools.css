@@ -97,13 +97,17 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 12rem 42rem;
 }
 .br-row {
-  grid-template-columns: 54rem;
+  grid-template-columns: auto auto auto;
   font-size: 2rem;
   line-height: 2.2rem;
 }
 .sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.br-row.br-error span {
+  grid-column-start: 1;
+  grid-column-end: 4;
 }
 .sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .br-row:first-child {
   border-top-style: solid;
