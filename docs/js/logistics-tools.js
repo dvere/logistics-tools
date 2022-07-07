@@ -191,7 +191,7 @@ let addPartsToDOM = (sc) => {
   let ltMenu = $('<div>', { id: 'lt_menu' })
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
-  .append($('<button>', { id: 'lt_br', class: 'lt-button', text: 'Bulk Reconcile'}))
+  .append($('<button>', { id: 'lt_br', class: 'lt-button', text: 'Label Packs' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'getGroups()' }))
 
@@ -200,7 +200,7 @@ let addPartsToDOM = (sc) => {
     .append($('<input>', { id: 'ci_date', type:'date' }))
     .append($('<select>', { id: 'ci_status' }))
     .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
-    .append($('<label>').css({gridColumn: '1 / 3', marginBottom: '-0.57em'})
+    .append($('<label>').css({ gridColumn: '1 / 3', marginBottom: '-0.57em' })
       .html('<input id="ci_ncr" type="checkbox" />&nbsp;Exclude records processed to trunk container')))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab'})
@@ -210,9 +210,9 @@ let addPartsToDOM = (sc) => {
     .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
 
-  let brForm = $('<div>', { id: 'br_tab', class: 'lt-tab'})
+  let brForm = $('<div>', { id: 'br_tab', class: 'lt-tab' })
   .append($('<div>', { id: 'br_form' })
-    .append($('<input>', { id: 'br_ti' }).attr({autocomplete: 'off'}))
+    .append($('<input>', { id: 'br_ti' }).attr({autocomplete: 'off' }))
     .append($('<textarea>', { id:'br_data' }))
     .append($('<button>', { id: 'br_btn', class: 'lt-button', text: 'Process' }))
     .append($('<button>', { id: 'br_clr', class: 'lt-button', text: 'Clear' })))
@@ -223,7 +223,7 @@ let addPartsToDOM = (sc) => {
     .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scAttr))
     .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
-  let ltClose = $('<span>', {id: 'lt_close'})
+  let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
     .click(() =>  $('#lt_container').remove())
   
