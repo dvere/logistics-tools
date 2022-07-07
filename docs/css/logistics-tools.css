@@ -61,7 +61,7 @@ input[type=date]::-webkit-inner-spin-button {
   width: 380px;
 }
 #br_form {
-  background-color: rgba(255, 128, 1);
+  background-color: rgba(255, 128, 0, 0.4);
 }
 #ac_ti, #br_ti {
   font-size: 2rem;
