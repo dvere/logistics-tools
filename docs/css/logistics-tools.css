@@ -93,11 +93,11 @@ input[type=date]::-webkit-inner-spin-button {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
-.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti, .br_row, .br-error {
+.sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #br_ti, .br-row, .br-error {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .br_row:first-child {
+.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .br-row:first-child {
   border-top-style: solid;
 }
 .sc-error, .lt-error, .br-error {
