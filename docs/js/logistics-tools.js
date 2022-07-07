@@ -120,8 +120,6 @@ const brMain = (data) => {
   })
 }
 
-
-
 let scMain = (source, dest) => {
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   let data = { count: 5000, fields: 'tracking_number', q: 'trunk_container:' + source }
@@ -193,7 +191,7 @@ let addPartsToDOM = (sc) => {
   let ltMenu = $('<div>', { id: 'lt_menu' })
   .append($('<button>', { id: 'lt_ci', class: 'lt-button', text: 'Consignments Inspector' }))
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
-  .append($('<button>', { id: 'lt-br', class: 'lt-button', text: 'Bulk Reconcile'}))
+  .append($('<button>', { id: 'lt_br', class: 'lt-button', text: 'Bulk Reconcile'}))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'getGroups()' }))
 
