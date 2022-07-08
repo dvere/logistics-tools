@@ -97,13 +97,16 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 12rem 42rem;
 }
 .lp-row {
-  grid-template-columns: 18rem 18rem 18rem;
+  grid-template-columns: 12rem 12rem 12rem;
   /*font-size: rem;
   line-height: 2.2rem;*/
 }
 .sc-row.lt-error td, .sc-row.lt-error span, #ac_ti, #lp_ti {
   grid-column-start: 1;
   grid-column-end: 3;
+}
+.lp-row span {
+  display: table-cell;
 }
 .lp-row.lp-error span {
   grid-column-start: 1;
