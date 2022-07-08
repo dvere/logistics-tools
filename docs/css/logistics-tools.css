@@ -105,10 +105,10 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.lp-row span {
-  display: table-cell;
+.lp-row div {
+  display: inline-block;
 }
-.lp-row.lp-error span {
+.lp-row.lp-error div {
   grid-column-start: 1;
   grid-column-end: 4;
 }

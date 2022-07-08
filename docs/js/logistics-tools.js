@@ -104,9 +104,9 @@ let acMain = (data) => {
 const lpMain = (data) => {
   $('#lt_results').html($('<div>',{ id: 'lp_results' })
   .append($('<div>', { id: 'lp_head', class: 'lp-row' })
-    .append($('<span>').text('Barcode'))
-    .append($('<span>').text('Route'))
-    .append($('<span>').text('Stop Id'))))
+    .append($('<div>').text('Barcode'))
+    .append($('<div>').text('Route'))
+    .append($('<div>').text('Stop Id'))))
   $.each(data, (_i, tn) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
@@ -117,9 +117,9 @@ const lpMain = (data) => {
       } else if (!j.requested_route) {
         row.addClass('lp-error').text(`${tn} not routed`)
       } else {
-        row.append($('<span>').text(tn))
-          .append($('<span>').text(j.requested_route))
-          .append($('<span>').text(j.consolidation_id))
+        row.append($('<div>').text(tn))
+          .append($('<div>').text(j.requested_route))
+          .append($('<div>').text(j.consolidation_id))
       }
       $('#lp_results').append(row)
     })
