@@ -112,7 +112,7 @@ const downloadCsv = (data) => {
   window.URL.revokeObjectURL(url)
 }
 
-const lpMain = (data) => {
+const lpMain = async (data) => {
   $('#lt_results').html($('<div>',{ id: 'lp_results' })
   .append($('<div>', { id: 'lp_head', class: 'lp-row' })
     .append($('<div>').text('Barcode'))
@@ -120,24 +120,22 @@ const lpMain = (data) => {
     .append($('<div>').text('Stop Id'))))
   let csv = [`Barcode,Route,Stop Id\n`]
   for(const tn of data) {
-    fetch('/consignment/scan/reconcile/' + tn)
-    .then(r => r.json())
-    .then(j => {
-      let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
-      if(!j.id) {
-        row.addClass('lp-error').text(`${tn} not manifested`)
-        csv.push(`${tn} not manifested\n`)
-      } else if (!j.requested_route) {
-        row.addClass('lp-error').text(`${tn} not routed`)
-        csv.push(`${tn} not routed\n`)
-      } else {
-        row.append($('<div>').text(tn))
-          .append($('<div>').text(j.requested_route))
-          .append($('<div>').text(j.consolidation_id))
-        csv.push(`${tn},${j.requested_route},${j.consolidation_id}\n`)
-      }
-      $('#lp_results').append(row)
-    })
+    let res = await fetch('/consignment/scan/reconcile/' + tn)
+    let j = r.json()
+    let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
+    if(!j.id) {
+      row.addClass('lp-error').text(`${tn} not manifested`)
+      csv.push(`${tn} not manifested\n`)
+    } else if (!j.requested_route) {
+      row.addClass('lp-error').text(`${tn} not routed`)
+      csv.push(`${tn} not routed\n`)
+    } else {
+      row.append($('<div>').text(tn))
+         .append($('<div>').text(j.requested_route))
+         .append($('<div>').text(j.consolidation_id))
+      csv.push(`${tn},${j.requested_route},${j.consolidation_id}\n`)
+    }
+    $('#lp_results').append(row)
   }
   downloadCsv(csv)
 }
