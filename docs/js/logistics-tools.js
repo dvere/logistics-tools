@@ -120,8 +120,7 @@ const lpMain = async (data) => {
     .append($('<div>').text('Stop Id'))))
   let csv = [`Barcode,Route,Stop Id\n`]
   for(const tn of data) {
-    let r = await fetch('/consignment/scan/reconcile/' + tn)
-    let j = r.json()
+    let j = await fetch('/consignment/scan/reconcile/' + tn).then(r => r.json())
     let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
     if(!j.id) {
       row.addClass('lp-error').text(`${tn} not manifested`)
