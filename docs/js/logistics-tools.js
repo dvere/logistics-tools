@@ -119,7 +119,7 @@ const lpMain = (data) => {
     .append($('<div>').text('Route'))
     .append($('<div>').text('Stop Id'))))
   let csv = [`Barcode,Route,Stop Id\n`]
-  $.each(data, (_i, tn) => {
+  for(const tn of data) {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
     .then(j => {
@@ -138,7 +138,7 @@ const lpMain = (data) => {
       }
       $('#lp_results').append(row)
     })
-  })
+  }
   downloadCsv(csv)
 }
 
