@@ -101,12 +101,24 @@ let acMain = (data) => {
   }
 }
 
+const downloadCsv = (data) => {
+  let a = document.createElement('a')
+  let blob = new Blob(data, { type: 'text/csv' })
+  let url = window.URL.createObjectURL(blob)
+  a.style = 'display: none'
+  a.href = url
+  a.download = `InProgress_${Date.now()}.csv`
+  a.click()
+  window.URL.revokeObjectURL(url)
+}
+
 const lpMain = (data) => {
   $('#lt_results').html($('<div>',{ id: 'lp_results' })
   .append($('<div>', { id: 'lp_head', class: 'lp-row' })
     .append($('<div>').text('Barcode'))
     .append($('<div>').text('Route'))
     .append($('<div>').text('Stop Id'))))
+  let csv = [`Barcode,Route,Stop Id\n`]
   $.each(data, (_i, tn) => {
     fetch('/consignment/scan/reconcile/' + tn)
     .then(r => r.json())
@@ -114,16 +126,20 @@ const lpMain = (data) => {
       let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
       if(!j.id) {
         row.addClass('lp-error').text(`${tn} not manifested`)
+        csv.push(`${tn} not manifested\n`)
       } else if (!j.requested_route) {
         row.addClass('lp-error').text(`${tn} not routed`)
+        csv.push(`${tn} not routed\n`)
       } else {
         row.append($('<div>').text(tn))
           .append($('<div>').text(j.requested_route))
           .append($('<div>').text(j.consolidation_id))
+        csv.push(`${tn},${j.requested_route},${j.consolidation_id}\n`)
       }
       $('#lp_results').append(row)
     })
   })
+  downloadCsv(csv)
 }
 
 let scMain = (source, dest) => {
