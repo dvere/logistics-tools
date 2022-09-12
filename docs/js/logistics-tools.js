@@ -107,7 +107,7 @@ const downloadCsv = (data) => {
   let url = window.URL.createObjectURL(blob)
   a.style = 'display: none'
   a.href = url
-  a.download = `InProgress_${Date.now()}.csv`
+  a.download = `LabelPacks_${Date.now()}.csv`
   a.click()
   window.URL.revokeObjectURL(url)
 }
