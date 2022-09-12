@@ -120,7 +120,7 @@ const lpMain = async (data) => {
     .append($('<div>').text('Stop Id'))))
   let csv = [`Barcode,Route,Stop Id\n`]
   for(const tn of data) {
-    let res = await fetch('/consignment/scan/reconcile/' + tn)
+    let r = await fetch('/consignment/scan/reconcile/' + tn)
     let j = r.json()
     let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
     if(!j.id) {
