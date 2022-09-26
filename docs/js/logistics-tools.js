@@ -101,13 +101,13 @@ let acMain = (data) => {
   }
 }
 
-const downloadCsv = (data) => {
+const downloadCsv = (data, fileName = 'download') => {
   let a = document.createElement('a')
   let blob = new Blob(data, { type: 'text/csv' })
   let url = window.URL.createObjectURL(blob)
   a.style = 'display: none'
   a.href = url
-  a.download = `LabelPacks_${Date.now()}.csv`
+  a.download = `${fileName}_${Date.now()}.csv`
   a.click()
   window.URL.revokeObjectURL(url)
 }
@@ -136,7 +136,7 @@ const lpMain = async (data) => {
     }
     $('#lp_results').append(row)
   }
-  downloadCsv(csv)
+  downloadCsv(csv, 'LabelPacks')
 }
 
 let scMain = (source, dest) => {
