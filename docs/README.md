@@ -8,11 +8,19 @@ Displays the status of records collected on a chosen date.
 
 ## Auto Containers
 
-Automates parent and child process for records containers. (Currently no-op)
+Automates parent and child process for records containers.
+
+## Label Packs
+
+Bulk reconcile Label packs.
 
 ## Swap Containers
 
 Move consignments from one container to another.
+
+## Print GP Containers
+
+Automatically generate and print labels for GP records sacks.
 
 ### css/
 
