@@ -102,14 +102,16 @@ let acMain = (data) => {
 }
 
 const downloadCsv = (data, fileName = 'download') => {
+  out = []
+  for (const i of data) {
+    out.push(i.join(',') + '\n')
+  }
   let a = document.createElement('a')
-  let blob = new Blob(data, { type: 'text/csv' })
-  let url = window.URL.createObjectURL(blob)
-  a.style = 'display: none'
-  a.href = url
+  let blob = new Blob(out, { type: 'text/csv' })
+  a.href = window.URL.createObjectURL(blob)
   a.download = `${fileName}_${Date.now()}.csv`
   a.click()
-  window.URL.revokeObjectURL(url)
+  window.URL.revokeObjectURL(a.href)
 }
 
 const lpMain = async (data) => {
@@ -118,24 +120,26 @@ const lpMain = async (data) => {
     .append($('<div>').text('Barcode'))
     .append($('<div>').text('Route'))
     .append($('<div>').text('Stop Id'))))
-  let csv = [`Barcode,Route,Stop Id\n`]
+  let csv = []
   for(const tn of data) {
     let j = await fetch('/consignment/scan/reconcile/' + tn).then(r => r.json())
     let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
     if(!j.id) {
       row.addClass('lp-error').text(`${tn} not manifested`)
-      csv.push(`${tn} not manifested\n`)
+      csv.push([tn, 'Consignment Not Manifested'])
     } else if (!j.requested_route) {
       row.addClass('lp-error').text(`${tn} not routed`)
-      csv.push(`${tn} not routed\n`)
+      csv.push([ tn, 'Consignment Not Routed'])
     } else {
       row.append($('<div>').text(tn))
          .append($('<div>').text(j.requested_route))
          .append($('<div>').text(j.consolidation_id))
-      csv.push(`${tn},${j.requested_route},${j.consolidation_id}\n`)
+      csv.push([ tn, j.consolidation_id, j.requested_route ])
     }
     $('#lp_results').append(row)
   }
+  csv.sort((a,b) => (a[1] > b[1]) ? 1: -1)
+  csv.unshift(['Barcode','Route','Stop Id'])
   downloadCsv(csv, 'LabelPacks')
 }
 
@@ -215,32 +219,32 @@ let addPartsToDOM = (sc) => {
   .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'getGroups()' }))
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
-  .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'ci_date', type:'date' }))
-    .append($('<select>', { id: 'ci_status' }))
-    .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
-    .append($('<label>').css({ gridColumn: '1 / 3', marginBottom: '-0.57em' })
-      .html('<input id="ci_ncr" type="checkbox" />&nbsp;Exclude records processed to trunk container')))
+    .append($('<div>', { id: 'ci_form' })
+      .append($('<input>', { id: 'ci_date', type:'date' }))
+      .append($('<select>', { id: 'ci_status' }))
+      .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
+      .append($('<label>').css({ gridColumn: '1 / 3', marginBottom: '-0.57em' })
+        .html('<input id="ci_ncr" type="checkbox" />&nbsp;Exclude records processed to trunk container')))
 
   let acForm = $('<div>', { id: 'ac_tab', class: 'lt-tab'})
-  .append($('<div>', { id: 'ac_form' })
-    .append($('<input>', { id: 'ac_ti' }).attr({autocomplete: 'off'}))
-    .append($('<textarea>', { id:'ac_data' }))
-    .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
-    .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
+    .append($('<div>', { id: 'ac_form' })
+      .append($('<input>', { id: 'ac_ti' }).attr({autocomplete: 'off'}))
+      .append($('<textarea>', { id:'ac_data' }))
+      .append($('<button>', { id: 'ac_btn', class: 'lt-button', text: 'Process' }))
+      .append($('<button>', { id: 'ac_clr', class: 'lt-button', text: 'Clear' })))
 
   let lpForm = $('<div>', { id: 'lp_tab', class: 'lt-tab' })
-  .append($('<div>', { id: 'lp_form' })
-    .append($('<input>', { id: 'lp_ti' }).attr({autocomplete: 'off' }))
-    .append($('<textarea>', { id:'lp_data' }))
-    .append($('<button>', { id: 'lp_btn', class: 'lt-button', text: 'Process' }))
-    .append($('<button>', { id: 'lp_clr', class: 'lt-button', text: 'Clear' })))
+    .append($('<div>', { id: 'lp_form' })
+      .append($('<input>', { id: 'lp_ti' }).attr({autocomplete: 'off' }))
+      .append($('<textarea>', { id:'lp_data' }))
+      .append($('<button>', { id: 'lp_btn', class: 'lt-button', text: 'Process' }))
+      .append($('<button>', { id: 'lp_clr', class: 'lt-button', text: 'Clear' })))
   
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
-  .append($('<div>', { id: 'ci_form' })
-    .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scAttr))
-    .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scAttr))
-    .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
+    .append($('<div>', { id: 'ci_form' })
+      .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scAttr))
+      .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scAttr))
+      .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
