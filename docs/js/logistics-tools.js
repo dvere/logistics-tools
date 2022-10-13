@@ -37,22 +37,37 @@ let filterProcessed = (json, query) => {
 }
 
 let ciOutput = (cons) => {
-  let out_html = $('<table>', {id: 'ci_results'})
+  let out_html = $('<table>', {id: 'ci_results'}),
+    results = []
 
   if (cons.length > 0) {
-    let head = $('<tr>', { class: 'ci-row ci-head' })
+    let head = $('<tr>', { class: 'ci-row ci-head' }),
+      fields = []
 
-    $.each(Object.keys(cons[0]), (_i, k) => head.append($('<td>').text(k)))
+    $.each(Object.keys(cons[0]), (_i, k) => {
+      head.append($('<td>').text(k))
+      fields.push(k)
+    })
     out_html.append(head)
     $.each(cons, (_i, o ) => {
-      let row = $('<tr>', { class: 'ci-row' })
-      $.each(o, (k, v) => $('<td>', {class: 'ci-' + k}).text(v).appendTo(row))
+      let row = $('<tr>', { class: 'ci-row' }),
+        line = []
+      $.each(o, (k, v) => {
+        $('<td>', {class: 'ci-' + k}).text(v).appendTo(row)
+        line.push(v)
+      })
       out_html.append(row)
+      results.push(line)
     })
   } else {
     out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
   }
   $('#lt_results').html(out_html)
+  if (results.length) {
+    results.unshift(fields)
+    $('<a>', {href: '#', onClick: downloadCsv(results, 'ci_output')})
+      .prependTo($('#lt_results'))
+  }
 }
 
 let acMain = (data) => {
