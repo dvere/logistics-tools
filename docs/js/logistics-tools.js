@@ -67,7 +67,11 @@ let ciOutput = (cons) => {
   if (results.length) {
     results.unshift(fields)
     $('<span>', { class: 'download-link'})
+<<<<<<< HEAD
       .text('Download these Results')
+=======
+      .text('Download Results')
+>>>>>>> 2c9a6a97acb9895aeb1886eb0d83f73873016ed4
       .on('click', () => downloadCsv(results, 'ci_output'))
       .prependTo($('#lt_results'))
   }
