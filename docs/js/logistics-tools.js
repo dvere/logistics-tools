@@ -38,11 +38,11 @@ let filterProcessed = (json, query) => {
 
 let ciOutput = (cons) => {
   let out_html = $('<table>', {id: 'ci_results'}),
-    results = []
+    results = [],
+    fields = []
 
   if (cons.length > 0) {
-    let head = $('<tr>', { class: 'ci-row ci-head' }),
-      fields = []
+    let head = $('<tr>', { class: 'ci-row ci-head' })
 
     $.each(Object.keys(cons[0]), (_i, k) => {
       head.append($('<td>').text(k))
