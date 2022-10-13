@@ -139,6 +139,7 @@ input[type=date]::-webkit-inner-spin-button {
 .download-link {
   cursor: pointer;
   color: rgba(42,145,216,1);
+  margin: 1rem;
 }
 .lt-loader {
   margin: 0 auto;
