@@ -60,7 +60,8 @@ let ciOutput = (cons) => {
       results.push(line)
     })
   } else {
-    out_html.append($('<tr>', { class: 'sc-row lt-error' }).html('<td>Query returned no results</td>'))
+    out_html.append($('<tr>', { class: 'sc-row lt-error' })
+      .html('<td>Query returned no results</td>'))
   }
   $('#lt_results').html(out_html)
   if (results.length) {
@@ -85,7 +86,8 @@ let acMain = (data) => {
     }
   })
   if (containers.length === 0) {
-    $('#lt_results').html($('<div>', { class: 'lt-error' }).text('Unable to build list of containers'))
+    $('#lt_results').html($('<div>', { class: 'lt-error' })
+      .text('Unable to build list of containers'))
   } else {
     $('#lt_results').html($('<div>', { id: 'ac_results' }))
     $.each(containers, (_i, o) => {
@@ -104,12 +106,14 @@ let acMain = (data) => {
         jqxhr.always(() => {
 
           if (jqxhr.status !== 204) {
-            $('#'+ o.id +' ul.ac-list').append($('<li>', { class: 'sc-error' }).text(r + ' - ' + jqxhr.responseJSON.message))
+            $('#'+ o.id +' ul.ac-list').append($('<li>', { class: 'sc-error' })
+              .text(r + ' - ' + jqxhr.responseJSON.message))
             errors++
           } else {
             added++
           }
-          $('#'+ o.id +' li.ac-summary').text('Records Added: ' + added + ', Errors: '+ errors)
+          $('#'+ o.id +' li.ac-summary')
+            .text('Records Added: ' + added + ', Errors: '+ errors)
         })
       })
     })
@@ -160,11 +164,15 @@ const lpMain = async (data) => {
 
 let scMain = (source, dest) => {
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
-  let data = { count: 5000, fields: 'tracking_number', q: 'trunk_container:' + source }
+  let data = {
+    count: 5000,
+    fields: 'tracking_number',
+    q: 'trunk_container:' + source }
   $.getJSON('/consignments/', data)
   .done((cons) => {
     if (cons.length === 0) {
-      $('#lt_results').html($('<div>', { class: 'lt-error' }).text('No records returned for ' + source))
+      $('#lt_results').html($('<div>', { class: 'lt-error' })
+        .text('No records returned for ' + source))
     } else {
       $('#lt_results').html($('<div>', { id: 'sc_results' }))
       $.each(cons, (_i, c) => {
@@ -277,7 +285,8 @@ let addPartsToDOM = (sc) => {
 
   $pageContent.prepend(ltContainer)
 
-  $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v }).appendTo($('#ci_status')))
+  $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v })
+    .appendTo($('#ci_status')))
   
   $('#ci_btn').click(() => {
     ciData.query.received_at = $('#ci_date').val()
