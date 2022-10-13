@@ -65,7 +65,7 @@ let ciOutput = (cons) => {
   $('#lt_results').html(out_html)
   if (results.length) {
     results.unshift(fields)
-    $('<a>', {href: '#', onClick: downloadCsv(results, 'ci_output')})
+    $('<a>', {href: '#', onClick: 'downloadCsv(' + results + ', "ci_output")'})
       .prependTo($('#lt_results'))
   }
 }
