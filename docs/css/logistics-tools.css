@@ -136,6 +136,10 @@ input[type=date]::-webkit-inner-spin-button {
   font-weight: 700;
   background-color: rgba(0,0,0,0.2);
 }
+.download-link {
+  cursor: pointer;
+  color: rgba(42,145,216,1);
+}
 .lt-loader {
   margin: 0 auto;
   border: 0.2rem solid rgba(42,145,216,1);
