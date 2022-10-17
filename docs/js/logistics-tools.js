@@ -147,20 +147,20 @@ const lpMain = async (data) => {
     let row = $('<div>', { id: `tn_${tn}`, class: 'lp-row'})
     if(!j.id) {
       row.addClass('lp-error').text(`${tn} not manifested`)
-      csv.push([tn, 'Consignment Not Manifested'])
+      csv.push([tn, 0, 'Consignment Not Manifested'])
     } else if (!j.requested_route) {
       row.addClass('lp-error').text(`${tn} not routed`)
-      csv.push([ tn, 'Consignment Not Routed'])
+      csv.push([ tn, 0, 'Consignment Not Routed'])
     } else {
       row.append($('<div>').text(tn))
          .append($('<div>').text(j.requested_route))
          .append($('<div>').text(j.consolidation_id))
-      csv.push([ tn, j.consolidation_id, j.requested_route ])
+      csv.push([ tn, j.requested_route, j.consolidation_id ])
     }
     $('#lp_results').append(row)
   }
-  csv.sort((a,b) => (a[1] > b[1]) ? 1: -1)
-  csv.unshift(['Barcode','Route','Stop Id'])
+  csv.sort((a,b) => a[1] - b[1] || a[2].localeCompare(b[2]))
+  csv.unshift(['Barcode', 'Route', 'Stop Id'])
   downloadCsv(csv, 'LabelPacks')
 }
 
