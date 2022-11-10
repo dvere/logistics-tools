@@ -233,7 +233,7 @@ let addPartsToDOM = (sc) => {
     location: sc.description
   }
   let ciOpts = [ 'RECEIVED', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
-  let scRegex = '(CAP)?(CSTC|OOC)[0-9]{8}'
+  let scRegex = '(CAP)?(TRNK|CSTC|OOC)[0-9]{8}'
   let scAttr = { required: 'required',  pattern: scRegex, autocomplete: 'off' }
 
   let ltMenu = $('<div>', { id: 'lt_menu' })
@@ -320,7 +320,7 @@ let addPartsToDOM = (sc) => {
   })
 
   $('#ac_btn').click(() => {
-    let regex = /^PCS[0-9]{9}|(CAP)?(CSLC|CSTC|OOC)[0-9]{8}$/
+    let regex = /^PCS[0-9]{9}|(CAP)?(TRNK|CSLC|CSTC|OOC)[0-9]{8}$/
 		let acData = $('#ac_data').val().toUpperCase().trim().split('\n')
 		if (validateBarcodes(acData, regex)) {
       $('#ac_ti').focus()
