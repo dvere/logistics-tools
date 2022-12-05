@@ -7,6 +7,7 @@ const today = [
 const d = date
 d.setDate(d.getDate() + ((7 - d.getDay()) % 7 + 1) % 7)
 const timer = ms => new Promise(res => setTimeout(res, ms))
+const sunday = new Date((date.setDate(date.getDate() - date.getDay() + 1) + 6))
 const baseUrl = window.location.origin
 const params = {
   "method": "GET",
@@ -44,8 +45,9 @@ const getGroups = async (groupDate = today) => {
   .then(res => res.json())
   .then(json => {
     for(const [key, gid] of Object.entries(json)) {
-      // filter groups.. temp default is to only return groups with date after Next Monday (present if day = 0) 
-      if(Date.parse(key) > d) {
+      // filter groups.. temp default is to only return groups with date after Next Monday (present if day = 0)
+      const keyDate = Date.parse(key) 
+      if(keyDate > d && keyDate < sunday) {
         const da = key.split('-')
         for(const [id, data] of Object.entries(gid)) {
           const re = /^Capita /
