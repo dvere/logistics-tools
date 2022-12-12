@@ -241,7 +241,7 @@ let addPartsToDOM = (sc) => {
   .append($('<button>', { id: 'lt_ac', class: 'lt-button', text: 'Auto Containers' }))
   .append($('<button>', { id: 'lt_br', class: 'lt-button', text: 'Label Packs' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
-  .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'getGroups()' }))
+  .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers', onClick:'bulkCreateContainers()' }))
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
     .append($('<div>', { id: 'ci_form' })
