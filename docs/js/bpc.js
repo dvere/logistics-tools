@@ -1,173 +1,142 @@
-
 const date = new Date()
-const today = [
-  date.getFullYear(),
-  String(date.getMonth()+1).padStart(2,'0'),
-  String(date.getDate()).padStart(2,'0')].join('-')
-
-const timer = ms => new Promise(res => setTimeout(res, ms))
+const today = date.toJSON().substring(0,10)
 const ddiff = (date.getDate() - date.getDay() + 1) + 6
 const sunday = new Date(date.setDate(ddiff))
-const baseUrl = window.location.origin
-const params = {
-  "method": "GET",
-  "mode": "cors",
-  "credentials": "include"
-}
-let config = {}
-let groups = []
+const config = await fetch('/user/me').then(r=>r.json())
+const sorter = (a,b) => (a.consolidation_id > b.consolidation_id) ? 1 : -1
+const timer = ms => new Promise(res => setTimeout(res, ms))
 
-const getGroups = async (groupDate = today) => {
-  if (location.protocol !== 'https:') {
-    const message = `This script requires a secure connection in order to run
-  
-  Click "OK" to reload this page using https, you can then re-run Logistics Tools
-  
-  Click "Cancel" to abort the creation and printing GP containers and remain on this page`
-  
-    if (confirm(message)) {
-      rel = "https://" + location.host + location.pathname + location.hash
-      location.assign(rel)
-    } else {
-      alert('Print GP Containers aborted')
-      throw new Error('Not using https - aborting')
+const checkSSL = () => {
+  if (location.protocol === 'https:') {
+    return true
+  }
+  if (confirm( 
+      'This script requires a secure connection in order to run\n\n' +
+      'Click "OK" to reload this page using https, you can then re-run Logistics Tools\n\n' +  
+      'Click "Cancel" to abort the creation and printing of GP containers and remain on this page'
+  )) {
+    location.assign(location.href.replace('http:','https:'))
+  } else {
+    throw 'Not using https, Print GP Containers aborted'
+  }
+}
+
+const getClientLocations = async config => {
+  const query = new URLSearchParams({
+    limit: 10000,
+    open: true,
+    order: 'consolidation_id',
+    service_centre: config.service_centre
+  })
+  const sites = await fetch('/client/11270/locations?' + query).then(r => r.json())
+  const GPs = sites.filter(l => l.address_type === 'GP' && l.fixed == true)
+  return GPs
+}
+
+const getLiveGroups = async (groupDate = today) => {
+  const url = `/route/current/depot/${config.service_centre}/date/${groupDate}`
+  const groups = await fetch(url).then(r=>r.json())
+  const liveGroups = filterGroups(groups)
+  return liveGroups
+}
+
+const filterGroups = groups => {
+  let filteredGroups = []
+  for(const [key, group] of Object.entries(groups)) {
+    const keyDate = Date.parse(key) 
+    if(keyDate < sunday) {
+      const da = key.split('-')
+      for(const [id, data] of Object.entries(group)) {
+        const re = /^Capita /
+        const notre = /Urgent/ 
+        if(data.name.match(re) && !data.name.match(notre)) {
+          const groupObject = {
+            rgid: id,
+            date: key,
+            shortDate: da[2] +'-'+ da[1]
+          }
+          filteredGroups.push(groupObject)
+        }
+      }
     }
   }
-  fetch(baseUrl + '/user/me', params)
-  .then(res => res.json())
-  .then(json => {
-    const sc = config.sc = json.service_centre
-    config.printer = json.consignment_printer_name
-    // insert logic for selecting routes by route/date here
-    const url = baseUrl +'/route/current/depot/'+ sc +'/date/' + groupDate
-    return fetch(url, params)
+  return filteredGroups
+}
+
+const getGroupRoutes = async group => {
+  const search = new URLSearchParams({
+    date: group.date,
+    routeGroupId: group.rgid
   })
-  .then(res => res.json())
-  .then(json => {
-    for(const [key, gid] of Object.entries(json)) {
-      // filter groups.. temp default is to only return groups with date after Next Monday (present if day = 0)
-      const keyDate = Date.parse(key) 
-      if(keyDate < sunday) {
-        const da = key.split('-')
-        for(const [id, data] of Object.entries(gid)) {
-          const re = /^Capita /
-          const notre = /Urgent/ 
-          if(data.name.match(re) && !data.name.match(notre)) {
-            const group = {
-              rgid: id,
-              date: key,
-              shortDate: da[2] +'-'+ da[1],
-              routes: []
-            }
-            groups.push(group)
-          }
-        }
-      }
+  const groupRoutes = await fetch('/routes/?' + search).then(r => r.json())
+  return groupRoutes
+}
+
+const getOpenContainers = async route => {
+  const query = new URLSearchParams({fields: 'location_containers'})
+  const location_containers = await fetch(`/routes/${route.key}?${query}`)
+    .then(r => r.json())
+    .then(j => j.location_containers.sort(sorter))
+  return location_containers
+}
+  
+const genNewContainers = async route => {
+  const rl = route.locations
+  const rc = route.location_containers
+  const c = []
+  
+  for(m of rl.filter(l => !rc.some(c => l.consolidation_id === c.consolidation_id))) c.push(m.consolidation_id)
+  if(c.length) {
+    const req = {
+      body: JSON.stringify({
+        route: route.key,
+        open: true,
+        consolidation_id: c.join(',')
+      }),
+      method: 'POST'
     }
-    return groups
-  })
-  .then(async groups => {
-    for(const group of groups) {
-      const search = new URLSearchParams({
-        date: group.date,
-        routeGroupId: group.rgid
+
+    const newContainers = await fetch('/locationcontainers/', req)
+      .then(r => r.json())
+      .then(j => {
+        data = []
+        const b = j.barcode.split(',')
+        const c = j.consolidationId.split(',')
+        for(;b.length > 0;) {
+          data.push({
+            barcode: b.shift(),
+            consolidation_id: c.shift()
+          })
+        }
+        return data
       })
-      const url = baseUrl + '/routes/?' + search.toString()
-      const response = await fetch(url, params)
-      const result = await response.json()
-      result.forEach(async route => {
-        const search = new URLSearchParams({
-          limit: 1000,
-          open: true,
-          order: 'consolidation_id',
-          service_centre: config.sc,
-          query: route.route_planned_code
-        })
-        const query = search.toString()
-        const url = baseUrl + '/client/11270/locations?' + query
-        const response = await fetch(url, params)
-        const result = await response.json()
-        const locations = result.filter(location => location.address_type === 'GP' && location.fixed == true)
-        group.routes.push({
-          key: route.key,
-          rpc: route.route_planned_code,
-          locations: locations
-        })
-      }) 
-    }
-    return groups
-  })
-  .then(async groups => {
-    for(let group of groups) {
-      for(let route of group.routes) {
-        const url = baseUrl +'/routes/'+ route.key +'?fields=location_containers'
-        const res = await fetch(url, params)
-        const data = await res.json()
-        // XXX DELETE to EOF to NOT create containers
-        // if no containers..generate and add them to data.location_containers
-        if(!data.location_containers.length) {
-          const cid = []
-          for(const l of route.locations) {
-            cid.push(l.consolidation_id)
-          }
-          const body = {
-            route: route.key,
-            open: true,
-            consolidation_id: cid.join(',')
-          }   
-          let request = await fetch(baseUrl + '/locationcontainers/', {
-            body: JSON.stringify(body),
-            method: 'POST',
-            mode: 'cors',
-            credentials: 'include'
-          })
-          let results = await request.json()
-          const rbarcodes = results.barcode.split(',')
-          const rcids = results.consolidationId.split(',')
-          for(i=0;i<rbarcodes.length;i++) {
-            data.location_containers.push({
-              barcode: rbarcodes[i],
-              consolidation_id: rcids[i]
-            })
-          }
-        } // XXX EOF <<
-        data.location_containers.sort((a, b) => (a.consolidation_id > b.consolidation_id)? 1: -1)
-        route.containers = data.location_containers
-      }
-    }
-    return groups
-  })
-  .then(groups => {
-    groups.sort((a,b) => (a.date > b.date)? 1: -1)
-    for(let group of groups) {
-      group.routes.sort((a,b) => (parseInt(a.rpc) > parseInt(b.rpc))? 1: -1)
-    }
-    return groups
-  }) 
-  .then(groups => {
-    for(let group of groups) {
-      for(let route of group.routes) {
-        route.printData = []
-        for(const c of route.containers) {
-          const idx = route.locations.map(o => o.consolidation_id).indexOf(c.consolidation_id)
-          const practice = route.locations[idx]
-          route.printData.push({
-            container_id: c.barcode,
-            date: group.shortDate,
-            practice_name: practice.name,
-            postcode: practice.postcode,
-            route: route.rpc,
-            to_ci: c.consolidation_id
-          })
-        }
-      }
-    }
-    return groups
-  })
-  // XXX DELETE to EOF to suppress printing
-  .then(async groups => {
-    for(let group of groups) {
-      for(let route of group.routes) {
+    return newContainers
+  } else {
+    return false
+  }
+}
+
+const addPrintData = route => {
+  const printData = []
+  for(const c of route.newContainers) {
+    const idx = route.locations.map(o => o.consolidation_id).indexOf(c.consolidation_id)
+    const practice = route.locations[idx]
+    printData.push({
+      container_id: c.barcode,
+      date: route.shortDate,
+      practice_name: practice.name,
+      postcode: practice.postcode,
+      route: route.route_planned_code,
+      to_ci: c.consolidation_id
+    })
+  }
+  return printData
+}
+
+const printLabels = async groups => {
+  for(let group of groups) {
+    for(let route of group.routes) {
+      if (route.printData) {
         let printBody = {
           url: 'https://labels.citysprint.co.uk/label/capita-location-container?printer=Swindon+Label+Printer+02',
           content: route.printData
@@ -176,15 +145,45 @@ const getGroups = async (groupDate = today) => {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8'
           },
-          referrer: baseUrl + '/route/',
-          body: JSON.stringify(printBody), 
+          referrer: location.origin + '/route/',
+          body: JSON.stringify(printBody),
           method: 'POST',
           mode: 'cors',
           credentials: 'include'
         }
-        await fetch(baseUrl + '/crossOrigin', printReq)
+        await fetch('/crossOrigin', printReq)
         await timer(2000)
       }
     }
-  }) // XXX EOF <<
+  }
+}
+
+const retrieveData = async () => {
+  let groups = await getLiveGroups()
+  let locations = await getClientLocations(config)
+  for (g of groups) {
+    g.routes = await getGroupRoutes(g)
+    for (r of g.routes) {
+      r.shortDate = g.shortDate 
+      r.locations = locations.filter(l => l.route_planned.code === r.route_planned_code)
+      r.location_containers = await getOpenContainers(r)
+      r.newContainers = await genNewContainers(r)
+      r.printData = addPrintData(r)
+    }
+  }
+  return groups
+}
+
+const bulkCreateContainers = async () => {
+  try {
+    checkSSL()
+  } catch (e) {
+    console.error(e)
+    alert(e)
+    return
+  }
+
+  const groups = await retrieveData()
+  console.log(groups)
+  printLabels(groups)
 }
