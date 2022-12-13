@@ -79,19 +79,25 @@ const getOpenContainers = async route => {
     .then(j => j.location_containers.sort(sorter))
   return location_containers
 }
-  
-const genNewContainers = async route => {
+
+const getMissingContainers = route => {
   const rl = route.locations
   const rc = route.location_containers
-  const c = []
+  const missing_containers = []
   
-  for(m of rl.filter(l => !rc.some(c => l.consolidation_id === c.consolidation_id))) c.push(m.consolidation_id)
-  if(c.length) {
+  for(m of rl.filter(l => !rc.some(c => l.consolidation_id === c.consolidation_id))) {
+    missing_containers.push(m.consolidation_id)
+  }
+  return missing_containers
+}
+
+const genNewContainers = async route => {
+  if(route.missing_containers.length) {
     const req = {
       body: JSON.stringify({
         route: route.key,
         open: true,
-        consolidation_id: c.join(',')
+        consolidation_id: route.missing_containers.join(',')
       }),
       method: 'POST'
     }
@@ -167,8 +173,7 @@ const retrieveData = async () => {
       r.shortDate = g.shortDate 
       r.locations = locations.filter(l => l.route_planned.code === r.route_planned_code)
       r.location_containers = await getOpenContainers(r)
-      r.newContainers = await genNewContainers(r)
-      r.printData = addPrintData(r)
+      r.missing_containers = getMissingContainers(r)
     }
   }
   return groups
@@ -182,8 +187,52 @@ const bulkCreateContainers = async () => {
     alert(e)
     return
   }
-
+  
+  $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
+  
   const groups = await retrieveData()
-  console.log(groups)
-  printLabels(groups)
+  
+  const messageArray = []
+  for (const g of groups) {
+    let groupObject = {
+      date: g.date,
+      routes: g.routes.length,
+      containers: 0
+    } 
+    for (const r of g.routes) {
+      groupObject.containers += r.missing_containers.length
+    }
+    messageArray.push(groupObject)
+  }
+  let promptMessage = 'Generate Containers as below?\n\n'
+  for(;messageArray.length>0;) {
+    m = messageArray.shift()
+    row = ''
+    for ([k,v] of Object.entries(m)) {
+      row += `${k}: ${v} `
+    }
+    promptMessage += `${row.trim()}\n\n`
+  }
+  
+  if(confirm(promptMessage)) {
+    for(g of groups) {
+      for(r of g.routes) {
+        console.log(g.rgid, r.route_planned_code, r.missing_containers.length, r.missing_containers)
+        r.newContainers = await genNewContainers(r)
+        r.printData = addPrintData(r)
+      }
+    }
+  } else {
+    $('#lt_results').html($('<h3>').text('Container generation canceled').css({color: 'red'}))
+    return
+  }
+
+  if(confirm('Print new container labels')) {
+    await printLabels(groups)
+    .then($('#lt_results').html($('<h3>').text('Container labels sent to printer')))
+    
+  } else {
+    $('#lt_results').html($('<h3>').text('Container labels created but not printed').css({color: 'red'}))
+    return
+  }
 }
