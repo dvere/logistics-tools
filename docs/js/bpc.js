@@ -215,7 +215,7 @@ const bulkCreateContainers = async () => {
     }
     
     for (const r of g.routes) {
-      if (r.missing_containers.lenth) {
+      if (r.missing_containers.length) {
         groupObject.routes += 1
         groupObject.containers += r.missing_containers.length
       }
@@ -260,5 +260,4 @@ const bulkCreateContainers = async () => {
   
   await printLabels(groups)
   win('Container labels sent to printer')
-
 }
