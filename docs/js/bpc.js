@@ -32,33 +32,33 @@ const getClientLocations = async config => {
   return GPs
 }
 
-const getLiveGroups = async (config, groupDate = today) => {
-  const url = `/route/current/depot/${config.service_centre}/date/${groupDate}`
+const getLiveGroups = async (config) => {
+  const url = `/route/current/depot/${config.service_centre}`
   const groups = await fetch(url).then(r=>r.json())
-  const liveGroups = filterGroups(groups)
   return liveGroups
 }
 
-const filterGroups = groups => {
-  let filteredGroups = []
+const filterGroups = (groups, future) => {
+  let ug = [], filteredGroups
   for(const [key, group] of Object.entries(groups)) {
-    const keyDate = Date.parse(key) 
-    if(keyDate < sunday) {
-      const da = key.split('-')
-      for(const [id, data] of Object.entries(group)) {
-        const re = /^Capita /
-        const notre = /Urgent/ 
-        if(data.name.match(re) && !data.name.match(notre)) {
-          const groupObject = {
-            rgid: id,
-            date: key,
-            shortDate: da[2] +'-'+ da[1]
-          }
-          filteredGroups.push(groupObject)
+    const keyDate = Date.parse(key)
+    const da = key.split('-')
+    for(const [id, data] of Object.entries(group)) {
+      const re = /^Capita /
+      const notre = /Urgent/ 
+      if(data.name.match(re) && !data.name.match(notre)) {
+        const groupObject = {
+          kd: keyDate,
+          rgid: id,
+          date: key,
+          shortDate: da[2] +'-'+ da[1]
         }
+        ug.push(groupObject)
       }
     }
   }
+  
+  filteredGroups = (future) ? ug.filter(g => g.kd > sunday) : ug.filter(g => g.kd < sunday)
   return filteredGroups
 }
 
@@ -163,8 +163,7 @@ const printLabels = async groups => {
   }
 }
 
-const retrieveData = async (config) => {
-  let groups = await getLiveGroups(config)
+const retrieveData = async (groups, config) => {
   let locations = await getClientLocations(config)
   for (g of groups) {
     g.routes = await getGroupRoutes(g)
@@ -186,7 +185,7 @@ const win = message => {
   $('#lt_results').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
 }
 
-const bulkCreateContainers = async () => {
+const bulkCreateContainers = async (future = false) => {
   try {
     checkSSL()
   } catch (e) {
@@ -199,8 +198,9 @@ const bulkCreateContainers = async () => {
 
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   
-  const groups = await retrieveData(config)
-
+  // const groups = await retrieveData(config)
+  let groups = await getLiveGroups(config).then(g => filterGroups(g, future))
+  
   if(!groups) {
     fail('No live groups to print labels for')
     return
