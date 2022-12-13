@@ -179,6 +179,14 @@ const retrieveData = async () => {
   return groups
 }
 
+const fail = message => {
+  $('#lt_results').html($('<h3>').text(`${message}`).css({color: 'red'}))
+}
+
+const win = message => {
+  $('#lt_results').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
+}
+
 const bulkCreateContainers = async () => {
   try {
     checkSSL()
@@ -191,6 +199,11 @@ const bulkCreateContainers = async () => {
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   
   const groups = await retrieveData()
+
+  if(!groups) {
+    fail('No live groups to print labels for')
+    return
+  }
   
   const messageArray = []
   for (const g of groups) {
@@ -198,10 +211,12 @@ const bulkCreateContainers = async () => {
       date: g.date,
       routes: g.routes.length,
       containers: 0
-    } 
+    }
+    
     for (const r of g.routes) {
       groupObject.containers += r.missing_containers.length
     }
+
     messageArray.push(groupObject)
   }
   let promptMessage = 'Generate Containers as below?\n\n'
@@ -211,28 +226,28 @@ const bulkCreateContainers = async () => {
     for ([k,v] of Object.entries(m)) {
       row += `${k}: ${v} `
     }
-    promptMessage += `${row.trim()}\n\n`
+    promptMessage += `${row.trim()}\n`
   }
   
-  if(confirm(promptMessage)) {
-    for(g of groups) {
-      for(r of g.routes) {
-        console.log(g.rgid, r.route_planned_code, r.missing_containers.length, r.missing_containers)
-        r.newContainers = await genNewContainers(r)
-        r.printData = addPrintData(r)
-      }
-    }
-  } else {
-    $('#lt_results').html($('<h3>').text('Container generation canceled').css({color: 'red'}))
+  if(!confirm(promptMessage)) {
+    fail('Container generation canceled')
     return
   }
 
-  if(confirm('Print new container labels')) {
-    await printLabels(groups)
-    .then($('#lt_results').html($('<h3>').text('Container labels sent to printer')))
-    
-  } else {
-    $('#lt_results').html($('<h3>').text('Container labels created but not printed').css({color: 'red'}))
+  for(g of groups) {
+    for(r of g.routes) {
+      console.log(g.rgid, r.route_planned_code, r.missing_containers.length, r.missing_containers)
+      r.newContainers = await genNewContainers(r)
+      r.printData = addPrintData(r)
+    }
+  }
+  
+  if(!confirm('Print new container labels')) {
+    fail('Container labels created but not printed')
     return
   }
+  
+  await printLabels(groups)
+  win('Container labels sent to printer')
+
 }
