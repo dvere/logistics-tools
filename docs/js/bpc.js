@@ -210,16 +210,26 @@ const bulkCreateContainers = async () => {
   for (const g of groups) {
     let groupObject = {
       date: g.date,
-      routes: g.routes.length,
+      routes: 0,
       containers: 0
     }
     
     for (const r of g.routes) {
-      groupObject.containers += r.missing_containers.length
+      if (r.missing_containers.lenth) {
+        groupObject.routes += 1
+        groupObject.containers += r.missing_containers.length
+      }
     }
-
-    messageArray.push(groupObject)
+    if(groupObject.routes > 0) {
+      messageArray.push(groupObject)
+    }
   }
+
+  if(!messageArray.length) {
+    fail('There are no GPs missing containers')
+    return
+  }
+
   let promptMessage = 'Generate Containers as below?\n\n'
   for(;messageArray.length>0;) {
     m = messageArray.shift()
