@@ -2,7 +2,6 @@ const date = new Date()
 const today = date.toJSON().substring(0,10)
 const ddiff = (date.getDate() - date.getDay() + 1) + 6
 const sunday = new Date(date.setDate(ddiff))
-const config = await fetch('/user/me').then(r=>r.json())
 const sorter = (a,b) => (a.consolidation_id > b.consolidation_id) ? 1 : -1
 const timer = ms => new Promise(res => setTimeout(res, ms))
 
@@ -33,7 +32,7 @@ const getClientLocations = async config => {
   return GPs
 }
 
-const getLiveGroups = async (groupDate = today) => {
+const getLiveGroups = async (config, groupDate = today) => {
   const url = `/route/current/depot/${config.service_centre}/date/${groupDate}`
   const groups = await fetch(url).then(r=>r.json())
   const liveGroups = filterGroups(groups)
@@ -164,8 +163,8 @@ const printLabels = async groups => {
   }
 }
 
-const retrieveData = async () => {
-  let groups = await getLiveGroups()
+const retrieveData = async (config) => {
+  let groups = await getLiveGroups(config)
   let locations = await getClientLocations(config)
   for (g of groups) {
     g.routes = await getGroupRoutes(g)
@@ -196,9 +195,11 @@ const bulkCreateContainers = async () => {
     return
   }
   
+  const config = await fetch('/user/me').then(r=>r.json())
+
   $('#lt_results').html($('<div>',{ class: 'lt-loader' }))
   
-  const groups = await retrieveData()
+  const groups = await retrieveData(config)
 
   if(!groups) {
     fail('No live groups to print labels for')
