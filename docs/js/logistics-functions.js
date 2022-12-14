@@ -363,7 +363,7 @@ const printLabels = async groups => {
   }
 }
 
-const retrieveData = async (groups, config) => {
+const retrieveData = async (groups) => {
   let locations = await getClientLocations(config)
   for (g of groups) {
     g.routes = await getGroupRoutes(g)
@@ -378,9 +378,41 @@ const retrieveData = async (groups, config) => {
 }
 
 const fail = message => {
-  $('#lt_results').html($('<h3>').text(`${message}`).css({color: 'red'}))
+  $('<h3>').text(`${message}`).css({color: 'red'})
 }
 
 const win = message => {
-  $('#lt_results').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
+  $('#gp_select').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
+}
+
+const populateGPs = async () => {
+  let groups = await getLiveGroups(config).then(g => filterGroups(g))
+  $('#gp_select').removeClass('lt-loader')
+  if(!groups) {
+    let h = fail('No live groups found')
+    $('#gp_select').html(h)
+    return
+  }
+
+  const selectOut = []
+  for (const g of groups) {
+    let gRow = []
+    for (const r of g.routes) {
+      const k = r.missing_containers.length
+      if (k > 0) {
+        let t = `${r.route_planned_code} - ${k} containers`
+        gRow.push($('<div>', { class: 'gp-row'})
+          .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
+          .append($('<label>', { for: r.key, text: t})))
+      }
+    }
+
+  }
+
+  if (success) {
+    $('#gp_select').removeClass('lt-loader')
+    $('#gp_form') 
+      .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
+      .append($('<button>', { id: 'gp_btn', text: 'Print Selected'}))
+  }
 }
