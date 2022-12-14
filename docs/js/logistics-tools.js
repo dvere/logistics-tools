@@ -266,7 +266,7 @@ let addPartsToDOM = (sc) => {
       .append($('<button>', { id: 'lp_clr', class: 'lt-button', text: 'Clear' })))
   
   let scForm = $('<div>', { id: 'sc_tab', class: 'lt-tab' })
-    .append($('<div>', { id: 'ci_form' })
+    .append($('<div>', { id: 'sc_form' })
       .append($('<input>', { id: 'sc_old', class: 'lt-input' }).attr(scAttr))
       .append($('<input>', { id: 'sc_new', class: 'lt-input' }).attr(scAttr))
       .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
