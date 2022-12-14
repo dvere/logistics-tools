@@ -202,7 +202,7 @@ const bulkCreateContainers = async (future = false) => {
   let groups = await getLiveGroups(config).then(g => filterGroups(g, future))
   
   if(!groups) {
-    fail('No live groups to print labels for')
+    fail('No live groups found')
     return
   }
   
