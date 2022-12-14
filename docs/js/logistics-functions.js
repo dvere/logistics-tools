@@ -194,10 +194,6 @@ const scMain = (source, dest) => {
     })
 }
 
-const gpMain = () => {
-
-}
-
 const validateBarcodes = (arr, regex) => {
   let count = 0
   $.each(arr, (_i, bc) => {
@@ -214,13 +210,13 @@ const checkSSL = () => {
     return true
   }
   if (confirm( 
-      'This script requires a secure connection in order to run\n\n' +
+      'Logistics Tools requires a secure connection in order to run\n\n' +
       'Click "OK" to reload this page using https, you can then re-run Logistics Tools\n\n' +  
-      'Click "Cancel" to abort the creation and printing of GP containers and remain on this page'
+      'Click "Cancel" to abort the loading of Logistics Tools and remain on this page'
   )) {
     location.assign(location.href.replace('http:','https:'))
   } else {
-    throw 'Not using https, Print GP Containers aborted'
+    throw 'Not using https, cannot load Logistics Tools'
   }
 }
 
