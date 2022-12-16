@@ -205,6 +205,8 @@ const bulkCreateContainers = async (future = false) => {
     fail('No live groups found')
     return
   }
+
+  groups = await retrieveData(groups, config)
   
   const messageArray = []
   for (const g of groups) {
