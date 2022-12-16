@@ -220,6 +220,7 @@ const checkSSL = () => {
   }
 }
 
+// BPC
 const getClientLocations = async config => {
   const query = new URLSearchParams({
     limit: 10000,
@@ -268,6 +269,9 @@ const getGroupRoutes = async group => {
     routeGroupId: group.rgid
   })
   const groupRoutes = await fetch('/routes/?' + search).then(r => r.json())
+  for( let r of groupRoutes ) {
+    r.shortDate = group.shortDate
+  }
   return groupRoutes
 }
 
@@ -363,18 +367,10 @@ const printLabels = async groups => {
   }
 }
 
-const retrieveData = async (groups) => {
-  let locations = await getClientLocations(config)
-  for (g of groups) {
-    g.routes = await getGroupRoutes(g)
-    for (r of g.routes) {
-      r.shortDate = g.shortDate 
-      r.locations = locations.filter(l => l.route_planned.code === r.route_planned_code)
-      r.location_containers = await getOpenContainers(r)
-      r.missing_containers = getMissingContainers(r)
-    }
-  }
-  return groups
+const retrieveRouteData = async (route, locations) => {
+  route.locations = locations.filter(l => l.route_planned.code === route.route_planned_code)
+  route.location_containers = await getOpenContainers(route)
+  route.missing_containers = getMissingContainers(route)
 }
 
 const fail = message => {
@@ -386,33 +382,39 @@ const win = message => {
 }
 
 const populateGPs = async () => {
+   
+  const locations = await getClientLocations(config)
   let groups = await getLiveGroups(config).then(g => filterGroups(g))
-  $('#gp_select').removeClass('lt-loader')
+  
   if(!groups) {
+    $('#gp_select').removeClass('lt-loader')
     let h = fail('No live groups found')
     $('#gp_select').html(h)
     return
   }
-
-  const selectOut = []
+  
   for (const g of groups) {
-    let gRow = []
-    for (const r of g.routes) {
-      const k = r.missing_containers.length
-      if (k > 0) {
-        let t = `${r.route_planned_code} - ${k} containers`
-        gRow.push($('<div>', { class: 'gp-row'})
-          .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
-          .append($('<label>', { for: r.key, text: t})))
+    g.routes = await getGroupRoutes(g)
+
+    if(g.routes.length > 0) {
+      let gpGroup = $('<div>', {class: 'gp-group', text: g.date})
+      for (const r of g.routes) {
+        await retrieveRouteData(r, locations)
+        const k = r.missing_containers.length
+        if (k > 0) {
+          let t = `${r.route_planned_code} - ${k} containers`
+          gpGroup.append($('<div>', { class: 'gp-row'})
+            .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
+            .append($('<label>', { for: r.key, text: t})))
+          success++
+        }
       }
     }
-
   }
-
-  if (success) {
-    $('#gp_select').removeClass('lt-loader')
-    $('#gp_form') 
-      .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
-      .append($('<button>', { id: 'gp_btn', text: 'Print Selected'}))
-  }
+  $('#gp_select').data('groups', groups)
+ 
+  $('#gp_select').removeClass('lt-loader')
+  $('#gp_form') 
+    .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
+    .append($('<button>', { id: 'gp_btn', text: 'Print Selected'}))
 }
