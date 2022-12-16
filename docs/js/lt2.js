@@ -66,9 +66,7 @@ const addPartsToDOM = (svc) => {
 
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
     .append($('<div>', { id: 'gp_form' })
-      .append($('<div>', { id: 'gp_select' }))
-      .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
-      .append($('<button>', { id: 'gp_btn', text: 'Print Selected'})))
+      .append($('<div>', { id: 'gp_select', class: 'lt-loader'})))
 
   let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
