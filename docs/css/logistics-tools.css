@@ -63,6 +63,19 @@ input[type=date]::-webkit-inner-spin-button {
 #lp_form {
   background-color: rgba(255, 128, 0, 0.4);
 }
+#gp_form {
+  grid-template-areas: "a a"
+                       "b c";
+}
+#gp_select {
+  grid-area: a;
+}
+#gp_all {
+  grid-area: b;
+}
+#gp_btn {
+  grid-area: c;
+}
 #ac_ti, #lp_ti {
   font-size: 2rem;
   font-weight: 600;
