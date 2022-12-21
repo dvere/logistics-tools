@@ -217,5 +217,6 @@ $.when($.ready).then(async () => {
   const config = await fetch('/user/me').then(r => r.json())
   const svc = await fetch(`/servicecentres/${config.service_centre}`)
     .then(r=>r.json())
+  console.dir(svc)
   addPartsToDOM(svc)
 })
