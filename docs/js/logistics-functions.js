@@ -221,10 +221,11 @@ const getClientLocations = async config => {
 const getLiveGroups = async (config) => {
   const url = `/route/current/depot/${config.service_centre}`
   const groups = await fetch(url).then(r=>r.json())
+  console.log(groups)
   return filterGroups(groups)
 }
 
-const filterGroups = (groups) => {
+const filterGroups = groups => {
   let filteredGroups = []
   for(const [key, group] of Object.entries(groups)) {
     const da = key.split('-')
