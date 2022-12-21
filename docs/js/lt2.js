@@ -1,5 +1,20 @@
 var config, svc
 
+const checkSSL = () => {
+  if (location.protocol === 'https:') {
+    return true
+  }
+  if (confirm( 
+      'Logistics Tools requires a secure connection in order to run\n\n' +
+      'Click "OK" to reload this page using https, you can then re-run Logistics Tools\n\n' +  
+      'Click "Cancel" to abort the loading of Logistics Tools and remain on this page'
+  )) {
+    location.assign(location.href.replace('http:','https:'))
+  } else {
+    throw 'Not using https, cannot load Logistics Tools'
+  }
+}
+
 const addPartsToDOM = (svc) => {
   let lt = 'https://dvere.github.io/logistics-tools/'
   let $pageContent = $('#main-container > div:first-child > div.page-content')
