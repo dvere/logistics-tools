@@ -417,7 +417,7 @@ const populateGPs = async config => {
     }
   }
   gpGroups = []
-  for([date,rArray] of Object.entries(groups)) {
+  for(const [date, rArray] of Object.entries(groups)) {
     let gpGroup = $('<div>', {class: 'gp-route', text: date})
     for (r of rArray) {
       gpGroup.append($('<div>', { class: 'gp-row'})
