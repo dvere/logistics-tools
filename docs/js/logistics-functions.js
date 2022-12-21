@@ -276,7 +276,7 @@ const getMissingContainers = route => {
 
 const getRoutes = async (config) => {
   const locations = await getClientLocations(config)
-  let groups = await getLiveGroups(config)
+  let groups = await getLiveGroups(config).then(g => filterGroups(g))
   const allRoutes = []
   for (let g of groups) {
     g.routes = await getGroupRoutes(g)
