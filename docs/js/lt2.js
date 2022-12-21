@@ -200,7 +200,7 @@ const addPartsToDOM = (svc) => {
   $('#lt_gp').click(() => {
     $('.lt-tab').hide()
     $('#lt_results').empty()
-    $('#gp_select').html(populateGPs())
+    $('#gp_select').html(populateGPs(config))
     $('#gp_tab').show()
   })
 }

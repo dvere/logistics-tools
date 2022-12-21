@@ -366,7 +366,7 @@ const win = message => {
   $('#gp_select').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
 }
 
-const populateGPs = async () => {
+const populateGPs = async (config) => {
    
   const locations = await getClientLocations(config)
   let groups = await getLiveGroups(config).then(g => filterGroups(g))
