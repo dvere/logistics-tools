@@ -227,9 +227,9 @@ const getLiveGroups = async (config) => {
 const filterGroups = groups => {
   let filteredGroups = []
   for(const [key, group] of Object.entries(groups)) {
+    console.log(group)
     const da = key.split('-')
     for(const [id, data] of Object.entries(group)) {
-      console.log(id)
       const re = /^Capita /
       const notre = /Urgent/ 
       if(data.name.match(re) && !data.name.match(notre)) {
