@@ -1,4 +1,4 @@
-var config, svc
+//var config, svc
 
 const checkSSL = () => {
   if (location.protocol === 'https:') {
@@ -213,7 +213,7 @@ $.when($.ready).then(async () => {
     alert(e)
     return
   }
-  config = await fetch('/user/me').then(r => r.json())
-  svc = await fetch(`/servicecentres/${config.service_centre}`)
+  const config = await fetch('/user/me').then(r => r.json())
+  const svc = await fetch(`/servicecentres/${config.service_centre}`)
   addPartsToDOM(svc)
 })
