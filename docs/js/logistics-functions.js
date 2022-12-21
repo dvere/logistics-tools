@@ -221,18 +221,15 @@ const getClientLocations = async config => {
 const getLiveGroups = async (config) => {
   const url = `/route/current/depot/${config.service_centre}`
   const groups = await fetch(url).then(r=>r.json())
-  console.log('groups before filterGroups()', groups)
   return filterGroups(groups)
 }
 
 const filterGroups = groups => {
-  console.log('groups as seen by filterGroups()', groups)
   let filteredGroups = []
   for(const [key, group] of Object.entries(groups)) {
     const da = key.split('-')
-    console.log(key, group)
     for(const [id, data] of Object.entries(group)) {
-      console.log(id, data)
+      console.log(data)
       const re = /^Capita /
       const notre = /Urgent/ 
       if(data.name.match(re) && !data.name.match(notre)) {
