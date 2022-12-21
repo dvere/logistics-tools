@@ -224,10 +224,9 @@ const getLiveGroups = async (config) => {
   return groups
 }
 
-const filterGroups = (groups, future) => {
-  let ug = [], filteredGroups
+const filterGroups = (groups) => {
+  let filteredGroups
   for(const [key, group] of Object.entries(groups)) {
-    const keyDate = Date.parse(key)
     const da = key.split('-')
     for(const [id, data] of Object.entries(group)) {
       const re = /^Capita /
@@ -239,12 +238,10 @@ const filterGroups = (groups, future) => {
           date: key,
           shortDate: da[2] +'-'+ da[1]
         }
-        ug.push(groupObject)
+        filteredGroups.push(groupObject)
       }
     }
   }
-  
-  filteredGroups = (future) ? ug.filter(g => g.kd > sunday) : ug.filter(g => g.kd < sunday)
   return filteredGroups
 }
 
@@ -254,9 +251,7 @@ const getGroupRoutes = async group => {
     routeGroupId: group.rgid
   })
   const groupRoutes = await fetch('/routes/?' + search).then(r => r.json())
-  for( let r of groupRoutes ) {
-    r.shortDate = group.shortDate
-  }
+  for( let r of groupRoutes ) r.shortDate = group.shortDate
   return groupRoutes
 }
 
@@ -279,126 +274,156 @@ const getMissingContainers = route => {
   return missing_containers
 }
 
-const genNewContainers = async route => {
-  if(route.missing_containers.length) {
-    const req = {
-      body: JSON.stringify({
-        route: route.key,
-        open: true,
-        consolidation_id: route.missing_containers.join(',')
-      }),
-      method: 'POST'
+const getRoutes = async (config) => {
+  const locations = await getClientLocations(config)
+  let groups = await getLiveGroups(config)
+  const allRoutes = []
+  for (let g of groups) {
+    g.routes = await getGroupRoutes(g)
+    for (r of g.routes) {
+      r.shortDate = g.shortDate 
+      r.locations = locations.filter(l => l.route_planned.code === r.route_planned_code)
+      r.location_containers = await getOpenContainers(r)
+      r.missing_containers = getMissingContainers(r)
+      allRoutes.push(r)
     }
-
-    const newContainers = await fetch('/locationcontainers/', req)
-      .then(r => r.json())
-      .then(j => {
-        data = []
-        const b = j.barcode.split(',')
-        const c = j.consolidationId.split(',')
-        for(;b.length > 0;) {
-          data.push({
-            barcode: b.shift(),
-            consolidation_id: c.shift()
-          })
-        }
-        return data
-      })
-    return newContainers
-  } else {
-    return false
   }
+  
+  allRoutes.sort((a,b) => ((a.date + a.route_planned_code) > (b.date + b.route_planned_code))? 1: -1)
+  const routes = allRoutes.filter(e => e.missing_containers.length > 0)
+  return routes
 }
 
-const addPrintData = route => {
-  const printData = []
-  for(const c of route.newContainers) {
-    const idx = route.locations.map(o => o.consolidation_id).indexOf(c.consolidation_id)
-    const practice = route.locations[idx]
-    printData.push({
-      container_id: c.barcode,
-      date: route.shortDate,
-      practice_name: practice.name,
-      postcode: practice.postcode,
-      route: route.route_planned_code,
-      to_ci: c.consolidation_id
+//fake
+const genNewContainers = async req => {
+  const data = []
+  const body = JSON.parse(req.body)
+  c = body.consolidation_id.split(',')
+  b = c.map(x => 'CLSC000' + x)
+  for(;b.length > 0;) {
+    data.push({
+      barcode: b.shift(),
+      consolidation_id: c.shift()
     })
   }
-  return printData
+  return data
+}
+//real
+const genNewContainers2 = async req => {
+  const newContainers = await fetch('/locationcontainers/', req)
+    .then(r => r.json())
+    .then(j => {
+      data = []
+      const b = j.barcode.split(',')
+      const c = j.consolidationId.split(',')
+      for(;b.length > 0;) {
+        data.push({
+          barcode: b.shift(),
+          consolidation_id: c.shift()
+        })
+      }
+      return data
+    })
+  return newContainers
 }
 
-const printLabels = async groups => {
-  for(let group of groups) {
-    for(let route of group.routes) {
-      if (route.printData) {
-        let printBody = {
-          url: 'https://labels.citysprint.co.uk/label/capita-location-container?printer=Swindon+Label+Printer+02',
-          content: route.printData
-        }
-        let printReq = {
-          headers: {
-            'Content-Type': 'application/json;charset=UTF-8'
-          },
-          referrer: location.origin + '/route/',
-          body: JSON.stringify(printBody),
-          method: 'POST',
-          mode: 'cors',
-          credentials: 'include'
-        }
-        await fetch('/crossOrigin', printReq)
-        await timer(2000)
-      }
-    }
+const addBarcodes = async route => {
+  let s = route.containers.map(x => x.to_ci)
+  const req = {
+    body: JSON.stringify({
+      route: route.key,
+      open: true,
+      consolidation_id: s.join(',')
+    }),
+    method: 'POST'
+  }
+  const nbc = await genNewContainers(req)
+  for (c of nbc) {
+    const idx = route.containers.map(o => o.to_ci).indexOf(c.consolidation_id)
+    route.containers[idx].barcode = nbc[idx].barcode
   }
 }
 
-const retrieveRouteData = async (route, locations) => {
-  route.locations = locations.filter(l => l.route_planned.code === route.route_planned_code)
-  route.location_containers = await getOpenContainers(route)
-  route.missing_containers = getMissingContainers(route)
+const printLabels = async data => {
+  let printBody = {
+    url: 'https://labels.citysprint.co.uk/label/capita-location-container?printer=Swindon+Label+Printer+02',
+    content: data
+  }
+  let printReq = {
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
+    referrer: location.origin + '/route/',
+    body: JSON.stringify(printBody),
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include'
+  }
+  await fetch('/crossOrigin', printReq)
+  await timer(2000)
 }
 
-const fail = message => {
-  $('<h3>').text(`${message}`).css({color: 'red'})
+const getData = async config => {
+  const routes = await getRoutes(config)
+  const nc = []
+
+  for (r of routes) {
+    const rData = {
+      date: r.date,
+      key: r.key,
+      rpc: r.route_planned_code,
+      containers: []
+    }
+    for(c of r.missing_containers) {
+      const idx = r.locations.map(o => o.consolidation_id).indexOf(c)
+      const practice = r.locations[idx]
+      let data = {
+        date: r.shortDate,
+        to_ci: c,
+        practice_name: practice.name,
+        postcode: practice.postcode,
+        route: r.route_planned_code
+      }
+      rData.containers.push(data)
+    }
+
+    nc.push(rData)
+  }
+  return nc
 }
 
-const win = message => {
-  $('#gp_select').html($('<h3>').text(`${message}`).css({color: 'rgba(98,168,209,1)'}))
-}
 
-const populateGPs = async (config) => {
-   
-  const locations = await getClientLocations(config)
-  let groups = await getLiveGroups(config).then(g => filterGroups(g))
+const populateGPs = async config => {
   
-  if(!groups) {
+  const routes = getData(config)
+ 
+  if(!routes) {
     $('#gp_select').removeClass('lt-loader')
-    let h = fail('No live groups found')
-    $('#gp_select').html(h)
+    $('#gp_select').html('<h3>No live routes found</h3>')
     return
   }
   
-  for (const g of groups) {
-    g.routes = await getGroupRoutes(g)
-
-    if(g.routes.length > 0) {
-      let gpGroup = $('<div>', {class: 'gp-group', text: g.date})
-      for (const r of g.routes) {
-        await retrieveRouteData(r, locations)
-        const k = r.missing_containers.length
-        if (k > 0) {
-          let t = `${r.route_planned_code} - ${k} containers`
-          gpGroup.append($('<div>', { class: 'gp-row'})
-            .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
-            .append($('<label>', { for: r.key, text: t})))
-          success++
-        }
-      }
+  const groups = {} 
+  for (const r of routes) {
+    if(groups[r.date]) {
+      groups[r.date].push(r)
+    } else {
+      groups[r.date] = [r]
     }
   }
-  $('#gp_select').data('groups', groups)
- 
-  $('#gp_select').removeClass('lt-loader')
+  gpGroups = []
+  for([date,rArray] of Object.entries(groups)) {
+    let gpGroup = $('<div>', {class: 'gp-route', text: date})
+    for (r of rArray) {
+      gpGroup.append($('<div>', { class: 'gp-row'})
+        .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
+        .append($('<label>', { for: r.key, text: `${r.rpc} - ${r.containers.length} containers`})))    
+    }
+    gpGroups.push(gpGroup)
+  }
+
+  $('#gp_select').removeClass('lt-loader').append(gpGroups)
+
   $('#gp_form') 
     .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
     .append($('<button>', { id: 'gp_btn', text: 'Print Selected'}))
