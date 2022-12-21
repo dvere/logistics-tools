@@ -229,7 +229,7 @@ const filterGroups = groups => {
   for(const [key, group] of Object.entries(groups)) {
     const da = key.split('-')
     for(const [id, data] of Object.entries(group)) {
-      console.log(data)
+      console.log(data.name)
       const re = /^Capita /
       const notre = /Urgent/ 
       if(data.name.match(re) && !data.name.match(notre)) {
