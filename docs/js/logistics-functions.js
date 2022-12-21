@@ -221,13 +221,13 @@ const getClientLocations = async config => {
 const getLiveGroups = async (config) => {
   const url = `/route/current/depot/${config.service_centre}`
   const groups = await fetch(url).then(r=>r.json())
+  console.log(groups)
   return filterGroups(groups)
 }
 
 const filterGroups = groups => {
   let filteredGroups = []
   for(const [key, group] of Object.entries(groups)) {
-    console.log(group)
     const da = key.split('-')
     for(const [id, data] of Object.entries(group)) {
       const re = /^Capita /
@@ -276,7 +276,7 @@ const getMissingContainers = route => {
 
 const getRoutes = async (config) => {
   const locations = await getClientLocations(config)
-  let groups = await getLiveGroups(config).then(g => filterGroups(g))
+  let groups = await getLiveGroups(config)
   const allRoutes = []
   for (let g of groups) {
     g.routes = await getGroupRoutes(g)
