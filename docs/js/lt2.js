@@ -1,4 +1,4 @@
-//var config, svc
+var config, svc
 
 const checkSSL = () => {
   if (location.protocol === 'https:') {
@@ -206,9 +206,9 @@ const addPartsToDOM = (svc) => {
 }
 
 (async () => {
-  var config = await fetch('/user/me').then(r => r.json())
+  config = await fetch('/user/me').then(r => r.json())
   console.log(config)
-  var svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
+  svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
   console.log(svc)
   addPartsToDOM(svc)
 })()
