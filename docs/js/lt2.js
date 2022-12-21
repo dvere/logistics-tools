@@ -205,10 +205,10 @@ const addPartsToDOM = (svc) => {
   })
 }
 
-$.when($.ready).then(async () => {
+(async () => {
   var config = await fetch('/user/me').then(r => r.json())
   console.log(config)
   var svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
   console.log(svc)
   addPartsToDOM(svc)
-})
+})()
