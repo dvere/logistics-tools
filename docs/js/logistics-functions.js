@@ -395,7 +395,7 @@ const getData = async config => {
 
 const populateGPs = async config => {
   
-  const routes = getData(config)
+  const routes = await getData(config)
  
   if(!routes) {
     $('#gp_select').removeClass('lt-loader')
