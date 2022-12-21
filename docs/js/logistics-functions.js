@@ -430,6 +430,6 @@ const populateGPs = async config => {
   $('#gp_select').removeClass('lt-loader').append(gpGroups)
 
   $('#gp_form') 
-    .append($('<button>', { id: 'gp_all', text: 'Toggle All'}))
-    .append($('<button>', { id: 'gp_btn', text: 'Print Selected'}))
+    .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All'}))
+    .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'}))
 }

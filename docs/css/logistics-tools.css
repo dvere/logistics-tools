@@ -46,7 +46,7 @@ input[type=date]::-webkit-inner-spin-button {
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
 }
-#ci_form, #ac_form, #lp_form, #sc_form {
+#ci_form, #ac_form, #lp_form, #sc_form, #gp_form {
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -86,7 +86,7 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-tab {
   display: none;
 }
-.sc-row, .ci-row, .ac-row, .lp-row {
+.sc-row, .ci-row, .ac-row, .lp-row, .gp-row {
   padding: .2rem 1rem .1rem;
   border: 1px solid rgba(0,0,0,0.25);
   border-style: none solid solid;
