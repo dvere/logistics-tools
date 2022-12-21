@@ -206,6 +206,11 @@ const validateBarcodes = (arr, regex) => {
 }
 
 // BPC
+const date = new Date()
+const today = date.toJSON().substring(0,10)
+const sorter = (a,b) => (a.consolidation_id > b.consolidation_id) ? 1 : -1
+const timer = ms => new Promise(res => setTimeout(res, ms))
+
 const getClientLocations = async config => {
   const query = new URLSearchParams({
     limit: 10000,
