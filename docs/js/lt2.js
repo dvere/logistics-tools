@@ -1,5 +1,3 @@
-var config, svc
-
 const checkSSL = () => {
   if (location.protocol === 'https:') {
     return true
@@ -15,7 +13,7 @@ const checkSSL = () => {
   }
 }
 
-const addPartsToDOM = (svc) => {
+const addPartsToDOM = (config, svc) => {
   let lt = 'https://dvere.github.io/logistics-tools/'
   let $pageContent = $('#main-container > div:first-child > div.page-content')
   
@@ -204,11 +202,9 @@ const addPartsToDOM = (svc) => {
     $('#gp_tab').show()
   })
 }
-
+;
 (async () => {
-  config = await fetch('/user/me').then(r => r.json())
-  console.log(config)
-  svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
-  console.log(svc)
-  addPartsToDOM(svc)
+  const config = await fetch('/user/me').then(r => r.json())
+  const svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
+  addPartsToDOM(config, svc)
 })()
