@@ -440,7 +440,9 @@ const populateGPs = async config => {
     .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'})
       .click(() => {
         let gpData = []
-        $('.gp-cbx:checked').each((i,e) => gpData.push(e.data('route)')))
+        $('.gp-cbx:checked').each(function() {
+          gpData.push($(this).data('route'))
+        })
         gpMain(gpData)
       }))
 }
