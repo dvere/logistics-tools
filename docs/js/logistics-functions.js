@@ -422,7 +422,7 @@ const populateGPs = async config => {
     let gpGroup = $('<div>', {class: 'gp-route', text: date})
     for (r of rArray) { 
       gpGroup.append($('<div>', { class: 'gp-row'})
-        .append($('<input>', { type: 'checkbox', class: 'gp-cbx', name: 'gpcbx'})
+        .append($('<input>', { type: 'checkbox', class: 'gp-cbx' checked: true})
           .data('route', r))
         .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`})))
     }
@@ -434,8 +434,8 @@ const populateGPs = async config => {
   $('#gp_form') 
     .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All'})
       .click(() => {
-        const cblist = $('input[name=gpcbx]')
-        cblist.attr('checked', !cblist.attr('checked'))
+        const cblist = $('input.gp-cbx]')
+        cblist.prop('checked', !cblist.prop('checked'))
       }))
     .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'})
       .click(() => {
