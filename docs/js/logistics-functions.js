@@ -226,7 +226,6 @@ const getClientLocations = async config => {
 const getLiveGroups = async (config) => {
   const url = `/route/current/depot/${config.service_centre}`
   const groups = await fetch(url).then(r=>r.json())
-  console.log(groups)
   return filterGroups(groups)
 }
 
