@@ -420,7 +420,8 @@ const populateGPs = async config => {
   for(const [date, rArray] of Object.entries(groups)) {
     let gpGroup = $('<div>', {class: 'gp-route', text: date})
     for (r of rArray) {
-      gpGroup.append($('<div>', { class: 'gp-row'})
+      const dataContainers = JSON.stringify(r) 
+      gpGroup.append($('<div>', { class: 'gp-row', dataRoute: r.key, dataContainers: dataContainers})
         .append($('<input>', { type: 'checkbox', id: r.key, name: r.key}))
         .append($('<label>', { for: r.key, text: `${r.rpc} - ${r.containers.length} containers`})))    
     }
