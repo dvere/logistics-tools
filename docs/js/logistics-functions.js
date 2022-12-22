@@ -396,7 +396,10 @@ const getData = async config => {
   return nc
 }
 const gpMain = async data => {
-  console.log(data)
+  for(const r of data) {
+    const cid = r.containers.map(o => o.to_ci)
+    console.log(cid)
+  }
 }
 
 const populateGPs = async config => {
