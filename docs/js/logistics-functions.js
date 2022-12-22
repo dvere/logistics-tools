@@ -434,7 +434,7 @@ const populateGPs = async config => {
   $('#gp_form') 
     .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All'})
       .click(() => {
-        const cblist = $('input.gp-cbx]')
+        const cblist = $('input.gp-cbx')
         cblist.prop('checked', !cblist.prop('checked'))
       }))
     .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'})
