@@ -432,7 +432,7 @@ const populateGPs = async config => {
   $('#gp_select').removeClass('lt-loader').append(gpGroups)
 
   $('#gp_form') 
-    .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle Selection'})
+    .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All'})
       .click(() => {
         const cblist = $('input.gp-cbx')
         cblist.prop('checked', !cblist.prop('checked'))
