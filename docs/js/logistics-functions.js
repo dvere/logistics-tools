@@ -399,7 +399,8 @@ const getData = async config => {
 
 
 const populateGPs = async config => {
-  
+  const groups = {}
+  const gpGroups = []
   const routes = await getData(config)
  
   if(!routes) {
@@ -408,7 +409,6 @@ const populateGPs = async config => {
     return
   }
   
-  const groups = {} 
   for (const r of routes) {
     if(groups[r.date]) {
       groups[r.date].push(r)
@@ -416,7 +416,7 @@ const populateGPs = async config => {
       groups[r.date] = [r]
     }
   }
-  gpGroups = []
+
   for(const [date, rArray] of Object.entries(groups)) {
     let gpGroup = $('<div>', {class: 'gp-route', text: date})
     for (r of rArray) { 
