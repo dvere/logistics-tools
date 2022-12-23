@@ -299,7 +299,7 @@ const getRoutes = async (config) => {
 }
 
 //fake
-const genNewContainers = async req => {
+const genNewContainers2 = async req => {
   const data = []
   const body = JSON.parse(req.body)
   c = body.consolidation_id.split(',')
@@ -313,7 +313,7 @@ const genNewContainers = async req => {
   return data
 }
 //real
-const genNewContainers2 = async req => {
+const genNewContainers = async req => {
   const newContainers = await fetch('/locationcontainers/', req)
     .then(r => r.json())
     .then(j => {
