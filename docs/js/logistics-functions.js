@@ -332,7 +332,7 @@ const genNewContainers2 = async req => {
 }
 
 const addBarcodes = async route => {
-  $(`#${route.key}`).text('Creating...')
+  $(`#${route.key}`).text('Creating containers...')
   let s = route.containers.map(x => x.to_ci)
   const req = {
     body: JSON.stringify({
@@ -407,6 +407,7 @@ const gpMain = async data => {
   for(const r of data) {
     await addBarcodes(r)
     console.log(r)
+    await printLabels(r.containers)
   }
 }
 
