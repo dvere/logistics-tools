@@ -68,6 +68,7 @@ input[type=date]::-webkit-inner-spin-button {
                        "x b c";
 }
 #gp_select {
+  background-color: rgba(255, 255, 255, 1);
   grid-area: a;
 }
 #gp_all {
