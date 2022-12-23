@@ -109,6 +109,9 @@ input[type=date]::-webkit-inner-spin-button {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
+.gp-row {
+  grid-template-columns: 6rem auto auto;
+}
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
   /*font-size: rem;
