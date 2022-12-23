@@ -416,7 +416,7 @@ const populateGPs = async config => {
   const routes = await getData(config)
  
   if(!routes) {
-    $('#gp_select').remove()
+    $('#gp_tmp').remove()
     $('#lt_results').append($('<h3>', { text: 'No live routes found', class: 'gp-error' }))
     return
   }
@@ -441,9 +441,9 @@ const populateGPs = async config => {
     gpGroups.push(gpGroup)
   }
   if (gpGroups.length) {
-    $('#gp_select').empty().append(gpGroups)
-
-    $('#gp_form')
+    let gpForm = $('<div>', { id: 'gp_form' })
+      .append($('<div>', { id: 'gp_select'})
+        .append(gpGroups))
       .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All' })
         .click(() => {
           const cblist = $('input.gp-cbx')
@@ -457,8 +457,9 @@ const populateGPs = async config => {
           })
           gpMain(gpData)
         }))
+    $('#gp_tmp').replaceWith(gpForm)
   } else {
-    $('#gp_select').remove()
+    $('#gp_tmp').remove()
     $('#lt_results').append($('<h3>', { text: 'No routes require containers', class: 'gp-error' }))
   }
 }
