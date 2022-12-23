@@ -364,15 +364,8 @@ const printLabels = async data => {
     mode: 'cors',
     credentials: 'include'
   } 
-  await fetch('/crossOrigin', printReq).then(r => {
-    if(r.ok) {
-      $(`#${route.key}`).text('Labels sent to print')
-    } else {
-      $(`#${route.key}`).text(`Print failed: ${r.statusText}`)
-    }
-  })
-  $(`#${route.key}`).text('Labels sent to print')
-  await timer(2000)
+  const response = await fetch('/crossOrigin', printReq)
+  return response
 }
 
 const getData = async config => {
@@ -407,7 +400,13 @@ const gpMain = async data => {
   for(const r of data) {
     await addBarcodes(r)
     console.log(r)
-    await printLabels(r.containers)
+    let response = await printLabels(r.containers)
+    if(response.ok) {
+      $(`#${r.key}`).text('Labels sent to print')
+    } else {
+      $(`#${r.key}`).text(`Print failed: ${resp.statusText}`)
+    }
+    await timer(2000)
   }
 }
 
