@@ -110,7 +110,7 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 12rem 42rem;
 }
 .gp-row {
-  grid-template-columns: 6rem auto auto;
+  grid-template-columns: 8rem 16rem 16rem;
 }
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
