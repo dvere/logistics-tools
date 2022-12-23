@@ -332,6 +332,7 @@ const genNewContainers2 = async req => {
 }
 
 const addBarcodes = async route => {
+  $(`#${route.key}`).text('Creating...')
   let s = route.containers.map(x => x.to_ci)
   const req = {
     body: JSON.stringify({
@@ -396,10 +397,9 @@ const getData = async config => {
   return nc
 }
 const gpMain = async data => {
-  console.log('gpMain(data): ', data)
   for(const r of data) {
-    const cid = r.containers.map(o => o.to_ci)
-    console.log(cid)
+    await addBarcodes(r)
+    console.log(r)
   }
 }
 
@@ -428,7 +428,8 @@ const populateGPs = async config => {
       gpGroup.append($('<div>', { class: 'gp-row'})
         .append($('<input>', { type: 'checkbox', class: 'gp-cbx', checked: true })
           .data('route', r))
-        .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`})))
+        .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`}))
+        .append($('<span>'), { id: r.key, class: 'gp-res' }))
     }
     gpGroups.push(gpGroup)
   }
