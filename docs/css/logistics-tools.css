@@ -112,6 +112,9 @@ input[type=date]::-webkit-inner-spin-button {
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
 }
+.gp-row > label {
+  margin-bottom: 0;
+}
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
   /*font-size: rem;
