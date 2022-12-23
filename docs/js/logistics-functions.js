@@ -440,21 +440,24 @@ const populateGPs = async config => {
     }
     gpGroups.push(gpGroup)
   }
+  if (gpGroups.length) {
+    $('#gp_select').removeClass('lt-loader').append(gpGroups)
 
-  $('#gp_select').removeClass('lt-loader').append(gpGroups)
-
-  $('#gp_form') 
-    .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All'})
-      .click(() => {
-        const cblist = $('input.gp-cbx')
-        cblist.prop('checked', !cblist.prop('checked'))
-      }))
-    .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'})
-      .click(() => {
-        let gpData = []
-        $('.gp-cbx:checked').each((i,e) => {
-          gpData.push($(e).data('route'))
-        })
-        gpMain(gpData)
-      }))
+    $('#gp_form')
+      .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All' })
+        .click(() => {
+          const cblist = $('input.gp-cbx')
+          cblist.prop('checked', !cblist.prop('checked'))
+        }))
+      .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected' })
+        .click(() => {
+          let gpData = []
+          $('.gp-cbx:checked').each((i, e) => {
+            gpData.push($(e).data('route'))
+          })
+          gpMain(gpData)
+        }))
+  } else {
+    $('#gp_select').removeClass('lt-loader').append($('<div>').append($('<h3>').text('No routes require containers')))
+  }
 }
