@@ -78,8 +78,7 @@ const addPartsToDOM = (config, svc) => {
       .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
-    .append($('<div>', { id: 'gp_tmp', class: 'lt-loader' }))
-
+    
   let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
     .click(() =>  $('#lt_container').remove())

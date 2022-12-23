@@ -413,6 +413,9 @@ const gpMain = async data => {
 const populateGPs = async config => {
   const groups = {}
   const gpGroups = []
+
+  $('#gp_tab').append($('<div>', { id: 'gp_tmp', class: 'lt-loader' }))
+  
   const routes = await getData(config)
  
   if(!routes) {
