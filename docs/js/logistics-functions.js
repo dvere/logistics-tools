@@ -416,8 +416,8 @@ const populateGPs = async config => {
   const routes = await getData(config)
  
   if(!routes) {
-    $('#gp_select').removeClass('lt-loader')
-    $('#gp_select').html('<h3>No live routes found</h3>')
+    $('#gp_form').removeClass('lt-loader')
+      .append($('<h3>', { text: 'No live routes found', class: 'gp-error' }))
     return
   }
   
@@ -441,7 +441,9 @@ const populateGPs = async config => {
     gpGroups.push(gpGroup)
   }
   if (gpGroups.length) {
-    $('#gp_select').removeClass('lt-loader').append(gpGroups)
+    $('#gp_form').removeClass('lt-loader')
+      .append($('<div>', { id: 'gp_select' })
+        .append(gpGroups))
 
     $('#gp_form')
       .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All' })
