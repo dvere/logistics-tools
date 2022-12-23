@@ -458,6 +458,7 @@ const populateGPs = async config => {
           gpMain(gpData)
         }))
   } else {
-    $('#gp_select').removeClass('lt-loader').append($('<div>').append($('<h3>').text('No routes require containers')))
+    $('#gp_select').remove()
+    $('#lt_results').append($('<h3>', { text: 'No routes require containers', class: 'gp-error' }))
   }
 }
