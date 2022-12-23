@@ -204,7 +204,11 @@ const addPartsToDOM = (config, svc) => {
 }
 ;
 (async () => {
-  const config = await fetch('/user/me').then(r => r.json())
-  const svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
-  addPartsToDOM(config, svc)
+  if (checkSSL()) {
+    const config = await fetch('/user/me').then(r => r.json())
+    const svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
+    addPartsToDOM(config, svc)
+  } else {
+    return false
+  }
 })()
