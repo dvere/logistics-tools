@@ -396,6 +396,7 @@ const getData = async config => {
   return nc
 }
 const gpMain = async data => {
+  console.log('gpMain(data): ', data)
   for(const r of data) {
     const cid = r.containers.map(o => o.to_ci)
     console.log(cid)
@@ -443,8 +444,8 @@ const populateGPs = async config => {
     .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected'})
       .click(() => {
         let gpData = []
-        $('.gp-cbx:checked').each(function() {
-          gpData.push($(this).data('route'))
+        $('.gp-cbx:checked').each((i,e) => {
+          gpData.push($(e).data('route'))
         })
         gpMain(gpData)
       }))
