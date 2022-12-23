@@ -429,7 +429,7 @@ const populateGPs = async config => {
         .append($('<input>', { type: 'checkbox', class: 'gp-cbx', checked: true })
           .data('route', r))
         .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`}))
-        .append($('<span>'), { id: r.key, class: 'gp-res' }))
+        .append($('<span>', { id: r.key, class: 'gp-res' })))
     }
     gpGroups.push(gpGroup)
   }
