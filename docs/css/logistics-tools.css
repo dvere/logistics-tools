@@ -64,8 +64,8 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(255, 128, 0, 0.4);
 }
 #gp_form {
-  grid-template-areas: "a a"
-                       "b c";
+  grid-template-areas: "a a a"
+                       "x b c";
 }
 #gp_select {
   grid-area: a;
