@@ -364,7 +364,14 @@ const printLabels = async data => {
     mode: 'cors',
     credentials: 'include'
   } 
-  await fetch('/crossOrigin', printReq)
+  await fetch('/crossOrigin', printReq).then(r => {
+    if(r.ok) {
+      $(`#${route.key}`).text('Labels sent to print')
+    } else {
+      $(`#${route.key}`).text(`Print failed: ${r.statusText}`)
+    }
+  })
+  $(`#${route.key}`).text('Labels sent to print')
   await timer(2000)
 }
 
