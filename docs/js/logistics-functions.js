@@ -345,7 +345,7 @@ const addBarcodes = async route => {
   const nbc = await genNewContainers(req)
   for (c of nbc) {
     const idx = route.containers.map(o => o.to_ci).indexOf(c.consolidation_id)
-    route.containers[idx].barcode = nbc[idx].barcode
+    route.containers[idx].container_id = nbc[idx].barcode
   }
 }
 
@@ -363,7 +363,7 @@ const printLabels = async data => {
     method: 'POST',
     mode: 'cors',
     credentials: 'include'
-  }
+  } 
   await fetch('/crossOrigin', printReq)
   await timer(2000)
 }
