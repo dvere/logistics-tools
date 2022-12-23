@@ -80,7 +80,7 @@ const addPartsToDOM = (config, svc) => {
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
     .append($('<div>', { id: 'gp_form' })
       .append($('<div>', { id: 'gp_select'})
-        .append($('<div>', {class: 'lt-loader'}))))
+        .append($('<div>', {class: 'lt-loader'}).css({ margin: '4rem' }))))
 
   let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
