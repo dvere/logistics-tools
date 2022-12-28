@@ -122,7 +122,7 @@ input[type=date]::-webkit-inner-spin-button {
   margin-top: 0;
 }
 .gp-route {
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 }
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
