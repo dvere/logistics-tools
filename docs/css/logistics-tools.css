@@ -100,13 +100,15 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-tab {
   display: none;
 }
-.sc-row, .ci-row, .ac-row, .lp-row, .gp-row {
+.sc-row, .ci-row, .ac-row, .lp-row, .gp-row, .gp-route {
   padding: .2rem 1rem .1rem;
   border: 1px solid rgba(0,0,0,0.25);
   border-style: none solid solid;
   font-size: 1.2rem;
   background-color: white;
   line-height: 1.6rem;
+}
+.sc-row, .ci-row, .ac-row, .lp-row, .gp-row {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
@@ -135,7 +137,7 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-start: 1;
   grid-column-end: 4;
 }
-.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child {
+.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child, .gp-route:first-child {
   border-top-style: solid;
 }
 .sc-error, .lt-error, .lp-error, .gp-error {
