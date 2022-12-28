@@ -121,6 +121,9 @@ input[type=date]::-webkit-inner-spin-button {
 .gp-row > input[type=checkbox] {
   margin-top: 0;
 }
+.gp-route {
+  padding-bottom: 0.5rem;
+}
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
   /*font-size: rem;
@@ -137,7 +140,7 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-start: 1;
   grid-column-end: 4;
 }
-.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child, .gp-row:first-child {
+.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child, .gp-row:first-child, .gp-route:first-child {
   border-top-style: solid;
 }
 .sc-error, .lt-error, .lp-error, .gp-error {
