@@ -105,20 +105,27 @@ const acMain = async (data) => {
         await fetch(scanUri, { method: 'POST'})
         .then(res => { 
           if (res.status !== 204) {
-            const resp = res.json()
-            $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
-              .text(r + ' - ' + resp.message))
             errors++
+            return res.json()
           } else {
             added++
+            return false
           }
-          $('#' + o.id + ' li.ac-summary')
-            .text('Records Added: ' + added + ', Errors: ' + errors)
+        })
+        .then(result => {
+          if(result) {
+            $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
+              .text(r + ' - ' + resp.message))
+          } else {
+            $('#' + o.id + ' li.ac-summary')
+              .text('Records Added: ' + added + ', Errors: ' + errors)
+          }
         })
       }
     }
   }
 }
+
 
 const downloadCsv = (data, fileName = 'download') => {
   out = []
