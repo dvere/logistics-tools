@@ -113,12 +113,11 @@ const acMain = async (data) => {
           }
         })
         .then(result => {
+          $('#' + o.id + ' li.ac-summary')
+              .text('Records Added: ' + added + ', Errors: ' + errors)
           if(result) {
             $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
-              .text(r + ' - ' + resp.message))
-          } else {
-            $('#' + o.id + ' li.ac-summary')
-              .text('Records Added: ' + added + ', Errors: ' + errors)
+              .text(r + ' - ' + result.message))
           }
         })
       }
