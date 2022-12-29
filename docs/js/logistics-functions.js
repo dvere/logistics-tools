@@ -103,11 +103,11 @@ const acMain = async (data) => {
       for(const r of o.records) {
         let scanUri = `/${o.type}containers/${o.id}/scan/${r}`
         await fetch(scanUri, { method: 'POST'})
-        .then(r => { 
-          if (r.status !== 204) {
-            const res = r.json()
+        .then(res => { 
+          if (res.status !== 204) {
+            const resp = r.json()
             $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
-              .text(r + ' - ' + res.message))
+              .text(r + ' - ' + resp.message))
             errors++
           } else {
             added++
