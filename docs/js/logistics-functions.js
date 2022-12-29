@@ -105,7 +105,7 @@ const acMain = async (data) => {
         await fetch(scanUri, { method: 'POST'})
         .then(res => { 
           if (res.status !== 204) {
-            const resp = r.json()
+            const resp = res.json()
             $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
               .text(r + ' - ' + resp.message))
             errors++
