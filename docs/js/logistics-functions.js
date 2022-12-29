@@ -70,11 +70,11 @@ const ciOutput = (cons) => {
   }
 }
 
-const acMain = (data) => {
+const acMain = async (data) => {
   $('#lt_results').html($('<div>', { class: 'lt-loader' }))
   let containers = []
   var current
-  $.each(data, (_i, bc) => {
+  for(const bc of data) {
     if (bc.match(/^PCS[0-9]{9}$/) === null) {
       let t = (bc.match(/^CSLC[0-9]{8}$/)) ? 'location' : 'trunk'
       containers.push({ id: bc, type: t, records: [] })
@@ -83,13 +83,13 @@ const acMain = (data) => {
       let idx = containers.findIndex(e => e.id === current)
       containers[idx].records.push(bc)
     }
-  })
+  }
   if (containers.length === 0) {
     $('#lt_results').html($('<div>', { class: 'lt-error' })
       .text('Unable to build list of containers'))
   } else {
     $('#lt_results').html($('<div>', { id: 'ac_results' }))
-    $.each(containers, (_i, o) => {
+    for(const o of containers) {
       let row = $('<div>', { id: o.id, class: 'ac-row' })
         .append($('<div>', { class: 'ac-col-l' }).text(o.id))
         .append($('<div>', { class: 'ac-col-r' })
@@ -100,10 +100,11 @@ const acMain = (data) => {
 
       let errors = 0
       let added = 0
-      $.each(o.records, (_i, r) => {
-        let jqxhr = $.post('/' + o.type + 'containers/' + o.id + '/scan/' + r)
-        jqxhr.always(() => {
-          if (jqxhr.status !== 204) {
+      for(const r of o.records) {
+        let scanUri = `/${o.type}containers/${o.id}/scan/${r}`
+        await fetch(scanUri, { method: 'POST'})
+        .then(r => { 
+          if (r.status !== 204) {
             $('#' + o.id + ' ul.ac-list').append($('<li>', { class: 'sc-error' })
               .text(r + ' - ' + jqxhr.responseJSON.message))
             errors++
@@ -113,8 +114,8 @@ const acMain = (data) => {
           $('#' + o.id + ' li.ac-summary')
             .text('Records Added: ' + added + ', Errors: ' + errors)
         })
-      })
-    })
+      }
+    }
   }
 }
 
