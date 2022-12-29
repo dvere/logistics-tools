@@ -26,7 +26,7 @@ const addPartsToDOM = (config, svc) => {
 
   $('<script>',{
     id: 'lt_func',
-    src: lt + 'js/logistics-functions.js'
+    src: lt + 'js/logistics-functions.js?v=' + $.now() 
   })
   .appendTo($('body'))
 
