@@ -125,7 +125,6 @@ const acMain = async (data) => {
   }
 }
 
-
 const downloadCsv = (data, fileName = 'download') => {
   out = []
   for (const i of data) {
@@ -357,9 +356,14 @@ const addBarcodes = async route => {
   }
 }
 
-const printLabels = async data => {
+const printLabels = async (data, config) => {
+  let printer = config.container_printer_name
+  if(config.local_printing) {
+    printer = config.container_local_printer_name
+  }
+  let query = new URLSearchParams({printer: printer})
   let printBody = {
-    url: 'https://labels.citysprint.co.uk/label/capita-location-container?printer=Swindon+Label+Printer+02',
+    url: 'https://labels.citysprint.co.uk/label/capita-location-container?' + query,
     content: data
   }
   let printReq = {
@@ -399,16 +403,15 @@ const getData = async config => {
       }
       rData.containers.push(data)
     }
-
     nc.push(rData)
   }
   return nc
 }
-const gpMain = async data => {
+const gpMain = async (data, config) => {
   for(const r of data) {
     await addBarcodes(r)
     console.log(r)
-    let response = await printLabels(r.containers)
+    let response = await printLabels(r.containers, config)
     if(response.ok) {
       $(`#${r.key}`).text('Labels sent to print')
     } else {
@@ -466,7 +469,7 @@ const populateGPs = async config => {
           $('.gp-cbx:checked').each((i, e) => {
             gpData.push($(e).data('route'))
           })
-          gpMain(gpData)
+          gpMain(gpData, config)
         }))
     $('#gp_tmp').replaceWith(gpForm)
   } else {
