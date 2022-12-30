@@ -412,7 +412,7 @@ const gpMain = async data => {
     if(response.ok) {
       $(`#${r.key}`).text('Labels sent to print')
     } else {
-      $(`#${r.key}`).text(`Print failed: ${resp.statusText}`)
+      $(`#${r.key}`).text(`Print failed: ${response.statusText}`)
     }
     await timer(2000)
   }
@@ -421,7 +421,7 @@ const gpMain = async data => {
 const populateGPs = async config => {
   const groups = {}
   const gpGroups = []
-
+  $('#gp_form').remove()
   $('#gp_tab').append($('<div>', { id: 'gp_tmp', class: 'lt-loader' }))
   
   const routes = await getData(config)
