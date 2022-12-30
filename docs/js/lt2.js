@@ -79,7 +79,7 @@ const addPartsToDOM = (config, svc) => {
 
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
     
-  let ltClose = $('<span>', {id: 'lt_close' })
+  let ltClose = $('<span>', {id: 'lt_close', title: 'Close Logistics Tools'})
     .html("&#10006;")
     .click(() => location.reload())
   
