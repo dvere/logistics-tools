@@ -81,7 +81,7 @@ const addPartsToDOM = (config, svc) => {
     
   let ltClose = $('<span>', {id: 'lt_close' })
     .html("&#10006;")
-    .click(() =>  $('#lt_container').remove())
+    .click(() => location.reload())
   
   let ltContainer = $('<div>', { id: 'lt_container' })
     .append(ltMenu)
