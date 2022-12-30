@@ -1,3 +1,4 @@
+// XXX TODO - convert to simple fetch
 const ciMain = (data) => {
   let query = data.query
   query.fields = 'id,tracking_number,requested_route,consolidation_id,status,location'
@@ -18,6 +19,7 @@ const ciMain = (data) => {
     })
 }
 
+// XXX TODO - convert to simple fetch
 const filterProcessed = (json, query) => {
   query.fields = 'id,trunk_container.barcode'
   delete query.status
@@ -167,6 +169,7 @@ const lpMain = async (data) => {
   downloadCsv(csv, 'LabelPacks')
 }
 
+// XXX TODO - convert to simple fetch
 const scMain = (source, dest) => {
   $('#lt_results').html($('<div>', { class: 'lt-loader' }))
   let data = {
@@ -305,21 +308,6 @@ const getRoutes = async (config) => {
   return routes
 }
 
-//fake
-const genNewContainers2 = async req => {
-  const data = []
-  const body = JSON.parse(req.body)
-  c = body.consolidation_id.split(',')
-  b = c.map(x => 'CLSC000' + x)
-  for(;b.length > 0;) {
-    data.push({
-      barcode: b.shift(),
-      consolidation_id: c.shift()
-    })
-  }
-  return data
-}
-//real
 const genNewContainers = async req => {
   const newContainers = await fetch('/locationcontainers/', req)
     .then(r => r.json())
