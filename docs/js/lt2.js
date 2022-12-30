@@ -18,7 +18,7 @@ const addPartsToDOM = (config, svc) => {
   let $pageContent = $('#main-container > div:first-child > div.page-content')
   
   $('<link>', {
-    id: 'lt-style',
+    id: 'lt_style',
     rel: 'stylesheet',
     href: lt + 'css/logistics-tools.css?v=' + $.now()
   })
