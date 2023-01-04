@@ -229,7 +229,7 @@ const getClientLocations = async config => {
     service_centre: config.service_centre
   })
   const sites = await fetch('/client/11270/locations?' + query).then(r => r.json())
-  const GPs = sites.filter(l => l.address_type === 'GP' && l.fixed == true)
+  const GPs = sites.filter(l => l.address_type === 'GP' && l.fixed === true)
   return GPs
 }
 
