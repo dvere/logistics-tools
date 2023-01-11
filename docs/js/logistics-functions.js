@@ -433,9 +433,9 @@ const populateGPs = async config => {
 
   for(const [date, rArray] of Object.entries(groups)) {
     let gpGroup = $('<div>', {class: 'gp-route', text: date, id: date})
-      .prepend($('<input>',{type: 'checkbox', checked: true})
-        .change(function() {
-          $('div.gp-row > input[type=checkbox]', $(this))
+    gpGroup.prepend($('<input>',{type: 'checkbox', checked: true})
+      .change(function() {
+        $('div.gp-row > input[type=checkbox]', gpGroup)
           .prop('checked', $(this).prop('checked'))
         })
       )
