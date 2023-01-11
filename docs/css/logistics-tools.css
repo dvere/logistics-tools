@@ -108,24 +108,24 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: white;
   line-height: 1.6rem;
 }
-.sc-row, .ci-row, .ac-row, .lp-row, .gp-row {
+.sc-row, .ci-row, .ac-row, .lp-row, .gp-row, .gp-route {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
-.gp-route {
+.gp-group {
   padding-bottom: 1rem;
 }
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
 }
-.gp-route > label.gp-lbl, .gp-row > label.gp-lbl {
+.gp-route {
+  grid-template-columns: 4rem 36rem;
+}
+label.gp-lbl {
   margin-bottom: 0;
 }
-.gp-route > input.gp-cbx, .gp-row > input.gp-cbx {
+input[type=checkbox].gp-cbx {
   margin-top: 0;
-}
-.gp-route > input.gp-cbx {
-  min-width: 3rem;
 }
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;

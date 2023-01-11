@@ -432,7 +432,7 @@ const populateGPs = async config => {
   }
 
   for(const [date, rArray] of Object.entries(groups)) {
-    let gpGroup = $('<div>', {class: 'gp-route', id: date})
+    let gpGroup = $('<div>', {class: 'gp-group', id: date})
   
     for (const r of rArray) { 
       gpGroup.append($('<div>', { class: 'gp-row'})
@@ -441,12 +441,14 @@ const populateGPs = async config => {
         .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`, class: 'gp-lbl'}))
         .append($('<span>', { id: r.key, class: 'gp-res' })))
     }
-    gpGroup.prepend($('<label>', {class: 'gp-lbl', text: date}))
-    gpGroup.prepend($('<input>',{type: 'checkbox', checked: true, class: 'gp-cbx'})
-      .change(function() {
-        $('div.gp-row > input[type=checkbox]', gpGroup)
-          .prop('checked', $(this).prop('checked'))
-      })
+    gpGroup.prepend($('<div>', {class: 'gp-route'})
+      .append($('<input>',{type: 'checkbox', checked: true, class: 'gp-cbx'})
+        .change(function() {
+          $('div.gp-row > input[type=checkbox]', gpGroup)
+            .prop('checked', $(this).prop('checked'))
+        })
+      )
+      .append($('<label>', {class: 'gp-lbl', text: date}))
     )
 
     gpGroups.push(gpGroup)
