@@ -436,19 +436,19 @@ const populateGPs = async config => {
   
     for (const r of rArray) { 
       gpGroup.append($('<div>', { class: 'gp-row'})
-        .append($('<input>', { type: 'checkbox', class: 'gp-cbx', checked: true })
+        .append($('<input>', { type: 'checkbox', class: 'gp-cbx' })
           .data('route', r))
         .append($('<label>', { text: `${r.rpc} - ${r.containers.length} containers`, class: 'gp-lbl'}))
         .append($('<span>', { id: r.key, class: 'gp-res' })))
     }
-    gpGroup.prepend($('<div>', {class: 'gp-route'})
-      .append($('<input>',{type: 'checkbox', checked: true, class: 'gp-cbx'})
+    gpGroup.prepend($('<div>', { class: 'gp-route'})
+      .append($('<input>',{ type: 'checkbox', class: 'gp-cbx' })
         .change(function() {
           $('div.gp-row > input[type=checkbox]', gpGroup)
             .prop('checked', $(this).prop('checked'))
         })
       )
-      .append($('<label>', {class: 'gp-lbl', text: date}))
+      .append($('<label>', { class: 'gp-lbl', text: date }))
     )
 
     gpGroups.push(gpGroup)
@@ -459,8 +459,7 @@ const populateGPs = async config => {
         .append(gpGroups))
       .append($('<button>', { class: 'lt-button', id: 'gp_all', text: 'Toggle All' })
         .click(() => {
-          const cblist = $('input.gp-cbx')
-          cblist.prop('checked', !cblist.prop('checked'))
+          $('input.gp-cbx').each((_,e) => $(e).prop('checked', !$(e).prop('checked')))
         }))
       .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected' })
         .click(() => {
