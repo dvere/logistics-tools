@@ -113,7 +113,8 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 12rem 42rem;
 }
 .gp-group {
-  padding-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(0,0,0,.1);
 }
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
