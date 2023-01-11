@@ -121,7 +121,7 @@ input[type=date]::-webkit-inner-spin-button {
 .gp-route > label.gp-lbl, .gp-row > label.gp-lbl {
   margin-bottom: 0;
 }
-.gp-route > input.gp-cbx, .gp-row > label.gp-cbx {
+.gp-route > input.gp-cbx, .gp-row > input.gp-cbx {
   margin-top: 0;
 }
 .gp-route > input.gp-cbx {
