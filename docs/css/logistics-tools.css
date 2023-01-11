@@ -117,11 +117,12 @@ input[type=date]::-webkit-inner-spin-button {
 }
 .gp-route > label.gp-lbl, .gp-row > label.gp-lbl {
   margin: 0;
-  display: block;
 }
 .gp-route > input.gp-cbx, .gp-row > label.gp-lbl {
   margin: 0;
-  display: block;
+}
+.gp-route > input.gp-cbx {
+  height: 1rem;
 }
 .gp-route {
   padding-bottom: 1rem;
