@@ -14,7 +14,7 @@ const ciMain = (data) => {
     }
   })
     .fail((o, s, e) => {
-      console.error('Ooops, CI GET Error: ' + s + '\n' + e)
+      console.error(`Ooops, CI GET Error: ${s}\n${e}`)
       $('#lt_results').html($('<pre>').text(o))
     })
 }
@@ -450,9 +450,9 @@ const populateGPs = async config => {
       )
       .append($('<label>', { class: 'gp-lbl', text: date }))
     )
-
     gpGroups.push(gpGroup)
   }
+
   if (gpGroups.length) {
     let gpForm = $('<div>', { id: 'gp_form' })
       .append($('<div>', { id: 'gp_select'})
@@ -464,7 +464,7 @@ const populateGPs = async config => {
       .append($('<button>', { class: 'lt-button', id: 'gp_btn', text: 'Print Selected' })
         .click(() => {
           let gpData = []
-          $('.gp-cbx:checked').each((i, e) => {
+          $('.gp-row > .gp-cbx:checked').each((i, e) => {
             gpData.push($(e).data('route'))
           })
           gpMain(gpData, config)
