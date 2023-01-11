@@ -115,10 +115,10 @@ input[type=date]::-webkit-inner-spin-button {
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
 }
-.gp-lbl {
+gp-route label {
   margin-bottom: 0;
 }
-.gp-cbx {
+gp-route input[type=checkbox] {
   margin-top: 0;
 }
 .gp-route {
