@@ -31,7 +31,7 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-button, .lt-input {
   border: 1px solid rgba(0,0,0,.25);
   padding: 1rem 2rem;
-} 
+}
 .lt-button {
   border-radius: .3rem;
   background: rgba(98,168,209,1);
