@@ -118,7 +118,6 @@ input[type=date]::-webkit-inner-spin-button {
 }
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
-  display: none;
 }
 .gp-route {
   grid-template-columns: 4rem 32rem;
@@ -177,6 +176,9 @@ input[type=checkbox].gp-cbx {
   cursor: pointer;
   color: rgba(42,145,216,1);
   margin: 1rem;
+}
+.hidden {
+  display: none;
 }
 .lt-loader {
   margin: 0 auto;
