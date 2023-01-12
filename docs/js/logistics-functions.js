@@ -105,7 +105,7 @@ const acMain = async (data) => {
       for(const r of o.records) {
         let scanUri = `/${o.type}containers/${o.id}/scan/${r}`
         await fetch(scanUri, { method: 'POST'})
-        .then(res => { 
+        .then(res => {
           if (res.status !== 204) {
             errors++
             return res.json()
@@ -245,7 +245,7 @@ const filterGroups = groups => {
     const da = key.split('-')
     for(const [id, data] of Object.entries(group)) {
       const re = /^Capita /
-      const notre = /Urgent/ 
+      const notre = /Urgent/
       if(data.name.match(re) && !data.name.match(notre)) {
         const groupObject = {
           rgid: id,
@@ -281,7 +281,7 @@ const getMissingContainers = route => {
   const rl = route.locations
   const rc = route.location_containers
   const missing_containers = []
-  
+
   for(m of rl.filter(l => !rc.some(c => l.consolidation_id === c.consolidation_id))) {
     missing_containers.push(m.consolidation_id)
   }
@@ -295,14 +295,14 @@ const getRoutes = async (config) => {
   for (let g of groups) {
     g.routes = await getGroupRoutes(g)
     for (r of g.routes) {
-      r.shortDate = g.shortDate 
+      r.shortDate = g.shortDate
       r.locations = locations.filter(l => l.route_planned.code === r.route_planned_code)
       r.location_containers = await getOpenContainers(r)
       r.missing_containers = getMissingContainers(r)
       allRoutes.push(r)
     }
   }
-  
+
   allRoutes.sort((a,b) => ((a.date + a.route_planned_code) > (b.date + b.route_planned_code))? 1: -1)
   const routes = allRoutes.filter(e => e.missing_containers.length > 0)
   return routes
@@ -363,7 +363,7 @@ const printLabels = async (data, config) => {
     method: 'POST',
     mode: 'cors',
     credentials: 'include'
-  } 
+  }
   const response = await fetch('/crossOrigin', printReq)
   return response
 }
@@ -414,15 +414,15 @@ const populateGPs = async config => {
   const gpGroups = []
   $('#gp_form').remove()
   $('#gp_tab').append($('<div>', { id: 'gp_tmp', class: 'lt-loader' }))
-  
+
   const routes = await getData(config)
- 
+
   if(!routes) {
     $('#gp_tmp').remove()
     $('#lt_results').append($('<h3>', { text: 'No live routes found', class: 'gp-error' }))
     return
   }
-  
+
   for (const r of routes) {
     if(groups[r.date]) {
       groups[r.date].push(r)
@@ -433,8 +433,8 @@ const populateGPs = async config => {
 
   for(const [date, rArray] of Object.entries(groups)) {
     let gpGroup = $('<div>', {class: 'gp-group', id: date})
-  
-    for (const r of rArray) { 
+
+    for (const r of rArray) {
       gpGroup.append($('<div>', { class: 'gp-row hidden'})
         .append($('<input>', { type: 'checkbox', class: 'gp-cbx' })
           .data('route', r))
