@@ -132,6 +132,10 @@ label.gp-lbl {
 input[type=checkbox].gp-cbx {
   margin-top: 0;
 }
+.gp-res {
+  color: rgba(70,70,170,1);
+  font-weight: 650;
+}
 .lp-row {
   grid-template-columns: 12rem 12rem 12rem;
   /*font-size: rem;
