@@ -120,7 +120,7 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: 8rem 16rem 16rem;
 }
 .gp-route {
-  grid-template-columns: 4rem 32rem;
+  grid-template-columns: 4rem 36rem;
 }
 .gp-route > .gp-lbl > .ace-icon {
   float: right;
