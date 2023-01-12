@@ -118,9 +118,14 @@ input[type=date]::-webkit-inner-spin-button {
 }
 .gp-row {
   grid-template-columns: 8rem 16rem 16rem;
+  display: none;
 }
 .gp-route {
-  grid-template-columns: 4rem 36rem;
+  grid-template-columns: 4rem 32rem;
+}
+.gp-route > .gp-lbl > .ace-icon {
+  float: right;
+  font-size: 1.6rem;
 }
 label.gp-lbl {
   margin-bottom: 0;

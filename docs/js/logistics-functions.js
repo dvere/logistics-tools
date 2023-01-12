@@ -448,7 +448,10 @@ const populateGPs = async config => {
             .prop('checked', $(this).prop('checked'))
         })
       )
-      .append($('<label>', { class: 'gp-lbl', text: date }))
+      .append($('<label>', { class: 'gp-lbl'})
+        .append($('<span>', { text: date }))
+        .append($('<i>', { class: 'ace-icon fa fa-caret-down'}))
+        .click(() => $('.gp-row', gpGroup).toggle()))
     )
     gpGroups.push(gpGroup)
   }
