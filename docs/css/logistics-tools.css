@@ -117,10 +117,10 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,.1);
 }
 .gp-row {
-  grid-template-columns: 8rem 16rem 16rem;
+  grid-template-columns: 6rem 15rem 15rem;
 }
 .gp-route {
-  grid-template-columns: 4rem 36rem;
+  grid-template-columns: 4rem 32rem;
 }
 .gp-route > .gp-lbl > .ace-icon {
   float: right;
