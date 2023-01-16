@@ -121,6 +121,8 @@ input[type=date]::-webkit-inner-spin-button {
 }
 .gp-route {
   grid-template-columns: 4rem 32rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 .gp-route > .gp-lbl > .ace-icon {
   float: right;
