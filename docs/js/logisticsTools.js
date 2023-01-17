@@ -20,13 +20,13 @@ const addPartsToDOM = (config, svc) => {
   $('<link>', {
     id: 'lt_style',
     rel: 'stylesheet',
-    href: lt + 'css/logisticsTools.css?v=' + $.now()
+    href: `${lt}css/logisticsTools.css?v=${$.now()}`
   })
   .appendTo($('head'))
 
   $('<script>',{
     id: 'lt_func',
-    src: lt + 'js/logisticsFunctions.js?v=' + $.now() 
+    src: `${lt}js/logisticsFunctions.js?v=${$.now()}` 
   })
   .appendTo($('body'))
 
@@ -110,7 +110,7 @@ const addPartsToDOM = (config, svc) => {
     if (e.which == 13) {
       let audio = new Audio('/audio/success')
       audio.play()
-      $('#ac_data').val((_i, text) => text + $('#ac_ti').val() + '\n')
+      $('#ac_data').val((_i, text) => `${text + $('#ac_ti').val()}\n`)
       $('#ac_data').scrollTop($('#ac_data')[0].scrollHeight)
       $('#ac_ti').select()
       return false
@@ -121,7 +121,7 @@ const addPartsToDOM = (config, svc) => {
     if (e.which == 13) {
       let audio = new Audio('/audio/success')
       audio.play()
-      $('#lp_data').val((_i, text) => text + $('#lp_ti').val() + '\n')
+      $('#lp_data').val((_i, text) => `${text + $('#lp_ti').val()}\n`)
       $('#lp_data').scrollTop($('#lp_data')[0].scrollHeight)
       $('#lp_ti').select()
       return false
