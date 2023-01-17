@@ -20,13 +20,13 @@ const addPartsToDOM = (config, svc) => {
   $('<link>', {
     id: 'lt_style',
     rel: 'stylesheet',
-    href: lt + 'css/logistics-tools.css?v=' + $.now()
+    href: lt + 'css/logisticsTools.css?v=' + $.now()
   })
   .appendTo($('head'))
 
   $('<script>',{
     id: 'lt_func',
-    src: lt + 'js/logistics-functions.js?v=' + $.now() 
+    src: lt + 'js/logisticsFunctions.js?v=' + $.now() 
   })
   .appendTo($('body'))
 
