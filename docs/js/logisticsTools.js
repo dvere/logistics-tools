@@ -205,6 +205,9 @@ const addPartsToDOM = (config, svc) => {
   if (checkSSL()) {
     const config = await fetch('/user/me').then(r => r.json())
     const svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
+    if(!config.consignment_printer_name) {
+      config.consignment_printer_name = config.container_printer_name = svc.label_printer_name
+    }
     addPartsToDOM(config, svc)
   } else {
     return false

@@ -304,8 +304,7 @@ const getRoutes = async (config) => {
   }
 
   allRoutes.sort((a,b) => ((a.date + a.route_planned_code) > (b.date + b.route_planned_code))? 1: -1)
-  const routes = allRoutes.filter(e => e.missing_containers.length > 0)
-  return routes
+  return allRoutes
 }
 
 const genNewContainers = async req => {
@@ -369,7 +368,8 @@ const printLabels = async (data, config) => {
 }
 
 const getData = async config => {
-  const routes = await getRoutes(config)
+  const allRoutes = await getRoutes(config)
+  const routes = allRoutes.filter(e => e.missing_containers.length > 0)
   const nc = []
 
   for (r of routes) {
