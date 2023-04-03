@@ -84,9 +84,6 @@ input[type=date]::-webkit-inner-spin-button {
   font-size: 2rem;
   font-weight: 600;
 }
-#bp_name, #bp_courier {
-  font-size: 1.4rem;
-}
 #ac_data, #lp_data, #bp_data {
   font-family: monospace;
   font-size: 1.9rem;
@@ -97,11 +94,19 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-end: 3;
   grid-row-start: 2;
 }
+#bp_data {
+  grid-column-end: 2;
+  grid-row-start: 3;
+}
 #lt_insert input, #lt_insert select {
   padding: 0 1rem;
 }
 #lt_insert select {
   height: 4rem;
+}
+#bp_name, #bp_courier {
+  font-size: 1.9rem;
+  padding: 1rem 2rem;
 }
 .lt-tab {
   display: none;
