@@ -48,6 +48,7 @@ const addPartsToDOM = (config, svc) => {
   .append($('<button>', { id: 'lt_lp', class: 'lt-button', text: 'Label Packs' }))
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers' }))
+  .append($('<button>', { id: 'lt_bp', class: 'lt-button', text: 'Bulk POD' }))
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
     .append($('<div>', { id: 'ci_form' })
@@ -78,7 +79,17 @@ const addPartsToDOM = (config, svc) => {
       .append($('<button>', { id: 'sc_btn', class: 'lt-button' }).text('Move Records')))
 
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
-    
+
+  let bpForm = $('<div', { id: 'bp_tab', class: 'lt-tab'})
+    .append($('<div', { id: 'bp_form'})
+      .append($('<input>', { id: 'bp_name', class: 'lt-input'}))
+      .append($('<input>', { id: 'bp_courier', class: 'lt-input'}))
+      .append($('<input>', { id: 'bp_time', type:'time' }))
+      .append($('<input>', { id: 'bp_date', type:'date' }))
+      .append($('<textarea>', { id:'bp_data' }))
+      .append($('<button>', { id: 'bp_btn', class: 'lt-button', text: 'Process' }))
+      .append($('<button>', { id: 'bp_clr', class: 'lt-button', text: 'Clear' })))
+  
   let ltClose = $('<span>', {id: 'lt_close', title: 'Close Logistics Tools'})
     .html("&#10006;")
     .click(() => location.reload())
@@ -90,7 +101,8 @@ const addPartsToDOM = (config, svc) => {
       .append(acForm)
       .append(lpForm)
       .append(scForm)
-      .append(gpForm))
+      .append(gpForm)
+      .append(bpForm))
     .append($('<div>', { id: 'lt_results' }))
     .append(ltClose)
 
@@ -198,6 +210,12 @@ const addPartsToDOM = (config, svc) => {
     $('#lt_results').empty()
     $('#gp_select').html(populateGPs(config))
     $('#gp_tab').show()
+  })
+  $('#lt_bp').click(() => {
+    $('.lt-tab').hide()
+    $('#lt_results').empty()
+    $('#bp_tab').show()
+    $('#bp_name').focus()
   })
 }
 ;
