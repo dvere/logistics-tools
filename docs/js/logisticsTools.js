@@ -80,8 +80,8 @@ const addPartsToDOM = (config, svc) => {
 
   let gpForm = $('<div>', { id: 'gp_tab', class: 'lt-tab'})
 
-  let bpForm = $('<div', { id: 'bp_tab', class: 'lt-tab'})
-    .append($('<div', { id: 'bp_form'})
+  let bpForm = $('<div>', { id: 'bp_tab', class: 'lt-tab'})
+    .append($('<div>', { id: 'bp_form'})
       .append($('<input>', { id: 'bp_name', class: 'lt-input'}))
       .append($('<input>', { id: 'bp_courier', class: 'lt-input'}))
       .append($('<input>', { id: 'bp_time', type:'time' }))
