@@ -46,7 +46,7 @@ input[type=date]::-webkit-inner-spin-button {
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
 }
-#ci_form, #ac_form, #lp_form, #sc_form, #gp_form {
+#ci_form, #ac_form, #lp_form, #sc_form, #gp_form, #bp_form {
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -56,7 +56,7 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,.25);
 }
-#ac_form, #lp_form {
+#ac_form, #lp_form, #bp_form {
   grid-template-columns: auto auto;
   width: 380px;
 }
@@ -81,7 +81,7 @@ input[type=date]::-webkit-inner-spin-button {
   font-size: 2rem;
   font-weight: 600;
 }
-#ac_data, #lp_data {
+#ac_data, #lp_data, #bp_data {
   font-family: monospace;
   font-size: 1.9rem;
   line-height: 2.2rem;
