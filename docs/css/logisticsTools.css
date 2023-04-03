@@ -60,6 +60,9 @@ input[type=date]::-webkit-inner-spin-button {
   grid-template-columns: auto auto;
   width: 380px;
 }
+#bp_form {
+  width: fit-content;
+}
 #lp_form {
   background-color: rgba(255, 128, 0, 0.4);
 }
@@ -80,6 +83,9 @@ input[type=date]::-webkit-inner-spin-button {
 #ac_ti, #lp_ti {
   font-size: 2rem;
   font-weight: 600;
+}
+#bp_name, #bp_courier {
+  font-size: 1.4rem;
 }
 #ac_data, #lp_data, #bp_data {
   font-family: monospace;
