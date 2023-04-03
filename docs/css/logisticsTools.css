@@ -95,7 +95,6 @@ input[type=date]::-webkit-inner-spin-button {
   grid-row-start: 2;
 }
 #bp_data {
-  grid-column-end: 2;
   grid-row-start: 3;
 }
 #lt_insert input, #lt_insert select {
