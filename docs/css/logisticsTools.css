@@ -103,9 +103,9 @@ input[type=date]::-webkit-inner-spin-button {
 #lt_insert select {
   height: 4rem;
 }
-input#bp_name, input#bp_courier {
-  font-size: 1.9rem;
-  padding: 1rem 2rem;
+#bp_name, input#bp_courier {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
 }
 .lt-tab {
   display: none;
