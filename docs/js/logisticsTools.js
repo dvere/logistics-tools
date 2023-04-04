@@ -13,7 +13,7 @@ const checkSSL = () => {
   }
 }
 
-const addPartsToDOM = (config, svc) => {
+const addPartsToDOM = (config, svc, clients) => {
   let lt = 'https://dvere.github.io/logistics-tools/'
   let $pageContent = $('#main-container > div:first-child > div.page-content')
   
@@ -34,7 +34,6 @@ const addPartsToDOM = (config, svc) => {
   ciData.query = {
     q: 'collected:' + svc.code,
     count: 5000,
-    client_id: 11270,
     location: svc.description
   }
 
@@ -54,6 +53,7 @@ const addPartsToDOM = (config, svc) => {
     .append($('<div>', { id: 'ci_form' })
       .append($('<input>', { id: 'ci_date', type:'date' }))
       .append($('<select>', { id: 'ci_status' }))
+      .append($('<select>', { id: 'ci_client' }))
       .append($('<button>', { id: 'ci_btn', class: 'lt-button', text: 'Look up collections' }))
       .append($('<label>').css({ gridColumn: '1 / 3', marginBottom: '-0.57em' })
         .html('<input id="ci_ncr" type="checkbox" />&nbsp;Exclude records processed to trunk container')))
@@ -110,10 +110,17 @@ const addPartsToDOM = (config, svc) => {
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v })
     .appendTo($('#ci_status')))
-  
+  $.each(clients, (_i, v) => {
+    let opt = $('<option>', { value: v.id, text: v.name})
+    if(v.id == 11270) {
+      opt = $('<option>', { value: v.id, text: v.name, selected: 'selected'})
+    }
+    opt.appendTo($('#ci_client'))})
+
   $('#ci_btn').click(() => {
     ciData.query.received_at = $('#ci_date').val()
     ciData.query.status = $('#ci_status').val()
+    ciData.query.client_id = $('#ci_client').val()
     ciData.ncr = ($('#ci_ncr').is(':checked')) ? 1 : 0 
     ciMain(ciData)
   })
@@ -223,10 +230,11 @@ const addPartsToDOM = (config, svc) => {
   if (checkSSL()) {
     const config = await fetch('/user/me').then(r => r.json())
     const svc = await fetch(`/servicecentres/${config.service_centre}`).then(r => r.json())
+    const clients = await fetch('/client/').then(r=>r.json())
     if(!config.consignment_printer_name) {
       config.consignment_printer_name = config.container_printer_name = svc.label_printer_name
     }
-    addPartsToDOM(config, svc)
+    addPartsToDOM(config, svc, clients)
   } else {
     return false
   }
