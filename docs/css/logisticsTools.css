@@ -104,6 +104,7 @@ input[type=date]::-webkit-inner-spin-button {
   height: 4rem;
 }
 #bp_form input {
+  line-height: 2rem;
   padding: 0.5rem 1rem;
 }
 .lt-tab {
