@@ -154,7 +154,7 @@ const addPartsToDOM = (config, svc, clients) => {
       $('#ac_ti').focus()
 			acMain(acData)
 		} else {
-			alert('Invalid Data, please check input and try again')
+			alert('Invalid barcode data, please check input and try again')
 			return false
 		}
 	})
@@ -172,7 +172,7 @@ const addPartsToDOM = (config, svc, clients) => {
       $('#lp_ti').focus()
 			lpMain(lpData)
 		} else {
-			alert('Invalid Data, please check input and try again')
+			alert('Invalid barcode data, please check input and try again')
 			return false
 		}
 	})
@@ -187,6 +187,33 @@ const addPartsToDOM = (config, svc, clients) => {
     let source = $('#sc_old').val().trim()
     let dest = $('#sc_new').val().trim()
     scMain(source, dest)
+  })
+
+  $('#bp_btn').click(() => {
+    let courier = $('#bp_courier').val().toUpperCase().trim()
+    let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
+		let bpData = {
+      data: $('#bp_data').val().toUpperCase().trim().split('\n'),
+      name: $('#bp_name').val(),
+      driver_key: getDriverId(courier),
+      date: $('#bp_date').val(),
+      time: $('#bp_time').val()
+    }
+    if (!bpData.driver_key) {
+      alert(`Unable to find unique driver_id for ${courier}`)
+      return false
+    }
+		if (!validateBarcodes(bpData.data, regex)) {
+			alert('Invalid barcode data, please check input and try again')
+			return false
+		}
+    bpMain(bpData)
+	})
+
+  $('#bp_clr').click(() => {
+    $('#bp_data').val('')
+    $('#lt_results').empty()
+    $('#bp_name').focus()
   })
 
   $('#lt_ci').click(() => {
