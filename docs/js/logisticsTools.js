@@ -82,8 +82,8 @@ const addPartsToDOM = (config, svc, clients) => {
 
   let bpForm = $('<div>', { id: 'bp_tab', class: 'lt-tab'})
     .append($('<div>', { id: 'bp_form'})
-      .append($('<input>', { id: 'bp_name', class: 'lt-input'}))
-      .append($('<input>', { id: 'bp_courier', class: 'lt-input'}))
+      .append($('<input>', { id: 'bp_name', class: 'lt-input', placeholder: 'Receiver'}))
+      .append($('<input>', { id: 'bp_courier', class: 'lt-input', placeholder: 'Driver Id'}))
       .append($('<input>', { id: 'bp_time', type:'time' }))
       .append($('<input>', { id: 'bp_date', type:'date' }))
       .append($('<textarea>', { id:'bp_data' }))
