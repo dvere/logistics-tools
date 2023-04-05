@@ -204,6 +204,22 @@ const scMain = (source, dest) => {
     })
 }
 
+const bpMain = async (bpData) => {
+  let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
+  let data = bpData.data.toUpperCase().trim().split('\n')
+  let id = getDriverId(bpData.key)
+  if (!id) {
+    alert(`Unable to find unique driver_id for ${courier}`)
+    return false
+  }
+  if (!validateBarcodes(data, regex)) {
+    alert('Invalid barcode data, please check input and try again')
+    return false
+  }
+  // just fail silently...
+  return false
+}
+
 const validateBarcodes = (arr, regex) => {
   let count = 0
   $.each(arr, (_i, bc) => {
@@ -213,6 +229,16 @@ const validateBarcodes = (arr, regex) => {
   })
   if (count > 0) return false
   return true
+}
+
+const getDriverId = async key => {
+  const result = await fetch(`/drivers/?enabled=true&query=${key}`)
+    .then(r => r.json())
+    .then(j => {
+      if (j.length != 1) return false
+      return j[0]
+    })
+  return result
 }
 
 // BPC

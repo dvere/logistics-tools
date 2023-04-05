@@ -110,6 +110,7 @@ const addPartsToDOM = (config, svc, clients) => {
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v })
     .appendTo($('#ci_status')))
+
   $.each(clients, (_i, v) => {
     let opt = $('<option>', { value: v.id, text: v.name})
     if(v.id == 11270) {
@@ -190,23 +191,13 @@ const addPartsToDOM = (config, svc, clients) => {
   })
 
   $('#bp_btn').click(() => {
-    let courier = $('#bp_courier').val().toUpperCase().trim()
-    let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
-		let bpData = {
-      data: $('#bp_data').val().toUpperCase().trim().split('\n'),
+    let bpData = {
+      data: $('#bp_data').val(),
       name: $('#bp_name').val(),
-      driver_key: getDriverId(courier),
+      key: $('#bp_courier').val().trim(),
       date: $('#bp_date').val(),
       time: $('#bp_time').val()
     }
-    if (!bpData.driver_key) {
-      alert(`Unable to find unique driver_id for ${courier}`)
-      return false
-    }
-		if (!validateBarcodes(bpData.data, regex)) {
-			alert('Invalid barcode data, please check input and try again')
-			return false
-		}
     bpMain(bpData)
 	})
 
