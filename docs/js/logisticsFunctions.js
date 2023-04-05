@@ -207,26 +207,34 @@ const scMain = (source, dest) => {
 const bpMain = async (bpData) => {
   let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
   let data = bpData.data.toUpperCase().trim().split('\n')
-  let did = await getDriverId(bpData.key)
+  let key = bpData.key.toUpperCase()
+  let did = await getDriverId(key)
+  let success = 0
+
   if (!did) {
-    alert(`Unable to find unique driver_id for ${bpData.key}`)
+    alert(`Unable to find unique driver_id for ${key}`)
     return false
   }
   if (!validateBarcodes(data, regex)) {
     alert('Invalid barcode data, please check input and try again')
     return false
   }
+
+  $('#lt_results').append($('<div>',{id: 'bp_results'}))
+
   const qs = new URLSearchParams({
     fields: 'tracking_number',
     count: data.length,
     tracking_number: data.join(',')
   })
   let cdata = await fetch(`/consignments/?${qs}`).then(r=>r.json())
+
   for(i in cdata) {
     const id = cdata[i].id
+    const tid = cdata[i].tracking_number
     const body = {
       id: id,
-      pod_name: bpData.name,
+      pod_name: bpData.name.toUpperCase(),
       driver: did,
       delivery_time: bpData.time,
       delivery_date: bpData.date
@@ -235,8 +243,14 @@ const bpMain = async (bpData) => {
       body: JSON.stringify(body),
       method: 'POST'
     })
-    let out = JSON.stringify(result.json())
-    $('#lt_results').append($('<div>',{text: `${cdata[i].tracking_number}: ${out}`}))
+    .then(r => r.json())
+    
+    if (result.success) {
+      success++
+      $('#bp_results').text(`Delivered: ${success}`)
+    } else {
+      $('#lt_results').append($('<div>').text(`Error: ${tid}`))
+    }
   }
   return true
 }
