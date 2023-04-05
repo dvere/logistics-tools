@@ -209,7 +209,7 @@ const bpMain = async (bpData) => {
   let data = bpData.data.toUpperCase().trim().split('\n')
   let did = await getDriverId(bpData.key)
   if (!did) {
-    alert(`Unable to find unique driver_id for ${courier}`)
+    alert(`Unable to find unique driver_id for ${bpData.key}`)
     return false
   }
   if (!validateBarcodes(data, regex)) {
