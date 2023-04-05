@@ -256,8 +256,9 @@ const getDriverId = async key => {
   const result = await fetch(`/drivers/?enabled=true&query=${key}`)
     .then(r => r.json())
     .then(j => {
-      if (j.length != 1) return false
-      return j[0]
+      const res = j.filter(x=>x.driver_key == key)
+      if (res.length != 1) return false
+      return res[0]
     })
   return result
 }
