@@ -258,7 +258,7 @@ const getDriverId = async key => {
     .then(j => {
       const res = j.filter(x=>x.driver_key == key)
       if (res.length != 1) return false
-      return res[0]
+      return res[0].id
     })
   return result
 }
