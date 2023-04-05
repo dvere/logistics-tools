@@ -235,7 +235,7 @@ const bpMain = async (bpData) => {
       body: JSON.stringify(body),
       method: 'POST'
     })
-    let out = result.json()
+    let out = JSON.stringify(result.json())
     $('#lt_results').append($('<div>',{text: `${cdata[i].tracking_number}: ${out}`}))
   }
   return true
