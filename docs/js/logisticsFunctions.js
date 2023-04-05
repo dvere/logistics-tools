@@ -207,8 +207,8 @@ const scMain = (source, dest) => {
 const bpMain = async (bpData) => {
   let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
   let data = bpData.data.toUpperCase().trim().split('\n')
-  let id = getDriverId(bpData.key)
-  if (!id) {
+  let did = await getDriverId(bpData.key)
+  if (!did) {
     alert(`Unable to find unique driver_id for ${courier}`)
     return false
   }
@@ -216,8 +216,29 @@ const bpMain = async (bpData) => {
     alert('Invalid barcode data, please check input and try again')
     return false
   }
-  // just fail silently...
-  return false
+  const qs = new URLSearchParams({
+    fields: 'tracking_number',
+    count: data.length,
+    tracking_number: data.join(',')
+  })
+  let cdata = await fetch(`/consignments/?${qs}`).then(r=>r.json())
+  for(i in cdata) {
+    const id = cdata[i].id
+    const body = {
+      id: id,
+      pod_name: bpData.name,
+      driver: did,
+      delivery_time: bpData.time,
+      delivery_date: bpData.date
+    }
+    const result = await fetch(`/consignment/${id}/delivered`, {
+      body: JSON.stringify(body),
+      method: 'POST'
+    })
+    let out = result.json()
+    $('#lt_results').append($('<div>',{text: `${cdata[i].tracking_number}: ${out}`}))
+  }
+  return true
 }
 
 const validateBarcodes = (arr, regex) => {
