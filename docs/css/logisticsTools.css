@@ -40,7 +40,7 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-button:hover, .lt-button:active {
  background: rgba(60,128,166,1);
 }
-#ci_results, #ac_results, #lp_results, #sc_results {
+#ci_results, #ac_results, #lp_results, #sc_results, #bp_results {
   padding: 2rem;
   line-height: 1.4rem;
   border: 1px solid rgba(0,0,0,0.25);
@@ -110,15 +110,13 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-tab {
   display: none;
 }
-.sc-row, .ci-row, .ac-row, .lp-row, .gp-row, .gp-route {
+.sc-row, .ci-row, .ac-row, .lp-row, .gp-row, .bp-row, .gp-route {
   padding: .2rem 1rem;
   border: 1px solid rgba(0,0,0,0.25);
   border-style: none solid solid;
   font-size: 1.2rem;
   background-color: white;
   line-height: 1.6rem;
-}
-.sc-row, .ci-row, .ac-row, .lp-row, .gp-row, .gp-route {
   display: grid;
   grid-template-columns: 12rem 42rem;
 }
