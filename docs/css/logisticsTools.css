@@ -162,7 +162,7 @@ input[type=checkbox].gp-cbx {
   grid-column-start: 1;
   grid-column-end: 4;
 }
-.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child, .gp-route:first-child {
+.sc-row:first-child, .ci-row:first-child, .ac-row:first-child, .lp-row:first-child, .gp-route:first-child, .bp-row {
   border-top-style: solid;
 }
 .sc-error, .lt-error, .lp-error, .gp-error {
@@ -185,6 +185,17 @@ input[type=checkbox].gp-cbx {
 .ci-head {
   font-weight: 700;
   background-color: rgba(0,0,0,0.2);
+}
+.bp-head {
+  font-size: 2rem;
+}
+.bp-row {
+  grid-template-columns: 12rem 12rem;
+}
+.bp-error {
+  grid-template-columns: 24rem;
+  font-weight: bold;
+  color: red;
 }
 .download-link {
   cursor: pointer;

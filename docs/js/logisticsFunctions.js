@@ -221,6 +221,9 @@ const bpMain = async (bpData) => {
   }
 
   $('#lt_results').append($('<div>',{id: 'bp_results'}))
+  .append($('<div>', { class: 'bp-head bp-row' })
+    .append($('<div>', { text: 'Delivered count:' }))
+    .append($('<div>', { id: 'bp_count' })))
 
   const qs = new URLSearchParams({
     fields: 'tracking_number',
@@ -247,9 +250,9 @@ const bpMain = async (bpData) => {
     
     if (result.success) {
       success++
-      $('#bp_results').text(`Delivered: ${success}`)
+      $('#bp_count').text(success)
     } else {
-      $('#lt_results').append($('<div>').text(`Error: ${tid}`))
+      $('#bp_results').append($('<div>', { class: 'bp-error'}).text(`${tid} failed to update`))
     }
   }
   return true
