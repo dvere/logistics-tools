@@ -94,6 +94,7 @@ const addPartsToDOM = (config, svc, clients) => {
 
   let usForm = $('<div>', { id: 'us_tab', class: 'lt-tab'})
     .append($('<div>', { id: 'us_form'})
+      .append($('<div>', { text: 'New Status:'}))
       .append($('<select>', { id: 'us_status'}))
       .append($('<textarea>', { id:'us_data' }))
       .append($('<button>', { id: 'us_btn', class: 'lt-button', text: 'Process' }))
