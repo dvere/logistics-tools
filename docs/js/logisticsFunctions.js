@@ -291,8 +291,9 @@ const usMain = async (usData) => {
       body: JSON.stringify(body),
       method: 'POST'
     })
+    .then(r => r.status)
 
-    if (result.success) {
+    if (result == 204) {
       success++
       $('#us_count').text(success)
     } else {
