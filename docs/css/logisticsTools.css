@@ -84,7 +84,7 @@ input[type=date]::-webkit-inner-spin-button {
   font-size: 2rem;
   font-weight: 600;
 }
-#ac_data, #lp_data, #bp_data {
+#ac_data, #lp_data, #bp_data, #us_data {
   font-family: monospace;
   font-size: 1.9rem;
   line-height: 2.2rem;
@@ -94,9 +94,10 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-end: 3;
   grid-row-start: 2;
 }
-#bp_data, #us_data {
+#bp_data {
   grid-row-start: 3;
 }
+
 #lt_insert input, #lt_insert select {
   padding: 0 1rem;
 }
