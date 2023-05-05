@@ -258,6 +258,51 @@ const bpMain = async (bpData) => {
   return true
 }
 
+const usMain = async (usData) => {
+  let regex = /^(PCS[0-9]{9}|CTL[0-9]{8})$/
+  let data = usData.data.toUpperCase().trim().split('\n')
+  let status = usData.status.toUpperCase()
+  let success = 0
+
+  if (!validateBarcodes(data, regex)) {
+    alert('Invalid barcode data, please check input and try again')
+    return false
+  }
+  
+  $('#lt_results').append($('<div>',{id: 'us_results'}))
+  .append($('<div>', { class: 'bp-head bp-row' })
+    .append($('<div>', { text: 'Updated count:' }))
+    .append($('<div>', { id: 'us_count' })))
+
+  const qs = new URLSearchParams({
+    fields: 'tracking_number',
+    count: data.length,
+    tracking_number: data.join(',')
+  })
+  let cdata = await fetch(`/consignments/?${qs}`).then(r=>r.json())
+
+  for(i in cdata) {
+    const id = cdata[i].id
+    const tid = cdata[i].tracking_number
+    const body = {
+      tracking_code: status
+    }
+    const result = await fetch(`/consignments/${id}/tracking`, {
+      body: JSON.stringify(body),
+      method: 'POST'
+    })
+    .then(r => r.json())
+
+    if (result.success) {
+      success++
+      $('#us_count').text(success)
+    } else {
+      $('#us_results').append($('<div>', { class: 'bp-error'}).text(`${tid} failed to update`))
+    }
+  }
+  return true
+}
+
 const validateBarcodes = (arr, regex) => {
   let count = 0
   $.each(arr, (_i, bc) => {

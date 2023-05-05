@@ -38,6 +38,7 @@ const addPartsToDOM = (config, svc, clients) => {
   }
 
   let ciOpts = [ 'RECEIVED', 'COLLECTED', 'ROUTED', 'RECONCILED' ]
+  let usOpts = [ 'COLLECT CLIENT', 'RECEIVED SC', 'LABEL PRINTED', 'PARCEL SCAN' ]
   let scRegex = '(CAP)?(TRNK|CSTC|OOC)[0-9]{8}'
   let scAttr = { required: 'required',  pattern: scRegex, autocomplete: 'off' }
 
@@ -48,6 +49,7 @@ const addPartsToDOM = (config, svc, clients) => {
   .append($('<button>', { id: 'lt_sc', class: 'lt-button', text: 'Swap Containers' }))
   .append($('<button>', { id: 'lt_gp', class: 'lt-button', text: 'Print GP Containers' }))
   .append($('<button>', { id: 'lt_bp', class: 'lt-button', text: 'Bulk POD' }))
+  .append($('<button>', { id: 'lt_us', class: 'lt-button', text: 'Bulk Update Status' }))
 
   let ciForm = $('<div>', { id: 'ci_tab', class: 'lt-tab' })
     .append($('<div>', { id: 'ci_form' })
@@ -89,6 +91,13 @@ const addPartsToDOM = (config, svc, clients) => {
       .append($('<textarea>', { id:'bp_data' }))
       .append($('<button>', { id: 'bp_btn', class: 'lt-button', text: 'Process' }))
       .append($('<button>', { id: 'bp_clr', class: 'lt-button', text: 'Clear' })))
+
+  let usForm = $('<div>', { id: 'us_tab', class: 'lt-tab'})
+    .append($('<div>', { id: 'us_form'})
+      .append($('<select>', { id: 'us_status'}))
+      .append($('<textarea>', { id:'us_data' }))
+      .append($('<button>', { id: 'us_btn', class: 'lt-button', text: 'Process' }))
+      .append($('<button>', { id: 'us_clr', class: 'lt-button', text: 'Clear' })))
   
   let ltClose = $('<span>', {id: 'lt_close', title: 'Close Logistics Tools'})
     .html("&#10006;")
@@ -102,7 +111,8 @@ const addPartsToDOM = (config, svc, clients) => {
       .append(lpForm)
       .append(scForm)
       .append(gpForm)
-      .append(bpForm))
+      .append(bpForm)
+      .append(usForm))
     .append($('<div>', { id: 'lt_results' }))
     .append(ltClose)
 
@@ -110,6 +120,9 @@ const addPartsToDOM = (config, svc, clients) => {
 
   $.each(ciOpts, (_i, v) => $('<option>', { value: v, text: v })
     .appendTo($('#ci_status')))
+  
+  $.each(usOpts, (_i, v) => $('<option>', { value: v, text: v })
+    .appendTo($('#us_status')))
 
   $.each(clients, (_i, v) => {
     let opt = $('<option>', { value: v.id, text: v.name})
@@ -207,6 +220,20 @@ const addPartsToDOM = (config, svc, clients) => {
     $('#bp_name').focus()
   })
 
+  $('#us_btn').click(() => {
+    let usData = {
+      data: $('#us_data').val(),
+      status: $('#us_status').val()
+    }
+    usMain(usData)
+	})
+
+  $('#us_clr').click(() => {
+    $('#us_data').val('')
+    $('#lt_results').empty()
+    $('#us_status').focus()
+  })
+
   $('#lt_ci').click(() => {
     $('.lt-tab').hide()
     $('#lt_results').empty()
@@ -241,6 +268,12 @@ const addPartsToDOM = (config, svc, clients) => {
     $('#lt_results').empty()
     $('#bp_tab').show()
     $('#bp_name').focus()
+  })
+  $('#lt_us').click(() => {
+    $('.lt-tab').hide()
+    $('#lt_results').empty()
+    $('#us_tab').show()
+    $('#us_status').focus()
   })
 }
 ;

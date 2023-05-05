@@ -40,13 +40,13 @@ input[type=date]::-webkit-inner-spin-button {
 .lt-button:hover, .lt-button:active {
  background: rgba(60,128,166,1);
 }
-#ci_results, #ac_results, #lp_results, #sc_results, #bp_results {
+#ci_results, #ac_results, #lp_results, #sc_results, #bp_results, #us_results {
   padding: 2rem;
   line-height: 1.4rem;
   border: 1px solid rgba(0,0,0,0.25);
   background-color: rgba(0,0,0,.1);
 }
-#ci_form, #ac_form, #lp_form, #sc_form, #gp_form, #bp_form {
+#ci_form, #ac_form, #lp_form, #sc_form, #gp_form, #bp_form, #us_form {
   margin: 0 auto;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -56,11 +56,11 @@ input[type=date]::-webkit-inner-spin-button {
   background-color: rgba(0,0,0,0.1);
   border: 1px solid rgba(0,0,0,.25);
 }
-#ac_form, #lp_form, #bp_form {
+#ac_form, #lp_form, #bp_form, #us_form {
   grid-template-columns: auto auto;
   width: 380px;
 }
-#bp_form {
+#bp_form, #us_form {
   width: fit-content;
 }
 #lp_form {
@@ -94,7 +94,7 @@ input[type=date]::-webkit-inner-spin-button {
   grid-column-end: 3;
   grid-row-start: 2;
 }
-#bp_data {
+#bp_data, #us_data {
   grid-row-start: 3;
 }
 #lt_insert input, #lt_insert select {
@@ -186,7 +186,7 @@ input[type=checkbox].gp-cbx {
   font-weight: 700;
   background-color: rgba(0,0,0,0.2);
 }
-#bp_count {
+#bp_count, #us_count {
   text-align: right;
 }
 .bp-head, .bp-error {
