@@ -291,7 +291,6 @@ const usMain = async (usData) => {
       body: JSON.stringify(body),
       method: 'POST'
     })
-    .then(r => r.json())
 
     if (result.success) {
       success++
